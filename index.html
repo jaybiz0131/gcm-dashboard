@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0a0e14">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>GCM Traffic</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0e14'/%3E%3Cpolyline points='5,22 12,15 17,19 27,8' fill='none' stroke='%2322d3ee' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #0a0e14;
+    --panel: #0e141d;
+    --line: #1b2534;
+    --ink: #e9eff8;
+    --dim: #8b98ab;
+    --faint: #55637a;
+    --cyan: #22d3ee;
+    --up: #34d399;
+    --down: #fbbf24;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1100px 500px at 50% -10%, rgba(34, 211, 238, 0.07), transparent 60%),
+      var(--bg);
+    color: var(--ink);
+    font: 400 15px/1.5 var(--sans);
+    padding: max(16px, env(safe-area-inset-top)) 16px 40px;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+
+  /* ---------- top bar ---------- */
+  .bar {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 4px 12px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em;
+    color: var(--faint); text-transform: uppercase;
+    border-bottom: 1px solid var(--line); padding-bottom: 12px;
+  }
+  .brand { color: var(--dim); font-weight: 700; white-space: nowrap; }
+  .brand b { color: var(--cyan); font-weight: 700; }
+  .stamp { text-align: right; flex: 1; white-space: nowrap; }
+  .stamp .live { color: var(--up); }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 30px 0 8px; }
+  .hero .label {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--faint);
+  }
+  .hero .row { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 18px; margin-top: 6px; }
+  .hero .total {
+    font-family: var(--mono); font-weight: 700; line-height: 1;
+    font-size: clamp(56px, 16vw, 108px); letter-spacing: -0.02em;
+    color: var(--ink); text-shadow: 0 0 34px rgba(34, 211, 238, 0.28);
+    font-variant-numeric: tabular-nums;
+  }
+  .wow {
+    font-family: var(--mono); font-weight: 700; font-size: 15px;
+    padding: 5px 11px; border-radius: 999px; border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.02); white-space: nowrap;
+  }
+  .wow.up   { color: var(--up);   border-color: rgba(52, 211, 153, 0.35); text-shadow: 0 0 12px rgba(52, 211, 153, 0.55); }
+  .wow.down { color: var(--down); border-color: rgba(251, 191, 36, 0.35); text-shadow: 0 0 12px rgba(251, 191, 36, 0.55); }
+  .wow.flat { color: var(--dim); }
+  .summary { color: var(--dim); max-width: 62ch; margin: 14px 0 0; font-size: 15px; }
+
+  /* ---------- movers strip ---------- */
+  .movers { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 26px; }
+  .movers:empty { display: none; }
+  .chip {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.03em;
+    color: var(--dim); border: 1px solid var(--line); border-radius: 8px;
+    padding: 7px 11px; background: linear-gradient(180deg, rgba(255,255,255,0.025), transparent);
+  }
+  .chip b { color: var(--ink); font-weight: 700; }
+  .chip .k { color: var(--cyan); margin-right: 7px; }
+
+  /* ---------- grid ---------- */
+  .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  @media (min-width: 620px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1080px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .card {
+    position: relative; overflow: hidden;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 55%), var(--panel);
+    border: 1px solid var(--line); border-radius: 14px; padding: 16px 16px 13px;
+  }
+  .card::before {
+    content: ""; position: absolute; inset: -1px; border-radius: 14px; pointer-events: none;
+    background: radial-gradient(320px 130px at 18% 0%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%);
+  }
+  .card > * { position: relative; }
+  .card header { display: flex; align-items: baseline; gap: 8px; }
+  .dot {
+    width: 9px; height: 9px; border-radius: 50%; flex: none; align-self: center;
+    background: var(--accent); box-shadow: 0 0 9px var(--accent);
+  }
+  .card h2 {
+    margin: 0; font-family: var(--mono); font-size: 13px; font-weight: 700;
+    letter-spacing: 0.14em; color: var(--ink); flex: 1; min-width: 0;
+  }
+  .card h2 .host {
+    display: block; font-size: 10px; font-weight: 400; letter-spacing: 0.06em;
+    color: var(--faint); text-transform: none; overflow: hidden; text-overflow: ellipsis;
+  }
+  .card .wow { font-size: 12px; padding: 3px 8px; }
+  .card .big {
+    font-family: var(--mono); font-weight: 700; font-size: 40px; line-height: 1.05;
+    margin-top: 12px; font-variant-numeric: tabular-nums;
+  }
+  .card .unit { font-family: var(--mono); font-size: 11px; color: var(--faint); letter-spacing: 0.08em; margin-top: 2px; }
+  .spark { display: block; width: 100%; height: 52px; margin-top: 12px; overflow: visible; }
+  .spark path.line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 4px color-mix(in srgb, var(--accent) 60%, transparent)); }
+  .spark circle.tip { fill: var(--accent); filter: drop-shadow(0 0 5px var(--accent)); }
+  .card footer {
+    display: flex; align-items: baseline; gap: 8px; margin-top: 11px;
+    border-top: 1px solid var(--line); padding-top: 9px;
+    font-family: var(--mono); font-size: 11.5px; min-width: 0;
+  }
+  .card footer .k { color: var(--faint); letter-spacing: 0.18em; flex: none; }
+  .card footer .path { color: var(--dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
+  .card footer .n { color: var(--ink); font-weight: 700; flex: none; }
+
+  /* awaiting-signal state */
+  .card.await { border-style: dashed; }
+  .card.await .big { color: var(--faint); font-size: 17px; letter-spacing: 0.2em; padding: 22px 0; }
+  .card.await .dot { background: var(--faint); box-shadow: none; animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity: 0.25; } }
+  .card.await .note { font-family: var(--mono); font-size: 10.5px; color: var(--faint); margin-top: 4px; }
+
+  .empty {
+    margin-top: 40px; text-align: center; color: var(--faint);
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase;
+  }
+  .empty b { color: var(--cyan); display: block; font-size: 17px; margin-bottom: 10px; }
+
+  .foot {
+    margin-top: 34px; text-align: center; font-family: var(--mono);
+    font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #3b4658;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card.await .dot { animation: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <span class="brand">GCM <b>//</b> TRAFFIC COMMAND</span>
+    <span class="stamp" id="stamp"><span class="live">●</span> loading</span>
+  </div>
+
+  <section class="hero">
+    <div class="label">Family visits · trailing 7 days</div>
+    <div class="row">
+      <span class="total" id="total">—</span>
+      <span class="wow flat" id="totalWow" hidden></span>
+    </div>
+    <p class="summary" id="summary"></p>
+  </section>
+
+  <div class="movers" id="movers"></div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" hidden><b>AWAITING FIRST PULL</b>run the Traffic pull workflow once and this board lights up</div>
+
+  <p class="foot">static bake · refreshed sundays 19:00 ET · zero live calls</p>
+</div>
+
+<script>
+"use strict";
+
+const SITES = [
+  { host: "gocheckmy.com",         label: "HUB",      accent: "#d4a54a" },
+  { host: "gocheckmyhome.com",     label: "HOME",     accent: "#2dd4bf" },
+  { host: "gocheckmypet.com",      label: "PET",      accent: "#fb7185" },
+  { host: "gocheckmymortgage.com", label: "MORTGAGE", accent: "#60a5fa" },
+  { host: "gocheckmyparents.com",  label: "PARENTS",  accent: "#93b4d1" },
+  { host: "gocheckmyestate.com",   label: "ESTATE",   accent: "#a78bfa" },
+  { host: "gocheckmystorm.com",    label: "STORM",    accent: "#22d3ee" },
+  { host: "gocheckmycrypto.com",   label: "CRYPTO",   accent: "#f7931a" },
+];
+
+const $ = (id) => document.getElementById(id);
+const fmt = (n) => (n ?? 0).toLocaleString("en-US");
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function siteWeek(week, host) { return (week && week.sites && week.sites[host]) || null; }
+function visits(week, host) { const s = siteWeek(week, host); return s && !s.no_data ? (s.visits || 0) : null; }
+function totalVisits(week) {
+  return SITES.reduce((t, s) => t + (visits(week, s.host) ?? 0), 0);
+}
+
+function wowChip(el, cur, prev) {
+  if (prev == null || prev === 0 || cur == null) { el.hidden = true; return; }
+  const pct = Math.round(((cur - prev) / prev) * 100);
+  el.hidden = false;
+  el.className = "wow " + (pct > 0 ? "up" : pct < 0 ? "down" : "flat");
+  el.textContent = (pct > 0 ? "▲ +" : pct < 0 ? "▼ " : "◆ ") + pct + "%";
+}
+
+function countUp(el, target) {
+  if (reduceMotion || target === 0) { el.textContent = fmt(target); return; }
+  const t0 = performance.now(), dur = 850;
+  (function tick(t) {
+    const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmt(Math.round(target * e));
+    if (p < 1) requestAnimationFrame(tick);
+  })(t0);
+}
+
+/* Smooth sparkline: Catmull-Rom converted to cubic beziers, drawn in via dash offset. */
+function sparkline(svg, series, accent) {
+  const W = 300, H = 52, PAD = 4;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  svg.setAttribute("preserveAspectRatio", "none");
+  const pts = series
+    .map((v, i) => ({ v, i }))
+    .filter((p) => p.v != null)
+    .map((p) => ({
+      x: series.length > 1 ? PAD + (p.i / (series.length - 1)) * (W - 2 * PAD) : W / 2,
+      y: 0, v: p.v,
+    }));
+  if (!pts.length) return;
+  const max = Math.max(...pts.map((p) => p.v), 1);
+  pts.forEach((p) => { p.y = H - PAD - (p.v / max) * (H - 2 * PAD); });
+
+  const ns = "http://www.w3.org/2000/svg";
+  if (pts.length >= 2) {
+    let d = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[Math.max(0, i - 1)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(pts.length - 1, i + 2)];
+      const c1x = p1.x + (p2.x - p0.x) / 6, c1y = p1.y + (p2.y - p0.y) / 6;
+      const c2x = p2.x - (p3.x - p1.x) / 6, c2y = p2.y - (p3.y - p1.y) / 6;
+      d += ` C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+    }
+    const area = document.createElementNS(ns, "path");
+    area.setAttribute("d", d + ` L ${pts[pts.length - 1].x.toFixed(1)} ${H} L ${pts[0].x.toFixed(1)} ${H} Z`);
+    area.setAttribute("fill", accent);
+    area.setAttribute("opacity", "0.08");
+    svg.appendChild(area);
+
+    const line = document.createElementNS(ns, "path");
+    line.setAttribute("d", d);
+    line.setAttribute("class", "line");
+    line.setAttribute("vector-effect", "non-scaling-stroke");
+    svg.appendChild(line);
+    if (!reduceMotion) {
+      const len = line.getTotalLength();
+      line.style.strokeDasharray = len;
+      line.style.strokeDashoffset = len;
+      line.style.transition = "stroke-dashoffset 900ms ease-out 120ms";
+      requestAnimationFrame(() => requestAnimationFrame(() => { line.style.strokeDashoffset = "0"; }));
+    }
+  }
+  const tip = document.createElementNS(ns, "circle");
+  const last = pts[pts.length - 1];
+  tip.setAttribute("cx", last.x); tip.setAttribute("cy", last.y); tip.setAttribute("r", "2.8");
+  tip.setAttribute("class", "tip");
+  svg.appendChild(tip);
+}
+
+function moverChips(weeks) {
+  const chips = [];
+  if (weeks.length < 2) return chips;
+  const cur = weeks[weeks.length - 1], prev = weeks[weeks.length - 2];
+
+  let best = null;
+  for (const s of SITES) {
+    const c = visits(cur, s.host), p = visits(prev, s.host);
+    if (c != null && p != null && p >= 5) {
+      const pct = Math.round(((c - p) / p) * 100);
+      if (!best || Math.abs(pct) > Math.abs(best.pct)) best = { s, pct };
+    }
+  }
+  if (best && best.pct !== 0) {
+    chips.push(`<span class="k">${best.pct > 0 ? "▲" : "▼"} MOVER</span><b>${best.s.label}</b> ${best.pct > 0 ? "+" : ""}${best.pct}%`);
+  }
+  for (const s of SITES) {
+    const c = visits(cur, s.host);
+    const priors = weeks.slice(0, -1).map((w) => visits(w, s.host) ?? 0);
+    if (c > 0 && priors.every((v) => v === 0)) {
+      chips.push(`<span class="k">● FIRST TRAFFIC</span><b>${s.label}</b> ${fmt(c)} visits`);
+    } else if (c > 0 && weeks.length >= 4 && c > Math.max(...priors)) {
+      chips.push(`<span class="k">◆ RECORD WEEK</span><b>${s.label}</b> ${fmt(c)} visits`);
+    }
+  }
+  return chips;
+}
+
+function render(history) {
+  const weeks = (history.weeks || []).slice().sort((a, b) => a.week_ending < b.week_ending ? -1 : 1);
+  const grid = $("grid");
+
+  if (!weeks.length) {
+    $("empty").hidden = false;
+    $("total").textContent = "0";
+    $("stamp").innerHTML = '<span class="live">●</span> no data yet';
+    return;
+  }
+  const cur = weeks[weeks.length - 1], prev = weeks.length > 1 ? weeks[weeks.length - 2] : null;
+
+  $("stamp").innerHTML = `<span class="live">●</span> thru ${cur.week_ending} · wk ${weeks.length}`;
+  countUp($("total"), totalVisits(cur));
+  wowChip($("totalWow"), totalVisits(cur), prev ? totalVisits(prev) : null);
+  $("summary").textContent = cur.summary || "";
+
+  $("movers").innerHTML = moverChips(weeks).map((c) => `<div class="chip">${c}</div>`).join("");
+
+  for (const site of SITES) {
+    const s = siteWeek(cur, site.host);
+    const card = document.createElement("article");
+    card.style.setProperty("--accent", site.accent);
+
+    if (!s || s.no_data) {
+      card.className = "card await";
+      card.innerHTML = `
+        <header><span class="dot"></span><h2>${site.label}<span class="host">${site.host}</span></h2></header>
+        <div class="big">AWAITING SIGNAL</div>
+        <div class="note">no beacon data this week</div>`;
+      grid.appendChild(card);
+      continue;
+    }
+
+    card.className = "card";
+    const top = (s.top_paths && s.top_paths[0]) || null;
+    card.innerHTML = `
+      <header>
+        <span class="dot"></span>
+        <h2>${site.label}<span class="host">${site.host}</span></h2>
+        <span class="wow flat" hidden></span>
+      </header>
+      <div class="big">0</div>
+      <div class="unit">visits · ${fmt(s.pageviews)} pv</div>
+      <svg class="spark" role="img" aria-label="weekly visit history for ${site.host}"></svg>
+      <footer>
+        <span class="k">TOP</span>
+        <span class="path">${top ? top.path : "n/a"}</span>
+        <span class="n">${top ? fmt(top.pageviews) : ""}</span>
+      </footer>`;
+    grid.appendChild(card);
+
+    countUp(card.querySelector(".big"), s.visits || 0);
+    wowChip(card.querySelector(".wow"), visits(cur, site.host), prev ? visits(prev, site.host) : null);
+    sparkline(card.querySelector(".spark"), weeks.map((w) => visits(w, site.host)), site.accent);
+  }
+}
+
+fetch("data/traffic-history.json", { cache: "no-store" })
+  .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(render)
+  .catch(() => {
+    $("empty").hidden = false;
+    $("stamp").innerHTML = '<span class="live" style="color:var(--down)">●</span> history file unreachable';
+  });
+</script>
+</body>
+</html>

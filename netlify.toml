@@ -1,0 +1,29 @@
+# Pure static: no build step, publish the repo root.
+[build]
+  command = ""
+  publish = "."
+
+# Fresh numbers on every Monday-morning check; the JSON only changes on deploy anyway.
+[[headers]]
+  for = "/data/traffic-history.json"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Markdown is for the repo, not the web. Force-404 everything that could serve it.
+[[redirects]]
+  from = "/reports/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/README.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/scripts/*"
+  to = "/404.html"
+  status = 404
+  force = true
