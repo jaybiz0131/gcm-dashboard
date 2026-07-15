@@ -4,9 +4,9 @@
   {
    "week": "2026-W29",
    "week_ending": "2026-07-15",
-   "pulled_at": "2026-07-15T12:02:28Z",
-   "summary": "The family logged 412 visits across 8 reporting sites this week.",
-   "summary_source": "fallback",
+   "pulled_at": "2026-07-15T12:05:12Z",
+   "summary": "Your network pulled in 412 visits across 530 pageviews this week, with GoCheckMyCrypto leading the pack at 86 visits and notably high engagement at 145 pageviews, while GoCheckMy and GoCheckMyParents tied for second at 68 visits each. GoCheckMyPet showed strong internal engagement with 31 visits generating 78 pageviews, suggesting visitors are exploring multiple pages on that site, whereas GoCheckMyHome and GoCheckMyMortgage lagged at 24 visits each with minimal additional pageviews.",
+   "summary_source": "haiku",
    "sites": {
     "gocheckmy.com": {
      "visits": 68,
@@ -147,5 +147,5 @@
    }
   }
  ],
- "updated_at": "2026-07-15T12:02:28Z"
+ "updated_at": "2026-07-15T12:05:12Z"
 }
