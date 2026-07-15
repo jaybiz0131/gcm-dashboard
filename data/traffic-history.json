@@ -1,4 +1,151 @@
 {
  "schema": 1,
- "weeks": []
+ "weeks": [
+  {
+   "week": "2026-W29",
+   "week_ending": "2026-07-15",
+   "pulled_at": "2026-07-15T12:02:28Z",
+   "summary": "The family logged 412 visits across 8 reporting sites this week.",
+   "summary_source": "fallback",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 68,
+     "pageviews": 72,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 64
+      },
+      {
+       "path": "/contact",
+       "pageviews": 3
+      },
+      {
+       "path": "/cmd_sco",
+       "pageviews": 1
+      }
+     ],
+     "no_data": false
+    },
+    "gocheckmyhome.com": {
+     "visits": 24,
+     "pageviews": 24,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 24
+      }
+     ],
+     "no_data": false
+    },
+    "gocheckmypet.com": {
+     "visits": 31,
+     "pageviews": 78,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 36
+      },
+      {
+       "path": "/picks/",
+       "pageviews": 8
+      },
+      {
+       "path": "/compare",
+       "pageviews": 8
+      }
+     ],
+     "no_data": false
+    },
+    "gocheckmymortgage.com": {
+     "visits": 24,
+     "pageviews": 24,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 24
+      }
+     ],
+     "no_data": false
+    },
+    "gocheckmyparents.com": {
+     "visits": 68,
+     "pageviews": 70,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 68
+      },
+      {
+       "path": "/assessment",
+       "pageviews": 1
+      },
+      {
+       "path": "/facility-checker",
+       "pageviews": 1
+      }
+     ],
+     "no_data": false
+    },
+    "gocheckmyestate.com": {
+     "visits": 51,
+     "pageviews": 53,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 45
+      },
+      {
+       "path": "/guides/the-beneficiary-mistake",
+       "pageviews": 2
+      },
+      {
+       "path": "/guides",
+       "pageviews": 1
+      }
+     ],
+     "no_data": false
+    },
+    "gocheckmystorm.com": {
+     "visits": 60,
+     "pageviews": 64,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 52
+      },
+      {
+       "path": "/flood-history",
+       "pageviews": 3
+      },
+      {
+       "path": "/generator-sizing",
+       "pageviews": 2
+      }
+     ],
+     "no_data": false
+    },
+    "gocheckmycrypto.com": {
+     "visits": 86,
+     "pageviews": 145,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 73
+      },
+      {
+       "path": "/articles/housing-bill-with-cbdc-ban-becomes-law-without-trump-s-signature",
+       "pageviews": 18
+      },
+      {
+       "path": "/pulse",
+       "pageviews": 9
+      }
+     ],
+     "no_data": false
+    }
+   }
+  }
+ ],
+ "updated_at": "2026-07-15T12:02:28Z"
 }
