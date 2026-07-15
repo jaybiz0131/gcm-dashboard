@@ -24,7 +24,8 @@ jobs:
       - name: Pull traffic, update history, write report
         env:
           CLOUDFLARE_ANALYTICS_TOKEN: ${{ secrets.CLOUDFLARE_ANALYTICS_TOKEN }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # accepts either secret name; ANTHROPIC_KEY is what exists on this repo
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY || secrets.ANTHROPIC_KEY }}
         run: python3 scripts/pull_traffic.py
 
       - name: Commit and push
