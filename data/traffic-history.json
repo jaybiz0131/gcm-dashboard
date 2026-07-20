@@ -145,7 +145,160 @@
      "no_data": false
     }
    }
+  },
+  {
+   "week": "2026-W30",
+   "week_ending": "2026-07-20",
+   "pulled_at": "2026-07-20T10:23:42Z",
+   "summary": "Your network pulled in 253 visits this week, down 22% from last week's 325, with gocheckmy.com leading the decline at negative 38 visits followed by gocheckmycrypto.com at negative 28 visits, though crypto still dominates engagement with 127 pageviews from just 58 visits. The smaller sites held relatively steady, with gocheckmymortgage.com remaining your lightest performer at 9 visits while gocheckmystorm.com and gocheckmyparents.com stayed your second and third strongest draws.",
+   "summary_source": "haiku",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 30,
+     "pageviews": 32,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 31
+      },
+      {
+       "path": "/how-we-make-money",
+       "pageviews": 1
+      }
+     ],
+     "no_data": false
+    },
+    "gocheckmyhome.com": {
+     "visits": 17,
+     "pageviews": 21,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 16
+      },
+      {
+       "path": "/report.html",
+       "pageviews": 3
+      },
+      {
+       "path": "/guides.html",
+       "pageviews": 1
+      }
+     ],
+     "no_data": false
+    },
+    "gocheckmypet.com": {
+     "visits": 27,
+     "pageviews": 41,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 26
+      },
+      {
+       "path": "/care-plan",
+       "pageviews": 5
+      },
+      {
+       "path": "/compare",
+       "pageviews": 4
+      }
+     ],
+     "no_data": false
+    },
+    "gocheckmymortgage.com": {
+     "visits": 9,
+     "pageviews": 9,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 8
+      },
+      {
+       "path": "/articles/pmi-cancellation-letter",
+       "pageviews": 1
+      }
+     ],
+     "no_data": false
+    },
+    "gocheckmyparents.com": {
+     "visits": 39,
+     "pageviews": 46,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 40
+      },
+      {
+       "path": "/assessment",
+       "pageviews": 2
+      },
+      {
+       "path": "/home-care-checker",
+       "pageviews": 2
+      }
+     ],
+     "no_data": false
+    },
+    "gocheckmyestate.com": {
+     "visits": 33,
+     "pageviews": 46,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 37
+      },
+      {
+       "path": "/assessment",
+       "pageviews": 4
+      },
+      {
+       "path": "/about",
+       "pageviews": 2
+      }
+     ],
+     "no_data": false
+    },
+    "gocheckmystorm.com": {
+     "visits": 40,
+     "pageviews": 60,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 40
+      },
+      {
+       "path": "/storm-center",
+       "pageviews": 9
+      },
+      {
+       "path": "/flood-history",
+       "pageviews": 3
+      }
+     ],
+     "no_data": false
+    },
+    "gocheckmycrypto.com": {
+     "visits": 58,
+     "pageviews": 127,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 64
+      },
+      {
+       "path": "/pulse",
+       "pageviews": 15
+      },
+      {
+       "path": "/flows",
+       "pageviews": 10
+      }
+     ],
+     "no_data": false
+    }
+   }
   }
  ],
- "updated_at": "2026-07-15T12:05:12Z"
+ "updated_at": "2026-07-20T10:23:42Z"
 }
