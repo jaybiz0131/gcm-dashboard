@@ -149,8 +149,8 @@
   {
    "week": "2026-W30",
    "week_ending": "2026-07-26",
-   "pulled_at": "2026-07-26T17:23:09Z",
-   "summary": "Traffic across your portfolio dropped 35% week-over-week to 269 visits, with gocheckmy.com (down 76%), gocheckmystorm.com (down 67%), and gocheckmycrypto.com (down 51%) seeing the biggest declines, while gocheckmysports.com and gocheckmynews.com led this week with 43 and 31 visits respectively. On the bright side, gocheckmysports.com appears to be getting its first tracked traffic with 43 visits and solid engagement at 47 pageviews.",
+   "pulled_at": "2026-07-26T17:27:28Z",
+   "summary": "Traffic across your portfolio dropped 35% week-over-week to 269 visits, with gocheckmycrypto.com and gocheckmyparents.com leading engagement at 42 and 35 visits respectively. gocheckmysports.com and gocheckmynews.com appear to have gotten their first tracked traffic this week with 43 and 31 visits, while gocheckmy.com saw the steepest decline, falling from 68 to 16 visits.",
    "summary_source": "haiku",
    "sites": {
     "gocheckmy.com": {
@@ -338,7 +338,7 @@
    }
   }
  ],
- "updated_at": "2026-07-26T17:23:09Z",
+ "updated_at": "2026-07-26T17:27:28Z",
  "days": [
   {
    "date": "2026-06-28",
@@ -2168,154 +2168,154 @@
    "sites": {
     "gocheckmy.com": {
      "overall": {
-      "lcp_p75_ms": 1155199,
-      "inp_p75_ms": 8000,
+      "lcp_p75_ms": 1155,
+      "inp_p75_ms": 8,
       "cls_p75": 0.295,
       "samples": 60
      },
      "desktop": {
-      "lcp_p75_ms": 1155199,
-      "inp_p75_ms": 8000,
+      "lcp_p75_ms": 1155,
+      "inp_p75_ms": 8,
       "cls_p75": 0.295,
       "samples": 40
      },
      "mobile": {
-      "lcp_p75_ms": 1063000,
-      "inp_p75_ms": -1,
+      "lcp_p75_ms": 1063,
+      "inp_p75_ms": 0,
       "cls_p75": -1,
       "samples": 20
      }
     },
     "gocheckmyhome.com": {
      "overall": {
-      "lcp_p75_ms": 828000,
-      "inp_p75_ms": 16000,
+      "lcp_p75_ms": 828,
+      "inp_p75_ms": 16,
       "cls_p75": 0,
       "samples": 40
      },
      "desktop": {
-      "lcp_p75_ms": 828000,
-      "inp_p75_ms": 16000,
+      "lcp_p75_ms": 828,
+      "inp_p75_ms": 16,
       "cls_p75": 0,
       "samples": 40
      }
     },
     "gocheckmypet.com": {
      "overall": {
-      "lcp_p75_ms": 1135000,
-      "inp_p75_ms": 40000,
+      "lcp_p75_ms": 1135,
+      "inp_p75_ms": 40,
       "cls_p75": 0,
       "samples": 130
      },
      "desktop": {
-      "lcp_p75_ms": 888000,
-      "inp_p75_ms": 40000,
+      "lcp_p75_ms": 888,
+      "inp_p75_ms": 40,
       "cls_p75": 0,
       "samples": 80
      },
      "mobile": {
-      "lcp_p75_ms": 1135000,
-      "inp_p75_ms": 40000,
+      "lcp_p75_ms": 1135,
+      "inp_p75_ms": 40,
       "cls_p75": -1,
       "samples": 50
      }
     },
     "gocheckmymortgage.com": {
      "overall": {
-      "lcp_p75_ms": 1464000,
-      "inp_p75_ms": 40000,
+      "lcp_p75_ms": 1464,
+      "inp_p75_ms": 40,
       "cls_p75": 0,
       "samples": 50
      },
      "desktop": {
-      "lcp_p75_ms": 2452000,
-      "inp_p75_ms": -1,
+      "lcp_p75_ms": 2452,
+      "inp_p75_ms": 0,
       "cls_p75": 0,
       "samples": 30
      },
      "mobile": {
-      "lcp_p75_ms": 472000,
-      "inp_p75_ms": 40000,
+      "lcp_p75_ms": 472,
+      "inp_p75_ms": 40,
       "cls_p75": 0.029,
       "samples": 20
      }
     },
     "gocheckmyparents.com": {
      "overall": {
-      "lcp_p75_ms": 1840000,
-      "inp_p75_ms": 64000,
+      "lcp_p75_ms": 1840,
+      "inp_p75_ms": 64,
       "cls_p75": 0.043,
       "samples": 190
      },
      "desktop": {
-      "lcp_p75_ms": 1108000,
-      "inp_p75_ms": 64000,
+      "lcp_p75_ms": 1108,
+      "inp_p75_ms": 64,
       "cls_p75": 0.043,
       "samples": 180
      },
      "mobile": {
-      "lcp_p75_ms": 7396000,
-      "inp_p75_ms": -1,
+      "lcp_p75_ms": 7396,
+      "inp_p75_ms": 0,
       "cls_p75": -1,
       "samples": 10
      }
     },
     "gocheckmyestate.com": {
      "overall": {
-      "lcp_p75_ms": 1820000,
-      "inp_p75_ms": 24000,
+      "lcp_p75_ms": 1820,
+      "inp_p75_ms": 24,
       "cls_p75": 0.008,
       "samples": 60
      },
      "desktop": {
-      "lcp_p75_ms": 1820000,
-      "inp_p75_ms": 24000,
+      "lcp_p75_ms": 1820,
+      "inp_p75_ms": 24,
       "cls_p75": 0.008,
       "samples": 40
      },
      "mobile": {
-      "lcp_p75_ms": 543000,
-      "inp_p75_ms": -1,
+      "lcp_p75_ms": 543,
+      "inp_p75_ms": 0,
       "cls_p75": -1,
       "samples": 20
      }
     },
     "gocheckmystorm.com": {
      "overall": {
-      "lcp_p75_ms": 492000,
-      "inp_p75_ms": 40000,
+      "lcp_p75_ms": 492,
+      "inp_p75_ms": 40,
       "cls_p75": 0.01,
       "samples": 80
      },
      "desktop": {
-      "lcp_p75_ms": 968000,
-      "inp_p75_ms": 40000,
+      "lcp_p75_ms": 968,
+      "inp_p75_ms": 40,
       "cls_p75": 0.004,
       "samples": 50
      },
      "mobile": {
-      "lcp_p75_ms": 468000,
-      "inp_p75_ms": 24000,
+      "lcp_p75_ms": 468,
+      "inp_p75_ms": 24,
       "cls_p75": 0.021,
       "samples": 30
      }
     },
     "gocheckmycrypto.com": {
      "overall": {
-      "lcp_p75_ms": 448000,
-      "inp_p75_ms": 64000,
+      "lcp_p75_ms": 448,
+      "inp_p75_ms": 64,
       "cls_p75": 0.002,
       "samples": 240
      },
      "desktop": {
-      "lcp_p75_ms": 460000,
-      "inp_p75_ms": 64000,
+      "lcp_p75_ms": 460,
+      "inp_p75_ms": 64,
       "cls_p75": 0.002,
       "samples": 150
      },
      "mobile": {
-      "lcp_p75_ms": 348000,
-      "inp_p75_ms": 32000,
+      "lcp_p75_ms": 348,
+      "inp_p75_ms": 32,
       "cls_p75": 0.018,
       "samples": 90
      }
@@ -2330,20 +2330,20 @@
     },
     "gocheckmynews.com": {
      "overall": {
-      "lcp_p75_ms": 1432000,
-      "inp_p75_ms": 24000,
+      "lcp_p75_ms": 1432,
+      "inp_p75_ms": 24,
       "cls_p75": 0.007,
       "samples": 20
      },
      "desktop": {
-      "lcp_p75_ms": 1432000,
-      "inp_p75_ms": 24000,
+      "lcp_p75_ms": 1432,
+      "inp_p75_ms": 24,
       "cls_p75": 0.007,
       "samples": 10
      },
      "mobile": {
-      "lcp_p75_ms": 1054000,
-      "inp_p75_ms": -1,
+      "lcp_p75_ms": 1054,
+      "inp_p75_ms": 0,
       "cls_p75": -1,
       "samples": 10
      }
