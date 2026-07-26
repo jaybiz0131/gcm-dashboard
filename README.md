@@ -23,7 +23,7 @@ Private traffic and experience command center for the GoCheckMy family (ten prop
 1. Repo secrets (Settings > Secrets and variables > Actions):
    - `CLOUDFLARE_ANALYTICS_TOKEN` — read-only token with Account Analytics: Read
    - `ANTHROPIC_API_KEY` — for the 2-3 sentence weekly summary (optional; a deterministic fallback is used without it)
-   - `PSI_API_KEY` — PageSpeed Insights key (free from Google Cloud console, no billing; practically required — the keyless quota 429s from shared IPs. Without it the Lighthouse layer just shows "no data", everything else works)
+   - (no key needed for Lighthouse: the Sunday pass runs the lighthouse CLI on the GitHub runner's preinstalled Chrome)
 2. Run the "Traffic pull" workflow once from the Actions tab (check "force weekly" to also get the report + Lighthouse on a non-Sunday).
 3. To view: double-click `open-dashboard.command` (pulls the latest nightly commit, serves the folder on localhost, opens the browser). Netlify is optional and unlinked; link it only if phone/anywhere access is ever wanted (build command blank, publish directory `.`, netlify.toml already says so).
 

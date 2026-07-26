@@ -32,7 +32,6 @@ jobs:
           CLOUDFLARE_ANALYTICS_TOKEN: ${{ secrets.CLOUDFLARE_ANALYTICS_TOKEN }}
           # accepts either secret name; ANTHROPIC_KEY is what exists on this repo
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY || secrets.ANTHROPIC_KEY }}
-          PSI_API_KEY: ${{ secrets.PSI_API_KEY }}
           GCM_FORCE_WEEKLY: ${{ inputs.force_weekly && '1' || '' }}
         run: python3 scripts/pull_traffic.py
 

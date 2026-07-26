@@ -10,15 +10,15 @@ alerts into data/alerts-latest.json.
 Sundays only (or GCM_FORCE_WEEKLY=1): additionally builds the weekly
 snapshot (visits, top paths, Haiku summary), writes
 reports/traffic-YYYY-MM-DD.md, and runs a Lighthouse lab pass per origin
-through the PageSpeed Insights API (performance + accessibility scores).
+using the lighthouse CLI (performance + accessibility scores). The CLI
+needs node + Chrome, which GitHub runners have preinstalled; locally it
+is skipped gracefully if npx is missing.
 
 Stdlib only. Secrets come from the environment:
   CLOUDFLARE_ANALYTICS_TOKEN  read-only Analytics token (required)
   ANTHROPIC_API_KEY           for the weekly Haiku summary (optional;
                               a deterministic fallback summary is used
                               if absent or the call fails)
-  PSI_API_KEY                 PageSpeed Insights key (optional; keyless
-                              works at this volume, key raises the quota)
 
 Local testing:
   GCM_MOCK=1     deterministic fake data, no network at all
@@ -33,7 +33,6 @@ import os
 import sys
 import time
 import urllib.error
-import urllib.parse
 import urllib.request
 from datetime import date, datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
@@ -54,7 +53,6 @@ SITES = [
 CF_API = "https://api.cloudflare.com/client/v4"
 CF_GRAPHQL = "https://api.cloudflare.com/client/v4/graphql"
 ANTHROPIC_API = "https://api.anthropic.com/v1/messages"
-PSI_API = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed"
 HAIKU_MODEL = "claude-haiku-4-5-20251001"
 
 ET = ZoneInfo("America/New_York")
@@ -318,17 +316,26 @@ def pull_vitals(token, account_tag, site_tag, host, since, until):
     return out
 
 
-# ---------------------------------------------------------------- Lighthouse (PSI)
+# ---------------------------------------------------------------- Lighthouse
 
-def pull_psi(host, api_key):
-    """One mobile Lighthouse lab run through the PageSpeed Insights API."""
-    params = [("url", f"https://{host}/"), ("category", "PERFORMANCE"),
-              ("category", "ACCESSIBILITY"), ("strategy", "mobile")]
-    if api_key:
-        params.append(("key", api_key))
-    url = f"{PSI_API}?{urllib.parse.urlencode(params)}"
-    resp = http_json(url, timeout=120, retries=1)
-    lr = resp.get("lighthouseResult") or {}
+def pull_lighthouse(host):
+    """One mobile Lighthouse lab run via the lighthouse CLI.
+
+    Runs where node + Chrome exist (GitHub runners have both preinstalled);
+    anywhere else the FileNotFoundError is caught by the caller and the lab
+    layer is simply skipped. No API key, no external quota.
+    """
+    import subprocess
+    import tempfile
+    out = os.path.join(tempfile.gettempdir(), f"lh-{host}.json")
+    subprocess.run(
+        ["npx", "--yes", "lighthouse@12", f"https://{host}/",
+         "--only-categories=performance,accessibility",
+         "--output=json", f"--output-path={out}", "--quiet",
+         "--chrome-flags=--headless=new --no-sandbox"],
+        check=True, timeout=300, capture_output=True)
+    with open(out) as f:
+        lr = json.load(f)
     cats = lr.get("categories") or {}
     audits = lr.get("audits") or {}
 
@@ -763,17 +770,17 @@ def main():
         report_written = (f"traffic-{week_ending}.md", build_report(weeks))
 
         # Lighthouse lab pass, one mobile run per origin, fail-soft per site.
-        psi_key = os.environ.get("PSI_API_KEY")
         lab_sites = {}
         for host in SITES:
             try:
-                lab_sites[host] = mock_psi(host) if MOCK else pull_psi(host, psi_key)
+                lab_sites[host] = mock_psi(host) if MOCK else pull_lighthouse(host)
                 log(f"  lab {host}: perf {lab_sites[host]['performance']}, "
                     f"a11y {lab_sites[host]['accessibility']}")
+            except FileNotFoundError:
+                log("WARN lab: npx not available here, skipping the Lighthouse pass")
+                break
             except Exception as e:
                 log(f"WARN lab {host}: {e}")
-            if not MOCK:
-                time.sleep(3)  # stay friendly to the keyless PSI quota
         if lab_sites:
             lab_entry = {"date": week_ending, "sites": lab_sites}
             history["lab"] = ([l for l in history["lab"] if l["date"] != lab_entry["date"]]
