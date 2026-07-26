@@ -1,20 +1,30 @@
 #!/usr/bin/env python3
-"""GCM traffic pull.
+"""GCM traffic + experience pull.
 
-Pulls trailing-7-day Cloudflare Web Analytics for all eight properties,
-appends an idempotent weekly snapshot to data/traffic-history.json, and
-writes reports/traffic-YYYY-MM-DD.md.
+Every run (daily cron): pulls the last 28 complete days of Cloudflare Web
+Analytics per property (per-day visits, pageviews, device split), plus
+real-user Core Web Vitals p75 (LCP / INP / CLS, overall and by device),
+upserts both into data/traffic-history.json, and recomputes regression
+alerts into data/alerts-latest.json.
+
+Sundays only (or GCM_FORCE_WEEKLY=1): additionally builds the weekly
+snapshot (visits, top paths, Haiku summary), writes
+reports/traffic-YYYY-MM-DD.md, and runs a Lighthouse lab pass per origin
+through the PageSpeed Insights API (performance + accessibility scores).
 
 Stdlib only. Secrets come from the environment:
   CLOUDFLARE_ANALYTICS_TOKEN  read-only Analytics token (required)
   ANTHROPIC_API_KEY           for the weekly Haiku summary (optional;
                               a deterministic fallback summary is used
                               if absent or the call fails)
+  PSI_API_KEY                 PageSpeed Insights key (optional; keyless
+                              works at this volume, key raises the quota)
 
 Local testing:
-  GCM_MOCK=1     deterministic fake Cloudflare data, no network at all
+  GCM_MOCK=1     deterministic fake data, no network at all
   GCM_ROOT=dir   write data/ and reports/ under dir instead of the repo
   GCM_NOW=date   pretend "now" is this ISO date (mock/testing only)
+  GCM_FORCE_WEEKLY=1  run the Sunday-only work regardless of weekday
 """
 
 import hashlib
@@ -23,8 +33,9 @@ import os
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
 SITES = [
@@ -36,17 +47,29 @@ SITES = [
     "gocheckmyestate.com",
     "gocheckmystorm.com",
     "gocheckmycrypto.com",
+    "gocheckmysports.com",
+    "gocheckmynews.com",
 ]
 
 CF_API = "https://api.cloudflare.com/client/v4"
 CF_GRAPHQL = "https://api.cloudflare.com/client/v4/graphql"
 ANTHROPIC_API = "https://api.anthropic.com/v1/messages"
+PSI_API = "https://www.googleapis.com/pagespeedonline/v5/runPagespeed"
 HAIKU_MODEL = "claude-haiku-4-5-20251001"
 
 ET = ZoneInfo("America/New_York")
 
+DAILY_WINDOW_DAYS = 28
+VITALS_MIN_SAMPLES = 10   # below this, p75 is noise: shown but never alerted on
+A11Y_ALERT_FLOOR = 90
+
+# Core Web Vitals thresholds (Google's good / poor boundaries)
+VITAL_GOOD = {"lcp_p75_ms": 2500, "inp_p75_ms": 200, "cls_p75": 0.1}
+VITAL_POOR = {"lcp_p75_ms": 4000, "inp_p75_ms": 500, "cls_p75": 0.25}
+
 ROOT = os.environ.get("GCM_ROOT") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HISTORY_PATH = os.path.join(ROOT, "data", "traffic-history.json")
+ALERTS_PATH = os.path.join(ROOT, "data", "alerts-latest.json")
 REPORTS_DIR = os.path.join(ROOT, "reports")
 
 MOCK = os.environ.get("GCM_MOCK") == "1"
@@ -99,6 +122,23 @@ def normalize_host(host):
     return host[4:] if host.startswith("www.") else host
 
 
+def host_filter(site_tag, host, since, until):
+    return (
+        f'{{siteTag: "{site_tag}", requestHost_in: ["{host}", "www.{host}"], '
+        f'datetime_geq: "{since}", datetime_lt: "{until}"}}'
+    )
+
+
+def graphql(token, query):
+    resp = http_json(CF_GRAPHQL, method="POST", headers=cf_headers(token), body={"query": query})
+    if resp.get("errors"):
+        raise RuntimeError(f"GraphQL error: {resp['errors']}")
+    accounts = (resp.get("data") or {}).get("viewer", {}).get("accounts") or []
+    if not accounts:
+        raise RuntimeError("GraphQL returned no account data")
+    return accounts[0]
+
+
 def discover_sites(token, since, until):
     """Map hostname -> (account_tag, site_tag) across every account the token can see.
 
@@ -147,10 +187,7 @@ def pull_site(token, account_tag, site_tag, host, since, until):
     Pinned to the production hostnames: the siteTag also collects hits on
     Netlify deploy-preview subdomains, which are not real traffic.
     """
-    flt = (
-        f'{{siteTag: "{site_tag}", requestHost_in: ["{host}", "www.{host}"], '
-        f'datetime_geq: "{since}", datetime_lt: "{until}"}}'
-    )
+    flt = host_filter(site_tag, host, since, until)
     query = f"""
     {{
       viewer {{
@@ -170,13 +207,7 @@ def pull_site(token, account_tag, site_tag, host, since, until):
       }}
     }}
     """
-    resp = http_json(CF_GRAPHQL, method="POST", headers=cf_headers(token), body={"query": query})
-    if resp.get("errors"):
-        raise RuntimeError(f"GraphQL error: {resp['errors']}")
-    accounts = (resp.get("data") or {}).get("viewer", {}).get("accounts") or []
-    if not accounts:
-        raise RuntimeError("GraphQL returned no account data")
-    acct = accounts[0]
+    acct = graphql(token, query)
     totals = acct.get("totals") or []
     visits = totals[0]["sum"]["visits"] if totals else 0
     pageviews = totals[0]["count"] if totals else 0
@@ -188,11 +219,142 @@ def pull_site(token, account_tag, site_tag, host, since, until):
     return {"visits": visits, "pageviews": pageviews, "top_paths": top_paths, "no_data": False}
 
 
+def pull_daily(token, account_tag, site_tag, host, since, until):
+    """Per-day visits, pageviews, and device split for one property."""
+    flt = host_filter(site_tag, host, since, until)
+    query = f"""
+    {{
+      viewer {{
+        accounts(filter: {{accountTag: "{account_tag}"}}) {{
+          byDay: rumPageloadEventsAdaptiveGroups(filter: {flt}, limit: 200) {{
+            count
+            sum {{ visits }}
+            dimensions {{ date deviceType }}
+          }}
+        }}
+      }}
+    }}
+    """
+    acct = graphql(token, query)
+    days = {}
+    for g in acct.get("byDay") or []:
+        dims = g.get("dimensions") or {}
+        d = dims.get("date")
+        if not d:
+            continue
+        dev = (dims.get("deviceType") or "").lower()
+        rec = days.setdefault(d, {"visits": 0, "pageviews": 0,
+                                  "mobile_visits": 0, "desktop_visits": 0})
+        rec["visits"] += g["sum"]["visits"]
+        rec["pageviews"] += g["count"]
+        if dev == "mobile":
+            rec["mobile_visits"] += g["sum"]["visits"]
+        elif dev == "desktop":
+            rec["desktop_visits"] += g["sum"]["visits"]
+    return days
+
+
+VITALS_FIELDS = ["largestContentfulPaintP75", "interactionToNextPaintP75",
+                 "cumulativeLayoutShiftP75"]
+
+
+def _vitals_record(group, fields):
+    qt = (group or {}).get("quantiles") or {}
+    lcp = qt.get("largestContentfulPaintP75")
+    inp = qt.get("interactionToNextPaintP75")
+    cls = qt.get("cumulativeLayoutShiftP75")
+    return {
+        "lcp_p75_ms": round(lcp) if lcp is not None else None,
+        "inp_p75_ms": round(inp) if (inp is not None and "interactionToNextPaintP75" in fields) else None,
+        "cls_p75": round(cls, 3) if cls is not None else None,
+        "samples": (group or {}).get("count", 0),
+    }
+
+
+def pull_vitals(token, account_tag, site_tag, host, since, until):
+    """Real-user Core Web Vitals p75 over the window, overall and by device.
+
+    The INP quantile is newer than the rest of the schema; if this zone's
+    GraphQL rejects the field, retry without it rather than losing LCP/CLS.
+    """
+    flt = host_filter(site_tag, host, since, until)
+    fields = list(VITALS_FIELDS)
+    while True:
+        qfields = " ".join(fields)
+        query = f"""
+        {{
+          viewer {{
+            accounts(filter: {{accountTag: "{account_tag}"}}) {{
+              overall: rumWebVitalsEventsAdaptiveGroups(filter: {flt}, limit: 1) {{
+                count
+                quantiles {{ {qfields} }}
+              }}
+              byDevice: rumWebVitalsEventsAdaptiveGroups(filter: {flt}, limit: 10) {{
+                count
+                quantiles {{ {qfields} }}
+                dimensions {{ deviceType }}
+              }}
+            }}
+          }}
+        }}
+        """
+        try:
+            acct = graphql(token, query)
+            break
+        except RuntimeError as e:
+            if "interactionToNextPaintP75" in fields and "interactionToNextPaint" in str(e):
+                fields.remove("interactionToNextPaintP75")
+                continue
+            raise
+    overall = (acct.get("overall") or [None])[0]
+    out = {"overall": _vitals_record(overall, fields)}
+    for g in acct.get("byDevice") or []:
+        dev = ((g.get("dimensions") or {}).get("deviceType") or "").lower()
+        if dev in ("mobile", "desktop"):
+            out[dev] = _vitals_record(g, fields)
+    return out
+
+
+# ---------------------------------------------------------------- Lighthouse (PSI)
+
+def pull_psi(host, api_key):
+    """One mobile Lighthouse lab run through the PageSpeed Insights API."""
+    params = [("url", f"https://{host}/"), ("category", "PERFORMANCE"),
+              ("category", "ACCESSIBILITY"), ("strategy", "mobile")]
+    if api_key:
+        params.append(("key", api_key))
+    url = f"{PSI_API}?{urllib.parse.urlencode(params)}"
+    resp = http_json(url, timeout=120, retries=1)
+    lr = resp.get("lighthouseResult") or {}
+    cats = lr.get("categories") or {}
+    audits = lr.get("audits") or {}
+
+    def score(name):
+        s = (cats.get(name) or {}).get("score")
+        return round(s * 100) if s is not None else None
+
+    def num(name):
+        return (audits.get(name) or {}).get("numericValue")
+
+    lcp, cls, tbt = num("largest-contentful-paint"), num("cumulative-layout-shift"), num("total-blocking-time")
+    return {
+        "performance": score("performance"),
+        "accessibility": score("accessibility"),
+        "lab_lcp_ms": round(lcp) if lcp is not None else None,
+        "lab_cls": round(cls, 3) if cls is not None else None,
+        "lab_tbt_ms": round(tbt) if tbt is not None else None,
+    }
+
+
 # ---------------------------------------------------------------- mock mode
+
+def _seed(*parts):
+    return int(hashlib.sha256("|".join(parts).encode()).hexdigest()[:8], 16)
+
 
 def mock_pull(site, week_key):
     """Deterministic fake numbers so idempotency tests are meaningful."""
-    seed = int(hashlib.sha256(f"{site}|{week_key}".encode()).hexdigest()[:8], 16)
+    seed = _seed(site, week_key)
     if site == "gocheckmystorm.com":  # exercise the no_data path
         return {"visits": 0, "pageviews": 0, "top_paths": [], "no_data": True,
                 "note": "mock: no Web Analytics property found for this hostname"}
@@ -207,6 +369,39 @@ def mock_pull(site, week_key):
         ],
         "no_data": False,
     }
+
+
+def mock_daily(site, day_list):
+    days = {}
+    for d in day_list:
+        seed = _seed(site, d)
+        v = 2 + seed % 18
+        if site in ("gocheckmysports.com", "gocheckmynews.com") and d < "2026-07-19":
+            continue  # went live mid-window
+        m = int(v * (0.4 + (seed % 4) / 10))
+        days[d] = {"visits": v, "pageviews": int(v * 1.5), "mobile_visits": m,
+                   "desktop_visits": v - m}
+    return days
+
+
+def mock_vitals(site):
+    seed = _seed(site, "vitals")
+    if site == "gocheckmycrypto.com":  # exercise the poor/alert path
+        base = {"lcp_p75_ms": 4400, "inp_p75_ms": 520, "cls_p75": 0.02, "samples": 40}
+    else:
+        base = {"lcp_p75_ms": 1400 + seed % 1400, "inp_p75_ms": 80 + seed % 160,
+                "cls_p75": round((seed % 12) / 100, 3), "samples": 15 + seed % 60}
+    mob = dict(base, lcp_p75_ms=(base["lcp_p75_ms"] or 0) + 300,
+               samples=max(1, base["samples"] // 2))
+    return {"overall": base, "mobile": mob, "desktop": dict(base, samples=base["samples"] // 3)}
+
+
+def mock_psi(site):
+    seed = _seed(site, "psi")
+    a11y = 88 if site == "gocheckmypet.com" else 94 + seed % 7  # one amber to exercise coloring
+    return {"performance": 70 + seed % 28, "accessibility": a11y,
+            "lab_lcp_ms": 1800 + seed % 1500, "lab_cls": round((seed % 9) / 100, 3),
+            "lab_tbt_ms": 40 + seed % 300}
 
 
 # ---------------------------------------------------------------- summary
@@ -234,12 +429,20 @@ def fallback_summary(week, prev_week):
 
 
 def haiku_summary(api_key, week, prev_week):
+    # Totals and the headline delta are computed here, not by the model:
+    # a summary that misstates the total is worse than no summary.
+    total = sum(s["visits"] for s in week["sites"].values() if not s.get("no_data"))
+    prev_total = None
+    if prev_week:
+        prev_total = sum(s["visits"] for s in prev_week["sites"].values() if not s.get("no_data"))
     payload = {
         "this_week": {h: {"visits": s["visits"], "pageviews": s["pageviews"],
                           "top_path": (s["top_paths"][0]["path"] if s["top_paths"] else None),
                           "no_data": s.get("no_data", False)}
                       for h, s in week["sites"].items()},
         "last_week": {h: s["visits"] for h, s in (prev_week or {}).get("sites", {}).items()} or None,
+        "computed": {"this_week_total": total, "last_week_total": prev_total,
+                     "total_wow_pct": fmt_pct(total, prev_total)},
         "week_ending": week["week_ending"],
     }
     prompt = (
@@ -248,6 +451,8 @@ def haiku_summary(api_key, week, prev_week):
         + json.dumps(payload, indent=1)
         + "\n\nWrite 2-3 plain-English sentences: what moved and by roughly how much, any site "
         "that got its first traffic, anything notable. Total and biggest changes first. "
+        "Use the numbers in \"computed\" for the total and week-over-week change verbatim; "
+        "do not do your own arithmetic on totals. "
         "No hype, no lists, no markdown, and never use an em dash."
     )
     resp = http_json(
@@ -321,6 +526,54 @@ def compute_notables(weeks):
     return notes
 
 
+# ---------------------------------------------------------------- alerts
+
+def vital_status(metric, value):
+    if value is None:
+        return None
+    if value <= VITAL_GOOD[metric]:
+        return "good"
+    if value <= VITAL_POOR[metric]:
+        return "ni"
+    return "poor"
+
+
+def compute_alerts(history):
+    """Newly-poor Core Web Vitals and accessibility regressions.
+
+    Transition-based on purpose: a metric alerts the day it turns poor, then
+    goes quiet while it stays poor, so the daily cron never spams the repo
+    with one open issue per day for the same regression.
+    """
+    alerts = []
+    vit = history.get("vitals") or []
+    cur, prev = (vit[-1] if vit else None), (vit[-2] if len(vit) >= 2 else None)
+    if cur:
+        for host in SITES:
+            c = ((cur.get("sites") or {}).get(host) or {}).get("overall") or {}
+            if c.get("samples", 0) < VITALS_MIN_SAMPLES:
+                continue
+            p = (((prev or {}).get("sites") or {}).get(host) or {}).get("overall") or {}
+            for metric, label, unit in (("lcp_p75_ms", "LCP", "ms"),
+                                        ("inp_p75_ms", "INP", "ms"),
+                                        ("cls_p75", "CLS", "")):
+                if vital_status(metric, c.get(metric)) == "poor" and \
+                   vital_status(metric, p.get(metric)) != "poor":
+                    alerts.append(f"{host}: real-user {label} p75 is {c[metric]}{unit}, "
+                                  f"past the poor threshold ({VITAL_POOR[metric]}{unit}).")
+    lab = history.get("lab") or []
+    cur_lab, prev_lab = (lab[-1] if lab else None), (lab[-2] if len(lab) >= 2 else None)
+    if cur_lab:
+        for host in SITES:
+            c = ((cur_lab.get("sites") or {}).get(host) or {})
+            p = (((prev_lab or {}).get("sites") or {}).get(host) or {})
+            a, pa = c.get("accessibility"), p.get("accessibility")
+            if a is not None and a < A11Y_ALERT_FLOOR and (pa is None or pa >= A11Y_ALERT_FLOOR):
+                alerts.append(f"{host}: Lighthouse accessibility score dropped to {a} "
+                              f"(alert floor {A11Y_ALERT_FLOOR}).")
+    return alerts
+
+
 # ---------------------------------------------------------------- report
 
 def build_report(weeks):
@@ -363,23 +616,49 @@ def atomic_write(path, text):
     os.replace(tmp, path)
 
 
+def daterange(first, last_exclusive):
+    d, out = first, []
+    while d < last_exclusive:
+        out.append(d.isoformat())
+        d += timedelta(days=1)
+    return out
+
+
 def main():
     now = now_et()
     until = now.astimezone(timezone.utc)
-    since = until - timedelta(days=7)
+    since7 = until - timedelta(days=7)
     iso = now.isocalendar()
     week_key = f"{iso.year}-W{iso.week:02d}"
     week_ending = now.date().isoformat()
-    since_s = since.strftime("%Y-%m-%dT%H:%M:%SZ")
+    since7_s = since7.strftime("%Y-%m-%dT%H:%M:%SZ")
     until_s = until.strftime("%Y-%m-%dT%H:%M:%SZ")
-    log(f"Pull window {since_s} to {until_s} (week {week_key}, ending {week_ending})")
+
+    # Daily series and vitals run over complete UTC days only, so every run
+    # of a given day writes identical values (idempotent, and the charts
+    # never show a half-day dip at the right edge).
+    day_end = until.date()                       # today, exclusive
+    day_start = day_end - timedelta(days=DAILY_WINDOW_DAYS)
+    dstart_s = f"{day_start.isoformat()}T00:00:00Z"
+    dend_s = f"{day_end.isoformat()}T00:00:00Z"
+    window_days = daterange(day_start, day_end)
+
+    do_weekly = MOCK or now.weekday() == 6 or os.environ.get("GCM_FORCE_WEEKLY") == "1"
+    log(f"Daily window {dstart_s} to {dend_s}; weekly={'yes' if do_weekly else 'no'} "
+        f"(week {week_key}, ending {week_ending})")
 
     if os.path.exists(HISTORY_PATH):
         with open(HISTORY_PATH) as f:
             history = json.load(f)
     else:
-        history = {"schema": 1, "weeks": []}
+        history = {"weeks": []}
+    history["schema"] = 2
+    history.setdefault("weeks", [])
+    history.setdefault("days", [])
+    history.setdefault("vitals", [])
+    history.setdefault("lab", [])
 
+    token = None
     mapping = {}
     if MOCK:
         log("MOCK mode: no network calls will be made.")
@@ -387,68 +666,133 @@ def main():
         token = os.environ.get("CLOUDFLARE_ANALYTICS_TOKEN")
         if not token:
             raise RuntimeError("CLOUDFLARE_ANALYTICS_TOKEN is not set")
-        mapping = discover_sites(token, since_s, until_s)
+        mapping = discover_sites(token, dstart_s, dend_s)
         log(f"Discovered {len(mapping)} Web Analytics properties: {sorted(mapping)}")
 
-    sites_out = {}
+    # ---- daily series + vitals, every run
+    daily_out, vitals_out, failures = {}, {}, 0
     for host in SITES:
         try:
             if MOCK:
-                sites_out[host] = mock_pull(host, week_key)
-            elif host not in mapping:
-                sites_out[host] = {"visits": 0, "pageviews": 0, "top_paths": [], "no_data": True,
-                                   "note": "no pageload events for this hostname in the window"}
-            else:
+                daily_out[host] = mock_daily(host, window_days)
+                vitals_out[host] = mock_vitals(host)
+            elif host in mapping:
                 acct, tag = mapping[host]
-                sites_out[host] = pull_site(token, acct, tag, host, since_s, until_s)
+                daily_out[host] = pull_daily(token, acct, tag, host, dstart_s, dend_s)
+                vitals_out[host] = pull_vitals(token, acct, tag, host, dstart_s, dend_s)
+            else:
+                log(f"  {host}: not discovered, leaving existing daily history untouched")
+                continue
+            v = (vitals_out.get(host) or {}).get("overall") or {}
+            log(f"  {host}: {sum(d['visits'] for d in daily_out[host].values())} visits/{DAILY_WINDOW_DAYS}d, "
+                f"LCP p75 {v.get('lcp_p75_ms')}ms ({v.get('samples', 0)} samples)")
         except Exception as e:
+            failures += 1
             log(f"WARN {host}: {e}")
-            sites_out[host] = {"visits": 0, "pageviews": 0, "top_paths": [], "no_data": True,
-                               "note": f"pull failed: {e}"[:300]}
-        s = sites_out[host]
-        log(f"  {host}: " + ("no data" if s["no_data"] else f"{s['visits']} visits, {s['pageviews']} pageviews"))
+    if not MOCK and failures == len(mapping) and mapping:
+        raise RuntimeError("every discovered property failed to pull; refusing to commit")
 
-    # A quiet site is fine; every site failing means the API or token is broken.
-    # Bail before writing anything so a systemic failure never publishes a dark week.
-    if all(s.get("no_data") for s in sites_out.values()) and \
-       any("pull failed" in s.get("note", "") for s in sites_out.values()):
-        raise RuntimeError("every property failed to pull; refusing to commit an all-dark week")
+    # Upsert per (date, site); a site that failed today keeps yesterday's rows.
+    by_date = {d["date"]: d for d in history["days"]}
+    for host, daymap in daily_out.items():
+        for d in window_days:
+            entry = by_date.setdefault(d, {"date": d, "sites": {}})
+            entry["sites"][host] = daymap.get(d) or {"visits": 0, "pageviews": 0,
+                                                     "mobile_visits": 0, "desktop_visits": 0}
+    history["days"] = sorted(by_date.values(), key=lambda e: e["date"])[-400:]
 
-    snapshot = {
-        "week": week_key,
-        "week_ending": week_ending,
-        "pulled_at": until_s,
-        "summary": "",
-        "summary_source": "fallback",
-        "sites": sites_out,
-    }
+    if vitals_out:
+        vitals_entry = {"date": window_days[-1], "window_days": DAILY_WINDOW_DAYS,
+                        "sites": vitals_out}
+        history["vitals"] = ([v for v in history["vitals"] if v["date"] != vitals_entry["date"]]
+                             + [vitals_entry])
+        history["vitals"].sort(key=lambda v: v["date"])
+        history["vitals"] = history["vitals"][-90:]
 
-    # Idempotent merge: one entry per ISO week, latest pull wins.
-    weeks = [w for w in history["weeks"] if w["week"] != week_key]
-    weeks.append(snapshot)
-    weeks.sort(key=lambda w: w["week_ending"])
-    prev_week = weeks[-2] if len(weeks) >= 2 else None
+    # ---- Sunday-only work: weekly snapshot, report, Lighthouse lab pass
+    report_written = None
+    if do_weekly:
+        sites_out = {}
+        for host in SITES:
+            try:
+                if MOCK:
+                    sites_out[host] = mock_pull(host, week_key)
+                elif host not in mapping:
+                    sites_out[host] = {"visits": 0, "pageviews": 0, "top_paths": [], "no_data": True,
+                                       "note": "no pageload events for this hostname in the window"}
+                else:
+                    acct, tag = mapping[host]
+                    sites_out[host] = pull_site(token, acct, tag, host, since7_s, until_s)
+            except Exception as e:
+                log(f"WARN {host}: {e}")
+                sites_out[host] = {"visits": 0, "pageviews": 0, "top_paths": [], "no_data": True,
+                                   "note": f"pull failed: {e}"[:300]}
 
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if api_key and not MOCK:
-        try:
-            snapshot["summary"] = haiku_summary(api_key, snapshot, prev_week)
-            snapshot["summary_source"] = "haiku"
-        except Exception as e:
-            log(f"WARN summary model call failed, using fallback: {e}")
+        # A quiet site is fine; every site failing means the API or token is broken.
+        if all(s.get("no_data") for s in sites_out.values()) and \
+           any("pull failed" in s.get("note", "") for s in sites_out.values()):
+            raise RuntimeError("every property failed the weekly pull; refusing to commit an all-dark week")
+
+        snapshot = {
+            "week": week_key,
+            "week_ending": week_ending,
+            "pulled_at": until_s,
+            "summary": "",
+            "summary_source": "fallback",
+            "sites": sites_out,
+        }
+        weeks = [w for w in history["weeks"] if w["week"] != week_key]
+        weeks.append(snapshot)
+        weeks.sort(key=lambda w: w["week_ending"])
+        prev_week = weeks[-2] if len(weeks) >= 2 else None
+
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if api_key and not MOCK:
+            try:
+                snapshot["summary"] = haiku_summary(api_key, snapshot, prev_week)
+                snapshot["summary_source"] = "haiku"
+            except Exception as e:
+                log(f"WARN summary model call failed, using fallback: {e}")
+                snapshot["summary"] = fallback_summary(snapshot, prev_week)
+        else:
             snapshot["summary"] = fallback_summary(snapshot, prev_week)
-    else:
-        snapshot["summary"] = fallback_summary(snapshot, prev_week)
+        history["weeks"] = weeks
+        report_written = (f"traffic-{week_ending}.md", build_report(weeks))
 
-    history["weeks"] = weeks
+        # Lighthouse lab pass, one mobile run per origin, fail-soft per site.
+        psi_key = os.environ.get("PSI_API_KEY")
+        lab_sites = {}
+        for host in SITES:
+            try:
+                lab_sites[host] = mock_psi(host) if MOCK else pull_psi(host, psi_key)
+                log(f"  lab {host}: perf {lab_sites[host]['performance']}, "
+                    f"a11y {lab_sites[host]['accessibility']}")
+            except Exception as e:
+                log(f"WARN lab {host}: {e}")
+            if not MOCK:
+                time.sleep(3)  # stay friendly to the keyless PSI quota
+        if lab_sites:
+            lab_entry = {"date": week_ending, "sites": lab_sites}
+            history["lab"] = ([l for l in history["lab"] if l["date"] != lab_entry["date"]]
+                              + [lab_entry])
+            history["lab"].sort(key=lambda l: l["date"])
+            history["lab"] = history["lab"][-52:]
+
+    alerts = compute_alerts(history)
+    for a in alerts:
+        log(f"ALERT: {a}")
+
     history["updated_at"] = until_s
-
     os.makedirs(os.path.dirname(HISTORY_PATH), exist_ok=True)
     os.makedirs(REPORTS_DIR, exist_ok=True)
     atomic_write(HISTORY_PATH, json.dumps(history, indent=1) + "\n")
-    report_path = os.path.join(REPORTS_DIR, f"traffic-{week_ending}.md")
-    atomic_write(report_path, build_report(weeks))
-    log(f"Wrote {HISTORY_PATH} ({len(weeks)} weeks) and {report_path}")
+    atomic_write(ALERTS_PATH, json.dumps(
+        {"generated_at": until_s, "alerts": alerts}, indent=1) + "\n")
+    if report_written:
+        atomic_write(os.path.join(REPORTS_DIR, report_written[0]), report_written[1])
+    log(f"Wrote {HISTORY_PATH} ({len(history['days'])} days, {len(history['weeks'])} weeks, "
+        f"{len(history['vitals'])} vitals entries, {len(history['lab'])} lab entries)"
+        + (f" and reports/{report_written[0]}" if report_written else ""))
 
 
 if __name__ == "__main__":
