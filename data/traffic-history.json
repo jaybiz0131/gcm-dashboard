@@ -149,8 +149,8 @@
   {
    "week": "2026-W30",
    "week_ending": "2026-07-26",
-   "pulled_at": "2026-07-26T17:27:28Z",
-   "summary": "Traffic across your portfolio dropped 35% week-over-week to 269 visits, with gocheckmycrypto.com and gocheckmyparents.com leading engagement at 42 and 35 visits respectively. gocheckmysports.com and gocheckmynews.com appear to have gotten their first tracked traffic this week with 43 and 31 visits, while gocheckmy.com saw the steepest decline, falling from 68 to 16 visits.",
+   "pulled_at": "2026-07-26T17:29:58Z",
+   "summary": "Overall traffic dipped 35% week-over-week to 269 visits, with gocheckmy.com dropping sharply from 68 to 16 visits and gocheckmyestate.com falling from 51 to 9. The brighter spots were gocheckmysports.com and gocheckmynews.com, which both entered the data this week with 43 and 31 visits respectively, while gocheckmyparents.com and gocheckmycrypto.com remained your strongest performers with 35 and 42 visits despite modest declines.",
    "summary_source": "haiku",
    "sites": {
     "gocheckmy.com": {
@@ -338,7 +338,7 @@
    }
   }
  ],
- "updated_at": "2026-07-26T17:27:28Z",
+ "updated_at": "2026-07-26T17:29:58Z",
  "days": [
   {
    "date": "2026-06-28",
@@ -2351,5 +2351,81 @@
    }
   }
  ],
- "lab": []
+ "lab": [
+  {
+   "date": "2026-07-26",
+   "sites": {
+    "gocheckmy.com": {
+     "performance": 80,
+     "accessibility": 98,
+     "lab_lcp_ms": 4002,
+     "lab_cls": 0.004,
+     "lab_tbt_ms": 23
+    },
+    "gocheckmyhome.com": {
+     "performance": 83,
+     "accessibility": 100,
+     "lab_lcp_ms": 3669,
+     "lab_cls": 0.012,
+     "lab_tbt_ms": 0
+    },
+    "gocheckmypet.com": {
+     "performance": 73,
+     "accessibility": 98,
+     "lab_lcp_ms": 4856,
+     "lab_cls": 0,
+     "lab_tbt_ms": 0
+    },
+    "gocheckmymortgage.com": {
+     "performance": 78,
+     "accessibility": 100,
+     "lab_lcp_ms": 4087,
+     "lab_cls": 0.028,
+     "lab_tbt_ms": 0
+    },
+    "gocheckmyparents.com": {
+     "performance": 73,
+     "accessibility": 96,
+     "lab_lcp_ms": 3307,
+     "lab_cls": 0.255,
+     "lab_tbt_ms": 0
+    },
+    "gocheckmyestate.com": {
+     "performance": 76,
+     "accessibility": 98,
+     "lab_lcp_ms": 4361,
+     "lab_cls": 0.09,
+     "lab_tbt_ms": 0
+    },
+    "gocheckmystorm.com": {
+     "performance": 83,
+     "accessibility": 100,
+     "lab_lcp_ms": 3663,
+     "lab_cls": 0.057,
+     "lab_tbt_ms": 0
+    },
+    "gocheckmycrypto.com": {
+     "performance": 68,
+     "accessibility": 100,
+     "lab_lcp_ms": 5100,
+     "lab_cls": 0,
+     "lab_tbt_ms": 0
+    },
+    "gocheckmysports.com": {
+     "performance": 65,
+     "accessibility": 96,
+     "lab_lcp_ms": 6011,
+     "lab_cls": 0,
+     "lab_tbt_ms": 0
+    },
+    "gocheckmynews.com": {
+     "performance": 71,
+     "accessibility": 95,
+     "lab_lcp_ms": 4868,
+     "lab_cls": 0.01,
+     "lab_tbt_ms": 0
+    }
+   }
+  }
+ ]
 }
