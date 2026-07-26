@@ -1,0 +1,24 @@
+{
+ "generated_at": "2026-07-26T17:23:09Z",
+ "alerts": [
+  "gocheckmy.com: real-user LCP p75 is 1155199ms, past the poor threshold (4000ms).",
+  "gocheckmy.com: real-user INP p75 is 8000ms, past the poor threshold (500ms).",
+  "gocheckmy.com: real-user CLS p75 is 0.295, past the poor threshold (0.25).",
+  "gocheckmyhome.com: real-user LCP p75 is 828000ms, past the poor threshold (4000ms).",
+  "gocheckmyhome.com: real-user INP p75 is 16000ms, past the poor threshold (500ms).",
+  "gocheckmypet.com: real-user LCP p75 is 1135000ms, past the poor threshold (4000ms).",
+  "gocheckmypet.com: real-user INP p75 is 40000ms, past the poor threshold (500ms).",
+  "gocheckmymortgage.com: real-user LCP p75 is 1464000ms, past the poor threshold (4000ms).",
+  "gocheckmymortgage.com: real-user INP p75 is 40000ms, past the poor threshold (500ms).",
+  "gocheckmyparents.com: real-user LCP p75 is 1840000ms, past the poor threshold (4000ms).",
+  "gocheckmyparents.com: real-user INP p75 is 64000ms, past the poor threshold (500ms).",
+  "gocheckmyestate.com: real-user LCP p75 is 1820000ms, past the poor threshold (4000ms).",
+  "gocheckmyestate.com: real-user INP p75 is 24000ms, past the poor threshold (500ms).",
+  "gocheckmystorm.com: real-user LCP p75 is 492000ms, past the poor threshold (4000ms).",
+  "gocheckmystorm.com: real-user INP p75 is 40000ms, past the poor threshold (500ms).",
+  "gocheckmycrypto.com: real-user LCP p75 is 448000ms, past the poor threshold (4000ms).",
+  "gocheckmycrypto.com: real-user INP p75 is 64000ms, past the poor threshold (500ms).",
+  "gocheckmynews.com: real-user LCP p75 is 1432000ms, past the poor threshold (4000ms).",
+  "gocheckmynews.com: real-user INP p75 is 24000ms, past the poor threshold (500ms)."
+ ]
+}

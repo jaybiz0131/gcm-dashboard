@@ -1,5 +1,5 @@
 {
- "schema": 1,
+ "schema": 2,
  "weeks": [
   {
    "week": "2026-W29",
@@ -148,151 +148,189 @@
   },
   {
    "week": "2026-W30",
-   "week_ending": "2026-07-20",
-   "pulled_at": "2026-07-20T10:23:42Z",
-   "summary": "Your network pulled in 253 visits this week, down 22% from last week's 325, with gocheckmy.com leading the decline at negative 38 visits followed by gocheckmycrypto.com at negative 28 visits, though crypto still dominates engagement with 127 pageviews from just 58 visits. The smaller sites held relatively steady, with gocheckmymortgage.com remaining your lightest performer at 9 visits while gocheckmystorm.com and gocheckmyparents.com stayed your second and third strongest draws.",
+   "week_ending": "2026-07-26",
+   "pulled_at": "2026-07-26T17:23:09Z",
+   "summary": "Traffic across your portfolio dropped 35% week-over-week to 269 visits, with gocheckmy.com (down 76%), gocheckmystorm.com (down 67%), and gocheckmycrypto.com (down 51%) seeing the biggest declines, while gocheckmysports.com and gocheckmynews.com led this week with 43 and 31 visits respectively. On the bright side, gocheckmysports.com appears to be getting its first tracked traffic with 43 visits and solid engagement at 47 pageviews.",
    "summary_source": "haiku",
    "sites": {
     "gocheckmy.com": {
-     "visits": 30,
-     "pageviews": 32,
+     "visits": 16,
+     "pageviews": 16,
      "top_paths": [
       {
        "path": "/",
-       "pageviews": 31
-      },
-      {
-       "path": "/how-we-make-money",
-       "pageviews": 1
+       "pageviews": 16
       }
      ],
      "no_data": false
     },
     "gocheckmyhome.com": {
-     "visits": 17,
-     "pageviews": 21,
+     "visits": 16,
+     "pageviews": 31,
      "top_paths": [
       {
        "path": "/",
-       "pageviews": 16
+       "pageviews": 15
       },
       {
-       "path": "/report.html",
-       "pageviews": 3
+       "path": "/guides",
+       "pageviews": 7
       },
       {
-       "path": "/guides.html",
-       "pageviews": 1
+       "path": "/sell-or-rent",
+       "pageviews": 4
       }
      ],
      "no_data": false
     },
     "gocheckmypet.com": {
      "visits": 27,
-     "pageviews": 41,
+     "pageviews": 28,
      "top_paths": [
       {
        "path": "/",
-       "pageviews": 26
+       "pageviews": 25
       },
       {
-       "path": "/care-plan",
-       "pageviews": 5
+       "path": "/recall-checker",
+       "pageviews": 2
       },
       {
-       "path": "/compare",
-       "pageviews": 4
+       "path": "/about",
+       "pageviews": 1
       }
      ],
      "no_data": false
     },
     "gocheckmymortgage.com": {
-     "visits": 9,
-     "pageviews": 9,
+     "visits": 30,
+     "pageviews": 40,
      "top_paths": [
       {
        "path": "/",
-       "pageviews": 8
+       "pageviews": 22
       },
       {
-       "path": "/articles/pmi-cancellation-letter",
+       "path": "/articles/avm-vs-appraisal-vs-bpo",
+       "pageviews": 16
+      },
+      {
+       "path": "/articles/",
        "pageviews": 1
       }
      ],
      "no_data": false
     },
     "gocheckmyparents.com": {
-     "visits": 39,
-     "pageviews": 46,
+     "visits": 35,
+     "pageviews": 106,
      "top_paths": [
       {
        "path": "/",
-       "pageviews": 40
+       "pageviews": 38
+      },
+      {
+       "path": "/facility-checker",
+       "pageviews": 12
       },
       {
        "path": "/assessment",
-       "pageviews": 2
-      },
-      {
-       "path": "/home-care-checker",
-       "pageviews": 2
+       "pageviews": 12
       }
      ],
      "no_data": false
     },
     "gocheckmyestate.com": {
-     "visits": 33,
-     "pageviews": 46,
+     "visits": 9,
+     "pageviews": 11,
      "top_paths": [
       {
        "path": "/",
-       "pageviews": 37
-      },
-      {
-       "path": "/assessment",
-       "pageviews": 4
+       "pageviews": 9
       },
       {
        "path": "/about",
-       "pageviews": 2
+       "pageviews": 1
+      },
+      {
+       "path": "/assessment.html",
+       "pageviews": 1
       }
      ],
      "no_data": false
     },
     "gocheckmystorm.com": {
-     "visits": 40,
-     "pageviews": 60,
+     "visits": 20,
+     "pageviews": 42,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 21
+      },
+      {
+       "path": "/storm-center",
+       "pageviews": 11
+      },
+      {
+       "path": "/assessment",
+       "pageviews": 2
+      }
+     ],
+     "no_data": false
+    },
+    "gocheckmycrypto.com": {
+     "visits": 42,
+     "pageviews": 98,
      "top_paths": [
       {
        "path": "/",
        "pageviews": 40
       },
       {
-       "path": "/storm-center",
-       "pageviews": 9
+       "path": "/flows",
+       "pageviews": 12
       },
       {
-       "path": "/flood-history",
+       "path": "/news",
+       "pageviews": 11
+      }
+     ],
+     "no_data": false
+    },
+    "gocheckmysports.com": {
+     "visits": 43,
+     "pageviews": 47,
+     "top_paths": [
+      {
+       "path": "/",
+       "pageviews": 40
+      },
+      {
+       "path": "/articles/nhl-takes-direct-control-of-local-broadcasts-for-four-teams",
+       "pageviews": 3
+      },
+      {
+       "path": "/articles/morning-brief-2026-07-21",
        "pageviews": 3
       }
      ],
      "no_data": false
     },
-    "gocheckmycrypto.com": {
-     "visits": 58,
-     "pageviews": 127,
+    "gocheckmynews.com": {
+     "visits": 31,
+     "pageviews": 41,
      "top_paths": [
       {
        "path": "/",
-       "pageviews": 64
+       "pageviews": 32
       },
       {
-       "path": "/pulse",
-       "pageviews": 15
+       "path": "/about",
+       "pageviews": 2
       },
       {
-       "path": "/flows",
-       "pageviews": 10
+       "path": "/sources",
+       "pageviews": 2
       }
      ],
      "no_data": false
@@ -300,5 +338,2018 @@
    }
   }
  ],
- "updated_at": "2026-07-20T10:23:42Z"
+ "updated_at": "2026-07-26T17:23:09Z",
+ "days": [
+  {
+   "date": "2026-06-28",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-06-29",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-06-30",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-01",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-02",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-03",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-04",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-05",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-06",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-07",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-08",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-09",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 20,
+     "pageviews": 20,
+     "mobile_visits": 10,
+     "desktop_visits": 10
+    },
+    "gocheckmyhome.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 10,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 10,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmyestate.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-10",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 10,
+     "pageviews": 20,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmyestate.com": {
+     "visits": 20,
+     "pageviews": 20,
+     "mobile_visits": 0,
+     "desktop_visits": 20
+    },
+    "gocheckmystorm.com": {
+     "visits": 30,
+     "pageviews": 30,
+     "mobile_visits": 10,
+     "desktop_visits": 20
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-11",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmypet.com": {
+     "visits": 10,
+     "pageviews": 50,
+     "mobile_visits": 10,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 10,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 20,
+     "pageviews": 20,
+     "mobile_visits": 0,
+     "desktop_visits": 20
+    },
+    "gocheckmycrypto.com": {
+     "visits": 60,
+     "pageviews": 70,
+     "mobile_visits": 0,
+     "desktop_visits": 60
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-12",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 20,
+     "pageviews": 20,
+     "mobile_visits": 10,
+     "desktop_visits": 10
+    },
+    "gocheckmyestate.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 10,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 20,
+     "pageviews": 20,
+     "mobile_visits": 0,
+     "desktop_visits": 20
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-13",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 20,
+     "pageviews": 20,
+     "mobile_visits": 0,
+     "desktop_visits": 20
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 10,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-14",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 10,
+     "pageviews": 20,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-15",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 10,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 20,
+     "pageviews": 30,
+     "mobile_visits": 0,
+     "desktop_visits": 20
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 20,
+     "pageviews": 30,
+     "mobile_visits": 10,
+     "desktop_visits": 10
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-16",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 20,
+     "pageviews": 20,
+     "mobile_visits": 10,
+     "desktop_visits": 10
+    },
+    "gocheckmycrypto.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 10,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-17",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-18",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 10,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 20,
+     "pageviews": 20,
+     "mobile_visits": 0,
+     "desktop_visits": 20
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 30,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 30,
+     "pageviews": 50,
+     "mobile_visits": 10,
+     "desktop_visits": 20
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-19",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-20",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 10,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 10,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 20,
+     "pageviews": 20,
+     "mobile_visits": 20,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-21",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 20,
+     "pageviews": 20,
+     "mobile_visits": 0,
+     "desktop_visits": 20
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmynews.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    }
+   }
+  },
+  {
+   "date": "2026-07-22",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmymortgage.com": {
+     "visits": 40,
+     "pageviews": 50,
+     "mobile_visits": 10,
+     "desktop_visits": 30
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 20,
+     "pageviews": 80,
+     "mobile_visits": 10,
+     "desktop_visits": 10
+    },
+    "gocheckmysports.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmynews.com": {
+     "visits": 10,
+     "pageviews": 20,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    }
+   }
+  },
+  {
+   "date": "2026-07-23",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 20,
+     "pageviews": 20,
+     "mobile_visits": 0,
+     "desktop_visits": 20
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 20,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-24",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmypet.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 20,
+     "pageviews": 60,
+     "mobile_visits": 0,
+     "desktop_visits": 20
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-07-25",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 10,
+     "pageviews": 70,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  }
+ ],
+ "vitals": [
+  {
+   "date": "2026-07-25",
+   "window_days": 28,
+   "sites": {
+    "gocheckmy.com": {
+     "overall": {
+      "lcp_p75_ms": 1155199,
+      "inp_p75_ms": 8000,
+      "cls_p75": 0.295,
+      "samples": 60
+     },
+     "desktop": {
+      "lcp_p75_ms": 1155199,
+      "inp_p75_ms": 8000,
+      "cls_p75": 0.295,
+      "samples": 40
+     },
+     "mobile": {
+      "lcp_p75_ms": 1063000,
+      "inp_p75_ms": -1,
+      "cls_p75": -1,
+      "samples": 20
+     }
+    },
+    "gocheckmyhome.com": {
+     "overall": {
+      "lcp_p75_ms": 828000,
+      "inp_p75_ms": 16000,
+      "cls_p75": 0,
+      "samples": 40
+     },
+     "desktop": {
+      "lcp_p75_ms": 828000,
+      "inp_p75_ms": 16000,
+      "cls_p75": 0,
+      "samples": 40
+     }
+    },
+    "gocheckmypet.com": {
+     "overall": {
+      "lcp_p75_ms": 1135000,
+      "inp_p75_ms": 40000,
+      "cls_p75": 0,
+      "samples": 130
+     },
+     "desktop": {
+      "lcp_p75_ms": 888000,
+      "inp_p75_ms": 40000,
+      "cls_p75": 0,
+      "samples": 80
+     },
+     "mobile": {
+      "lcp_p75_ms": 1135000,
+      "inp_p75_ms": 40000,
+      "cls_p75": -1,
+      "samples": 50
+     }
+    },
+    "gocheckmymortgage.com": {
+     "overall": {
+      "lcp_p75_ms": 1464000,
+      "inp_p75_ms": 40000,
+      "cls_p75": 0,
+      "samples": 50
+     },
+     "desktop": {
+      "lcp_p75_ms": 2452000,
+      "inp_p75_ms": -1,
+      "cls_p75": 0,
+      "samples": 30
+     },
+     "mobile": {
+      "lcp_p75_ms": 472000,
+      "inp_p75_ms": 40000,
+      "cls_p75": 0.029,
+      "samples": 20
+     }
+    },
+    "gocheckmyparents.com": {
+     "overall": {
+      "lcp_p75_ms": 1840000,
+      "inp_p75_ms": 64000,
+      "cls_p75": 0.043,
+      "samples": 190
+     },
+     "desktop": {
+      "lcp_p75_ms": 1108000,
+      "inp_p75_ms": 64000,
+      "cls_p75": 0.043,
+      "samples": 180
+     },
+     "mobile": {
+      "lcp_p75_ms": 7396000,
+      "inp_p75_ms": -1,
+      "cls_p75": -1,
+      "samples": 10
+     }
+    },
+    "gocheckmyestate.com": {
+     "overall": {
+      "lcp_p75_ms": 1820000,
+      "inp_p75_ms": 24000,
+      "cls_p75": 0.008,
+      "samples": 60
+     },
+     "desktop": {
+      "lcp_p75_ms": 1820000,
+      "inp_p75_ms": 24000,
+      "cls_p75": 0.008,
+      "samples": 40
+     },
+     "mobile": {
+      "lcp_p75_ms": 543000,
+      "inp_p75_ms": -1,
+      "cls_p75": -1,
+      "samples": 20
+     }
+    },
+    "gocheckmystorm.com": {
+     "overall": {
+      "lcp_p75_ms": 492000,
+      "inp_p75_ms": 40000,
+      "cls_p75": 0.01,
+      "samples": 80
+     },
+     "desktop": {
+      "lcp_p75_ms": 968000,
+      "inp_p75_ms": 40000,
+      "cls_p75": 0.004,
+      "samples": 50
+     },
+     "mobile": {
+      "lcp_p75_ms": 468000,
+      "inp_p75_ms": 24000,
+      "cls_p75": 0.021,
+      "samples": 30
+     }
+    },
+    "gocheckmycrypto.com": {
+     "overall": {
+      "lcp_p75_ms": 448000,
+      "inp_p75_ms": 64000,
+      "cls_p75": 0.002,
+      "samples": 240
+     },
+     "desktop": {
+      "lcp_p75_ms": 460000,
+      "inp_p75_ms": 64000,
+      "cls_p75": 0.002,
+      "samples": 150
+     },
+     "mobile": {
+      "lcp_p75_ms": 348000,
+      "inp_p75_ms": 32000,
+      "cls_p75": 0.018,
+      "samples": 90
+     }
+    },
+    "gocheckmysports.com": {
+     "overall": {
+      "lcp_p75_ms": null,
+      "inp_p75_ms": null,
+      "cls_p75": null,
+      "samples": 0
+     }
+    },
+    "gocheckmynews.com": {
+     "overall": {
+      "lcp_p75_ms": 1432000,
+      "inp_p75_ms": 24000,
+      "cls_p75": 0.007,
+      "samples": 20
+     },
+     "desktop": {
+      "lcp_p75_ms": 1432000,
+      "inp_p75_ms": 24000,
+      "cls_p75": 0.007,
+      "samples": 10
+     },
+     "mobile": {
+      "lcp_p75_ms": 1054000,
+      "inp_p75_ms": -1,
+      "cls_p75": -1,
+      "samples": 10
+     }
+    }
+   }
+  }
+ ],
+ "lab": []
 }
