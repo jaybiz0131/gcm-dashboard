@@ -259,13 +259,16 @@ VITALS_FIELDS = ["largestContentfulPaintP75", "interactionToNextPaintP75",
 
 
 def _vitals_record(group, fields):
+    # Cloudflare returns the timing quantiles in MICROSECONDS (verified against
+    # live data 2026-07-26: healthy static pages came back as e.g. 1155199).
+    # CLS is unitless and needs no conversion.
     qt = (group or {}).get("quantiles") or {}
     lcp = qt.get("largestContentfulPaintP75")
     inp = qt.get("interactionToNextPaintP75")
     cls = qt.get("cumulativeLayoutShiftP75")
     return {
-        "lcp_p75_ms": round(lcp) if lcp is not None else None,
-        "inp_p75_ms": round(inp) if (inp is not None and "interactionToNextPaintP75" in fields) else None,
+        "lcp_p75_ms": round(lcp / 1000) if lcp is not None else None,
+        "inp_p75_ms": round(inp / 1000) if (inp is not None and "interactionToNextPaintP75" in fields) else None,
         "cls_p75": round(cls, 3) if cls is not None else None,
         "samples": (group or {}).get("count", 0),
     }
