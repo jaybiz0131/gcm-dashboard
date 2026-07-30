@@ -338,7 +338,7 @@
    }
   }
  ],
- "updated_at": "2026-07-29T08:11:41Z",
+ "updated_at": "2026-07-30T07:56:17Z",
  "days": [
   {
    "date": "2026-06-28",
@@ -2354,6 +2354,71 @@
      "desktop_visits": 0
     }
    }
+  },
+  {
+   "date": "2026-07-29",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 10,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 20,
+     "pageviews": 20,
+     "mobile_visits": 10,
+     "desktop_visits": 10
+    },
+    "gocheckmypet.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 10
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 10,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
   }
  ],
  "vitals": [
@@ -3083,6 +3148,200 @@
       "inp_p75_ms": 32,
       "cls_p75": 0.018,
       "samples": 100
+     }
+    },
+    "gocheckmysports.com": {
+     "overall": {
+      "lcp_p75_ms": 1812,
+      "inp_p75_ms": 0,
+      "cls_p75": 0.001,
+      "samples": 20
+     },
+     "desktop": {
+      "lcp_p75_ms": 1812,
+      "inp_p75_ms": 0,
+      "cls_p75": 0.001,
+      "samples": 20
+     }
+    },
+    "gocheckmynews.com": {
+     "overall": {
+      "lcp_p75_ms": 1432,
+      "inp_p75_ms": 24,
+      "cls_p75": 0.007,
+      "samples": 30
+     },
+     "desktop": {
+      "lcp_p75_ms": 1432,
+      "inp_p75_ms": 24,
+      "cls_p75": 0.007,
+      "samples": 20
+     },
+     "mobile": {
+      "lcp_p75_ms": 1054,
+      "inp_p75_ms": 0,
+      "cls_p75": -1,
+      "samples": 10
+     }
+    }
+   }
+  },
+  {
+   "date": "2026-07-29",
+   "window_days": 28,
+   "sites": {
+    "gocheckmy.com": {
+     "overall": {
+      "lcp_p75_ms": 1155,
+      "inp_p75_ms": 8,
+      "cls_p75": 0.295,
+      "samples": 60
+     },
+     "desktop": {
+      "lcp_p75_ms": 1155,
+      "inp_p75_ms": 8,
+      "cls_p75": 0.295,
+      "samples": 40
+     },
+     "mobile": {
+      "lcp_p75_ms": 1063,
+      "inp_p75_ms": 0,
+      "cls_p75": -1,
+      "samples": 20
+     }
+    },
+    "gocheckmyhome.com": {
+     "overall": {
+      "lcp_p75_ms": 828,
+      "inp_p75_ms": 16,
+      "cls_p75": 0,
+      "samples": 40
+     },
+     "desktop": {
+      "lcp_p75_ms": 828,
+      "inp_p75_ms": 16,
+      "cls_p75": 0,
+      "samples": 40
+     }
+    },
+    "gocheckmypet.com": {
+     "overall": {
+      "lcp_p75_ms": 1135,
+      "inp_p75_ms": 40,
+      "cls_p75": 0,
+      "samples": 130
+     },
+     "desktop": {
+      "lcp_p75_ms": 888,
+      "inp_p75_ms": 40,
+      "cls_p75": 0,
+      "samples": 80
+     },
+     "mobile": {
+      "lcp_p75_ms": 1135,
+      "inp_p75_ms": 40,
+      "cls_p75": -1,
+      "samples": 50
+     }
+    },
+    "gocheckmymortgage.com": {
+     "overall": {
+      "lcp_p75_ms": 1464,
+      "inp_p75_ms": 40,
+      "cls_p75": 0,
+      "samples": 50
+     },
+     "desktop": {
+      "lcp_p75_ms": 2452,
+      "inp_p75_ms": 0,
+      "cls_p75": 0,
+      "samples": 30
+     },
+     "mobile": {
+      "lcp_p75_ms": 472,
+      "inp_p75_ms": 40,
+      "cls_p75": 0.029,
+      "samples": 20
+     }
+    },
+    "gocheckmyparents.com": {
+     "overall": {
+      "lcp_p75_ms": 1840,
+      "inp_p75_ms": 64,
+      "cls_p75": 0.043,
+      "samples": 210
+     },
+     "desktop": {
+      "lcp_p75_ms": 1108,
+      "inp_p75_ms": 64,
+      "cls_p75": 0.043,
+      "samples": 180
+     },
+     "mobile": {
+      "lcp_p75_ms": 7396,
+      "inp_p75_ms": 0,
+      "cls_p75": 0.044,
+      "samples": 30
+     }
+    },
+    "gocheckmyestate.com": {
+     "overall": {
+      "lcp_p75_ms": 1820,
+      "inp_p75_ms": 24,
+      "cls_p75": 0.008,
+      "samples": 70
+     },
+     "desktop": {
+      "lcp_p75_ms": 1820,
+      "inp_p75_ms": 24,
+      "cls_p75": 0.008,
+      "samples": 50
+     },
+     "mobile": {
+      "lcp_p75_ms": 543,
+      "inp_p75_ms": 0,
+      "cls_p75": -1,
+      "samples": 20
+     }
+    },
+    "gocheckmystorm.com": {
+     "overall": {
+      "lcp_p75_ms": 492,
+      "inp_p75_ms": 40,
+      "cls_p75": 0.01,
+      "samples": 80
+     },
+     "desktop": {
+      "lcp_p75_ms": 968,
+      "inp_p75_ms": 40,
+      "cls_p75": 0.004,
+      "samples": 50
+     },
+     "mobile": {
+      "lcp_p75_ms": 468,
+      "inp_p75_ms": 24,
+      "cls_p75": 0.021,
+      "samples": 30
+     }
+    },
+    "gocheckmycrypto.com": {
+     "overall": {
+      "lcp_p75_ms": 448,
+      "inp_p75_ms": 64,
+      "cls_p75": 0.002,
+      "samples": 280
+     },
+     "desktop": {
+      "lcp_p75_ms": 1196,
+      "inp_p75_ms": 64,
+      "cls_p75": 0.002,
+      "samples": 170
+     },
+     "mobile": {
+      "lcp_p75_ms": 386,
+      "inp_p75_ms": 32,
+      "cls_p75": 0.018,
+      "samples": 110
      }
     },
     "gocheckmysports.com": {
