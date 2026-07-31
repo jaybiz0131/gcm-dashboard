@@ -271,6 +271,15 @@
   </section>
 
   <section>
+    <h2 class="sec">Search visibility</h2>
+    <p class="sec-sub">From Google Search Console. Impressions count the times a page was shown in results, including the times nobody clicked, which is the only growth signal that moves before traffic does.</p>
+    <div class="card t-blue" id="gscCard">
+      <div id="gscBody"></div>
+      <div class="method" id="gscMethod"></div>
+    </div>
+  </section>
+
+  <section>
     <h2 class="sec">Per property</h2>
     <p class="sec-sub" id="siteSub"></p>
     <div class="sites" id="sites"></div>
@@ -329,7 +338,7 @@ const MIN_SAMPLES = 10;
 const $ = (id) => document.getElementById(id);
 const fmt = (n) => (n ?? 0).toLocaleString("en-US");
 const tip = $("tip");
-let HISTORY = null, RANGE = 30;
+let HISTORY = null, GSC = null, RANGE = 30;
 
 function el(tag, cls, text) {
   const n = document.createElement(tag);
@@ -817,11 +826,61 @@ function renderRangeNote() {
   note.textContent = `Only ${days.length} days collected so far, so this view shows everything on record. Full ${RANGE}-day history in ${need} more day${need===1?"":"s"}.`;
 }
 
+function renderGSC() {
+  const body = $("gscBody"), meth = $("gscMethod");
+  body.textContent = ""; meth.textContent = "";
+  if (!GSC || !GSC.sites || !Object.keys(GSC.sites).length) {
+    body.appendChild(el("div","miniempty",
+      "No Search Console export loaded yet. In Search Console open a property, go to Performance, " +
+      "set the date range, press Export and download the CSV. Drop the file into " +
+      "data/search-console/drop/ and run: python3 scripts/import_gsc.py"));
+    return;
+  }
+  const rows = SITES.map(s => ({ s, e: GSC.sites[s.host] })).filter(r => r.e);
+  const table = el("table");
+  const hr = el("tr");
+  for (const h of ["Property","Impressions","Clicks","CTR","Avg position","Top query","Range"])
+    hr.appendChild(el("th", null, h));
+  const th = el("thead"); th.appendChild(hr); table.appendChild(th);
+  const tb = el("tbody");
+  for (const { s, e } of rows) {
+    const t = e.totals || {};
+    const q = (e.queries || [])[0];
+    const tr = el("tr");
+    for (const c of [
+      s.short,
+      t.impressions != null ? fmt(t.impressions) : "–",
+      t.clicks != null ? fmt(t.clicks) : "–",
+      t.ctr_pct != null ? t.ctr_pct + "%" : "–",
+      t.avg_position != null ? String(t.avg_position) : "–",
+      q ? q.key : "–",
+      e.range ? `${e.range.from} → ${e.range.to}` : "top rows only",
+    ]) tr.appendChild(el("td", null, c));
+    tb.appendChild(tr);
+  }
+  table.appendChild(tb);
+  const sc = el("div"); sc.style.overflowX = "auto";
+  sc.appendChild(table); body.appendChild(sc);
+  const missing = SITES.filter(s => !GSC.sites[s.host]);
+  meth.appendChild(el("b", null, "How to read this: "));
+  meth.appendChild(document.createTextNode(
+    "average position above roughly 20 means you are on page two or worse, where almost nobody clicks, so " +
+    "impressions with a poor position mean Google knows the page but does not rank it yet. Rising impressions " +
+    "at a flat position is the earliest sign content is working. This section is a manual import and only " +
+    "refreshes when you export again" +
+    (GSC.generated_at ? `; last imported ${GSC.generated_at.slice(0,10)}.` : ".")));
+  if (missing.length) {
+    meth.appendChild(el("div", null,
+      `Not yet imported: ${missing.map(m => m.short).join(", ")}.`));
+  }
+}
+
 function renderAll() {
   renderFreshness();
   renderRangeNote();
   renderTraffic();
   renderChannels();
+  renderGSC();
   renderSites();
   renderHealth();
   renderTable();
@@ -865,6 +924,11 @@ fetch("data/traffic-history.json", { cache:"no-store" })
   .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
   .then(h => { HISTORY = trimPreCollection(h); renderAll(); })
   .catch(() => { $("freshness").textContent = "history file unreachable"; });
+
+fetch("data/search-console.json", { cache:"no-store" })
+  .then(r => r.ok ? r.json() : null)
+  .then(g => { GSC = g; if (HISTORY) renderGSC(); })
+  .catch(() => {});
 
 fetch("data/alerts-latest.json", { cache:"no-store" })
   .then(r => r.ok ? r.json() : null)
