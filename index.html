@@ -650,7 +650,8 @@ function renderSites() {
   const vit = latest("vitals"), src = latest("sources");
   const wrap = $("sites"); wrap.textContent = "";
   $("siteSub").textContent =
-    `Ranked by visits in the selected range. "Found by search" is the share of that site's visits arriving from a search engine or AI assistant.`;
+    `Ranked by visits in the selected range. "Found by search" is the share of that site's visits arriving from a search engine or AI assistant. ` +
+    `"Past the homepage" is the share of pageviews on any deeper page; the hub is measured by onward clicks instead, since its cards open elsewhere.`;
 
   const rows = SITES.map(s => ({ s, v: sumVisits(cur, s.host) || 0, p: sumVisits(prev, s.host) }))
                     .sort((a,b) => b.v - a.v);
@@ -680,7 +681,19 @@ function renderSites() {
       fm.appendChild(el("b", null, Math.round(found/chTotal*100) + "%"));
       fm.appendChild(document.createTextNode(" found by search"));
     } else fm.textContent = "search data pending";
-    if (rec && rec.tool_reach_pct != null) {
+    /* The hub's job is to send people away, so "pageviews past the homepage"
+       cannot see it working: a card click opens the child site in a new tab
+       and never produces a second hub pageview. Measure it by what the child
+       sites report as family-referred arrivals instead. */
+    if (s.host === "gocheckmy.com") {
+      const sent = SITES.filter(o => o.host !== s.host).reduce((t, o) => {
+        const r2 = src ? ((src.sites||{})[o.host] || {}) : {};
+        return t + ((r2.channels || {}).family || 0);
+      }, 0);
+      fm.appendChild(el("div", null, sent
+        ? `sent ${fmt(sent)} visits onward to family sites`
+        : "onward clicks not yet measurable"));
+    } else if (rec && rec.tool_reach_pct != null) {
       fm.appendChild(el("div", null, rec.tool_reach_pct + "% went past the homepage"));
     }
     row.appendChild(fm);
