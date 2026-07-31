@@ -615,6 +615,13 @@ function renderChannels() {
     "bookmarks, and apps that strip the header, so it is a floor and not a true measure of intent. " +
     "Family means one GoCheckMy site linking to another, separated out so internal traffic never reads as new discovery. " +
     "This mix always covers the trailing 28 days regardless of the range selected above."));
+  const q = Object.values(networkChannels());
+  if (q.length && q.every(v => v % 10 === 0)) {
+    m.appendChild(el("div", null,
+      "Every value here is a multiple of ten, which means Cloudflare is sampling and scaling rather than " +
+      "counting each event. Treat a difference of ten as indistinguishable from zero, and read these as " +
+      "proportions rather than exact visit counts."));
+  }
 
   const src = latest("sources");
   const refs = {}, countries = {};
