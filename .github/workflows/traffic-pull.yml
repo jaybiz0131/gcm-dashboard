@@ -2,9 +2,12 @@ name: Traffic pull
 
 on:
   schedule:
-    # Daily 23:00 UTC, about 19:00 ET. Sundays the run also writes the weekly
-    # briefing and the Lighthouse lab pass (gated inside the script).
-    - cron: "0 23 * * *"
+    # Daily 05:00 UTC, about 01:00 ET. Deliberately just after the UTC day
+    # rolls over: the pull counts complete UTC days only, so running at 23:00
+    # UTC used to exclude the day that had just ended and left the dashboard
+    # ~2 days behind. Sundays the run also writes the weekly briefing and the
+    # Lighthouse lab pass (gated inside the script).
+    - cron: "0 5 * * *"
   workflow_dispatch:
     inputs:
       force_weekly:

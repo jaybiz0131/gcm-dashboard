@@ -4,275 +4,292 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#0a0e14">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>GCM Command</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0e14'/%3E%3Cpolyline points='5,22 12,15 17,19 27,8' fill='none' stroke='%2322d3ee' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#1a1916">
+<title>GoCheckMy Network · Performance</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231a1916'/%3E%3Cpolyline points='5,22 12,15 17,19 27,8' fill='none' stroke='%23d4a24c' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>
   :root {
-    --bg: #0a0e14;
-    --panel: #0e141d;
-    --panel2: #101825;
-    --line: #1b2534;
-    --ink: #e9eff8;
-    --dim: #8b98ab;
-    --faint: #55637a;
-    --cyan: #22d3ee;
-    --good: #34d399;
-    --warn: #fbbf24;
-    --poor: #f87171;
-    --mono: "JetBrains Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-    --sans: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    /* Bernolytics shell */
+    --b-shell:#1a1916; --b-shell-soft:#232220; --b-text:#f4f1ea;
+    --b-muted:#8a8580; --b-faint:#4a4640;
+    --b-accent:#d4a24c; --b-accent-soft:#f3dba5;
+    --b-teal:#3cb4a8;
+    /* Bernolytics content */
+    --navy:#0a2540; --blue:#1e4d8b; --blue-soft:#e8eff8;
+    --rose:#b04949; --rose-soft:#fdecec;
+    --amber:#b07d18; --amber-soft:#fbf2dc;
+    --success:#2d7d4f; --success-soft:#e6f3ec;
+    --text:#1a2842; --muted:#5d6b86; --faint:#9aa6bb;
+    --surface:#ffffff; --bg:#f4f7fb; --border:#d8e0ec;
+    /* acquisition channels: validated on white, worst CVD pair dE 7.0,
+       legal at that level only because legend + labels + table all repeat
+       the identity. Five classes, not six: past five, nominal hues on white
+       stop separating under deuteranopia no matter how they are chosen. */
+    --ch-search:#1E5FA8; --ch-ai:#A83E52; --ch-direct:#6B7A93;
+    --ch-family:#8A6A0F; --ch-other:#D9A63C;
+    --serif:Charter,'Bitstream Charter',Georgia,'Times New Roman',serif;
+    --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
   }
-  * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
+  * { box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
   body {
-    margin: 0;
-    background:
-      radial-gradient(1100px 500px at 50% -10%, rgba(34, 211, 238, 0.07), transparent 60%),
-      var(--bg);
-    color: var(--ink);
-    font: 400 15px/1.5 var(--sans);
-    padding: max(16px, env(safe-area-inset-top)) 16px 40px;
+    margin:0; background:var(--bg); color:var(--text);
+    font:400 15px/1.6 var(--sans); -webkit-font-smoothing:antialiased;
   }
-  .wrap { max-width: 1180px; margin: 0 auto; }
+  .wrap { max-width:1320px; margin:0 auto; padding:0 32px; }
+  @media(max-width:640px){ .wrap{padding:0 16px;} }
 
-  /* ---------- top bar ---------- */
-  .bar {
-    display: flex; align-items: baseline; justify-content: space-between; gap: 4px 12px; flex-wrap: wrap;
-    font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em;
-    color: var(--faint); text-transform: uppercase;
-    border-bottom: 1px solid var(--line); padding-bottom: 12px;
+  /* ---------- shell ---------- */
+  .shell { background:var(--b-shell); color:var(--b-text); }
+  .shell-in {
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px 24px; flex-wrap:wrap; padding:18px 0;
   }
-  .brand { color: var(--dim); font-weight: 700; white-space: nowrap; }
-  .brand b { color: var(--cyan); font-weight: 700; }
-  .stamp { text-align: right; flex: 1; white-space: nowrap; }
-  .stamp .live { color: var(--good); }
+  .mark { display:flex; align-items:baseline; gap:10px; }
+  .mark .b { font-family:var(--serif); font-size:21px; font-weight:500; letter-spacing:-0.01em; }
+  .mark .b em { color:var(--b-accent); font-style:normal; }
+  .mark .tag {
+    font-size:9px; text-transform:uppercase; letter-spacing:0.3em;
+    color:var(--b-muted); font-weight:600;
+  }
+  .freshness { font-size:11px; color:var(--b-muted); letter-spacing:0.06em; text-align:right; }
+  .freshness b { color:var(--b-accent-soft); font-weight:600; }
+  .freshness .stale { color:#e9a24c; }
 
-  .seclabel {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.22em;
-    text-transform: uppercase; color: var(--faint); margin: 26px 0 10px;
+  /* ---------- range control ---------- */
+  .controls {
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    padding:20px 0 4px;
   }
+  .eyebrow {
+    font-size:9px; text-transform:uppercase; letter-spacing:0.24em;
+    color:var(--muted); font-weight:700;
+  }
+  .seg { display:flex; border:1px solid var(--border); border-radius:8px; overflow:hidden; background:var(--surface); }
+  .seg button {
+    appearance:none; border:0; background:transparent; cursor:pointer;
+    font:600 12px/1 var(--sans); letter-spacing:0.08em; color:var(--muted);
+    padding:9px 16px; border-right:1px solid var(--border);
+  }
+  .seg button:last-child { border-right:0; }
+  .seg button[aria-pressed="true"] { background:var(--navy); color:#fff; }
+  .seg button:focus-visible { outline:2px solid var(--blue); outline-offset:-2px; }
+  .seg button:hover:not([aria-pressed="true"]) { background:var(--blue-soft); }
 
-  /* ---------- alerts ---------- */
-  .alerts {
-    margin-top: 18px; border: 1px solid rgba(248, 113, 113, 0.45); border-radius: 10px;
-    background: rgba(248, 113, 113, 0.07); padding: 12px 16px;
+  /* ---------- sections & cards ---------- */
+  section { margin:30px 0; }
+  h2.sec {
+    font-family:var(--serif); font-size:19px; font-weight:500; margin:0 0 3px;
+    letter-spacing:-0.01em; color:var(--navy);
   }
-  .alerts h2 {
-    margin: 0 0 6px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.18em;
-    color: var(--poor); text-transform: uppercase;
-  }
-  .alerts ul { margin: 0; padding-left: 18px; color: var(--dim); font-size: 14px; }
-
-  /* ---------- experience health tiles ---------- */
-  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-  @media (max-width: 900px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
-  .tile {
-    background: linear-gradient(180deg, var(--panel2), var(--panel));
-    border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px;
-    display: flex; flex-direction: column; gap: 3px; min-width: 0;
-  }
-  .tile .k {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
-    color: var(--faint); text-transform: uppercase; display: flex; justify-content: space-between; gap: 8px;
-  }
-  .tile .v {
-    font-family: var(--mono); font-weight: 700; font-size: clamp(26px, 4vw, 34px);
-    line-height: 1.1; letter-spacing: -0.01em;
-  }
-  .tile .v small { font-size: 0.55em; font-weight: 400; color: var(--dim); }
-  .tile .meta { font-family: var(--mono); font-size: 11px; color: var(--faint); letter-spacing: 0.04em; }
-  .pill {
-    display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 700;
-    letter-spacing: 0.14em; padding: 2px 8px; border-radius: 999px; text-transform: uppercase;
-  }
-  .st-good  { color: var(--good); }  .pill.st-good  { background: rgba(52, 211, 153, 0.12); }
-  .st-ni    { color: var(--warn); }  .pill.st-ni    { background: rgba(251, 191, 36, 0.12); }
-  .st-poor  { color: var(--poor); }  .pill.st-poor  { background: rgba(248, 113, 113, 0.12); }
-  .st-none  { color: var(--faint); } .pill.st-none  { background: rgba(85, 99, 122, 0.15); }
-
-  /* ---------- hero ---------- */
-  .hero .row { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 18px; }
-  .hero .total {
-    font-family: var(--mono); font-weight: 700; line-height: 1;
-    font-size: clamp(48px, 12vw, 88px); letter-spacing: -0.02em;
-    text-shadow: 0 0 34px rgba(233, 239, 248, 0.18);
-  }
-  .wow {
-    font-family: var(--mono); font-size: 13px; font-weight: 700; letter-spacing: 0.04em;
-    padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); white-space: nowrap;
-  }
-  .wow.up { color: var(--good); border-color: rgba(52, 211, 153, 0.35); }
-  .wow.down { color: var(--warn); border-color: rgba(251, 191, 36, 0.35); }
-  .wow.flat { color: var(--dim); }
-  .summary { color: var(--dim); max-width: 74ch; margin: 12px 0 0; }
-  .movers { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-  .chip {
-    font-family: var(--mono); font-size: 12px; letter-spacing: 0.03em; color: var(--dim);
-    border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px;
-    display: flex; align-items: center; gap: 7px; background: var(--panel);
-  }
-  .chip .k { color: var(--faint); letter-spacing: 0.12em; font-size: 10px; }
-  .chip b { color: var(--ink); font-weight: 700; }
-
-  /* ---------- panels & charts ---------- */
-  .panel {
-    background: linear-gradient(180deg, var(--panel2), var(--panel));
-    border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-top: 16px;
-  }
-  .panel-head {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
-    color: var(--faint); text-transform: uppercase; margin-bottom: 10px;
-  }
-  .chart { position: relative; }
-  .chart svg { display: block; width: 100%; overflow: visible; }
-  .chart .gl { stroke: var(--line); stroke-width: 1; }
-  .chart .ytick, .chart .xtick {
-    font-family: var(--mono); font-size: 10px; fill: var(--faint);
-    font-variant-numeric: tabular-nums;
-  }
-  .chart .endlab { font-family: var(--mono); font-size: 11px; font-weight: 700; fill: var(--dim); }
-  .chart .cross { stroke: var(--faint); stroke-width: 1; }
-
-  .tooltip {
-    position: fixed; z-index: 30; pointer-events: none;
-    background: #131c29; border: 1px solid var(--line); border-radius: 8px;
-    padding: 7px 10px; font-family: var(--mono); font-size: 12px; color: var(--dim);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); white-space: nowrap;
-  }
-  .tooltip b { color: var(--ink); font-weight: 700; font-size: 13px; }
-  .tooltip .d { color: var(--faint); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
-
-  /* ---------- site grid ---------- */
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 12px; }
+  .sec-sub { font-size:13px; color:var(--muted); margin:0 0 14px; }
   .card {
-    background: linear-gradient(180deg, var(--panel2), var(--panel));
-    border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px;
-    display: flex; flex-direction: column; gap: 8px; min-width: 0;
-    border-top: 2px solid var(--accent, var(--line));
+    background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:18px 20px;
   }
-  .card header { display: flex; align-items: flex-start; gap: 9px; }
-  .card .dot {
-    width: 9px; height: 9px; border-radius: 50%; flex: none; align-self: center;
-    background: var(--accent); box-shadow: 0 0 9px var(--accent);
-  }
-  .card h2 {
-    margin: 0; font-family: var(--mono); font-size: 13px; font-weight: 700;
-    letter-spacing: 0.1em; flex: 1; min-width: 0;
-  }
-  .card h2 .host {
-    display: block; font-size: 10px; font-weight: 400; letter-spacing: 0.06em;
-    color: var(--faint); overflow: hidden; text-overflow: ellipsis;
-  }
-  .card .big {
-    font-family: var(--mono); font-weight: 700; font-size: 34px; line-height: 1.05;
-    letter-spacing: -0.01em;
-  }
-  .card .unit { font-family: var(--mono); font-size: 11px; color: var(--faint); letter-spacing: 0.06em; }
-  .card.await .big { font-size: 17px; color: var(--faint); letter-spacing: 0.2em; padding: 14px 0; }
-  .card .note { font-family: var(--mono); font-size: 11px; color: var(--faint); }
+  .card.t-navy { border-top:3px solid var(--navy); }
+  .card.t-gold { border-top:3px solid var(--amber); }
+  .card.t-blue { border-top:3px solid var(--blue); }
 
-  .vitals { display: flex; flex-wrap: wrap; gap: 6px; }
-  .vchip {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.05em; color: var(--dim);
-    border: 1px solid var(--line); border-radius: 6px; padding: 3px 7px;
-    display: flex; align-items: center; gap: 5px; background: rgba(0, 0, 0, 0.18);
+  .method {
+    background:var(--blue-soft); border-left:3px solid var(--blue);
+    padding:10px 14px; border-radius:0 6px 6px 0; font-size:12px;
+    color:var(--muted); margin-top:14px; line-height:1.55;
   }
-  .vchip .sdot { width: 6px; height: 6px; border-radius: 50%; flex: none; }
-  .vchip .sdot.st-good { background: var(--good); }
-  .vchip .sdot.st-ni { background: var(--warn); }
-  .vchip .sdot.st-poor { background: var(--poor); }
-  .vchip .sdot.st-none { background: var(--faint); }
-  .vchip b { color: var(--ink); font-weight: 700; }
+  .method b { color:var(--text); font-weight:600; }
 
-  .devrow { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 10px; color: var(--faint); letter-spacing: 0.06em; }
-  .devbar { flex: 1; height: 6px; border-radius: 3px; overflow: hidden; display: flex; gap: 2px; background: transparent; }
-  .devbar i { display: block; height: 100%; border-radius: 3px; }
-  .devbar .m { background: var(--accent); }
-  .devbar .d { background: var(--accent); opacity: 0.35; }
-
-  .card footer {
-    display: flex; align-items: baseline; gap: 8px; border-top: 1px solid var(--line);
-    padding-top: 8px; font-family: var(--mono); font-size: 11px; margin-top: auto;
+  /* ---------- hero + stat tiles ---------- */
+  .heroline { display:flex; align-items:flex-end; gap:28px; flex-wrap:wrap; }
+  .bignum {
+    font-family:var(--serif); font-weight:500; font-size:60px; line-height:1;
+    letter-spacing:-0.02em; color:var(--navy);
   }
-  .card footer .k { color: var(--faint); letter-spacing: 0.12em; font-size: 10px; }
-  .card footer .path { color: var(--dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
-  .card footer .n { color: var(--ink); font-weight: 700; flex: none; }
+  .delta { font-size:13px; font-weight:600; letter-spacing:0.02em; }
+  .up { color:var(--success); } .down { color:var(--rose); } .flat { color:var(--muted); }
+  .tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  @media(max-width:860px){ .tiles{grid-template-columns:repeat(2,1fr);} }
+  .tile .lab { font-size:9px; text-transform:uppercase; letter-spacing:0.2em; color:var(--muted); font-weight:700; }
+  .tile .val { font-family:var(--serif); font-size:32px; font-weight:500; line-height:1.1; letter-spacing:-0.02em; margin-top:5px; }
+  .tile .sub { font-size:11.5px; color:var(--muted); margin-top:3px; }
+  .pill {
+    display:inline-block; font-size:9px; font-weight:700; letter-spacing:0.14em;
+    text-transform:uppercase; padding:2px 8px; border-radius:999px; vertical-align:middle;
+  }
+  .p-good{background:var(--success-soft);color:var(--success);}
+  .p-warn{background:var(--amber-soft);color:var(--amber);}
+  .p-bad{background:var(--rose-soft);color:var(--rose);}
+  .p-none{background:#eef2f7;color:var(--muted);}
+  .v-good{color:var(--success);} .v-warn{color:var(--amber);} .v-bad{color:var(--rose);} .v-none{color:var(--faint);}
+
+  /* ---------- charts ---------- */
+  .chart { position:relative; }
+  .chart svg { display:block; width:100%; overflow:visible; }
+  .gl { stroke:#e6ecf4; stroke-width:1; }
+  .axtx { font-family:var(--sans); font-size:10px; fill:var(--faint); font-variant-numeric:tabular-nums; }
+  .endlab { font-family:var(--sans); font-size:11px; font-weight:700; fill:var(--muted); }
+  .cross { stroke:var(--faint); stroke-width:1; }
+  .tooltip {
+    position:fixed; z-index:40; pointer-events:none; background:var(--surface);
+    border:1px solid var(--border); border-radius:8px; padding:9px 12px;
+    box-shadow:0 12px 32px rgba(10,37,64,.16); font-size:12px; color:var(--muted);
+    white-space:nowrap;
+  }
+  .tooltip b { font-family:var(--serif); color:var(--navy); font-size:17px; font-weight:500; display:block; }
+  .tooltip .d { font-size:9px; text-transform:uppercase; letter-spacing:0.16em; color:var(--faint); }
+
+  /* ---------- channel bar ---------- */
+  .chanbar { display:flex; height:30px; border-radius:6px; overflow:hidden; gap:2px; background:var(--surface); }
+  .chanbar i { display:block; height:100%; }
+  .legend { display:flex; flex-wrap:wrap; gap:8px 20px; margin-top:12px; }
+  .lg { display:flex; align-items:center; gap:7px; font-size:12px; color:var(--muted); }
+  .lg .sw { width:11px; height:11px; border-radius:3px; flex:none; }
+  .lg b { color:var(--text); font-weight:600; font-variant-numeric:tabular-nums; }
+
+  .two { display:grid; grid-template-columns:1.35fr 1fr; gap:16px; }
+  @media(max-width:900px){ .two{grid-template-columns:1fr;} }
+  .minirow { display:flex; justify-content:space-between; gap:12px; padding:6px 0; border-bottom:1px solid #eef2f7; font-size:13px; }
+  .minirow:last-child{border-bottom:0;}
+  .minirow .n { font-variant-numeric:tabular-nums; color:var(--text); font-weight:600; }
+  .miniempty { font-size:12.5px; color:var(--faint); padding:8px 0; }
+
+  /* ---------- site rows ---------- */
+  .sites { display:flex; flex-direction:column; gap:10px; }
+  .srow {
+    display:grid; grid-template-columns:190px 96px 1fr 120px 108px 150px; gap:18px;
+    align-items:center; background:var(--surface); border:1px solid var(--border);
+    border-radius:10px; padding:13px 18px;
+  }
+  @media(max-width:1080px){
+    .srow{grid-template-columns:1fr 1fr; gap:10px 16px;}
+    .srow .spark{grid-column:1/-1;}
+  }
+  .sname { font-family:var(--serif); font-size:16px; font-weight:500; color:var(--navy); }
+  .sname span { display:block; font-family:var(--sans); font-size:10.5px; color:var(--faint); letter-spacing:0.02em; }
+  .svis { font-family:var(--serif); font-size:26px; font-weight:500; color:var(--navy); line-height:1; }
+  .svis small { font-family:var(--sans); font-size:10px; color:var(--muted); font-weight:400; display:block; letter-spacing:0.1em; text-transform:uppercase; margin-top:3px; }
+  .sdelta { font-size:12px; font-weight:600; }
+  .smeta { font-size:11px; color:var(--muted); }
+  .smeta b { color:var(--text); font-weight:600; }
+  .vits { display:flex; gap:6px; flex-wrap:wrap; }
+  .vit { font-size:10px; color:var(--muted); display:flex; align-items:center; gap:4px; }
+  .vit i { width:7px; height:7px; border-radius:50%; flex:none; }
+  .vit b { color:var(--text); font-weight:600; }
 
   /* ---------- table ---------- */
-  .tablewrap details { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
-  .tablewrap summary {
-    cursor: pointer; padding: 12px 16px; font-family: var(--mono); font-size: 11px;
-    letter-spacing: 0.18em; color: var(--faint); text-transform: uppercase; user-select: none;
+  details.tbl { background:var(--surface); border:1px solid var(--border); border-radius:10px; }
+  details.tbl summary {
+    cursor:pointer; padding:14px 20px; font-size:9px; text-transform:uppercase;
+    letter-spacing:0.22em; color:var(--muted); font-weight:700; user-select:none;
   }
-  .tablewrap .scroll { overflow-x: auto; padding: 0 8px 8px; }
-  table { border-collapse: collapse; width: 100%; font-family: var(--mono); font-size: 12px; }
-  th, td { padding: 7px 10px; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
-  th {
-    color: var(--faint); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
-    font-weight: 400; border-bottom: 1px solid var(--line);
-  }
-  td { color: var(--dim); border-bottom: 1px solid rgba(27, 37, 52, 0.5); }
-  th:first-child, td:first-child { text-align: left; }
-  td:first-child { color: var(--ink); font-weight: 700; }
-  tr:last-child td { border-bottom: none; }
+  .scroll { overflow-x:auto; padding:0 12px 12px; }
+  table { border-collapse:collapse; width:100%; font-size:12.5px; }
+  th,td { padding:8px 11px; text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; }
+  th { color:var(--muted); font-size:9px; letter-spacing:0.12em; text-transform:uppercase; font-weight:700; border-bottom:1px solid var(--border); }
+  td { color:var(--muted); border-bottom:1px solid #eef2f7; }
+  th:first-child,td:first-child { text-align:left; }
+  td:first-child { color:var(--text); font-weight:600; }
+  tr:last-child td { border-bottom:none; }
 
-  .empty {
-    margin-top: 40px; text-align: center; color: var(--faint);
-    font-family: var(--mono); font-size: 13px; letter-spacing: 0.1em;
-  }
-  .foot {
-    margin-top: 34px; text-align: center; font-family: var(--mono); font-size: 10px;
-    letter-spacing: 0.2em; color: var(--faint); text-transform: uppercase;
-  }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+  .alerts { border:1px solid #f0c9c9; background:var(--rose-soft); border-radius:10px; padding:14px 18px; }
+  .alerts h3 { margin:0 0 6px; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--rose); font-weight:700; }
+  .alerts ul { margin:0; padding-left:18px; font-size:13px; color:var(--text); }
+  .foot { padding:26px 0 40px; font-size:11px; color:var(--faint); text-align:center; letter-spacing:0.04em; }
+  @media(prefers-reduced-motion:reduce){ *{transition:none!important;animation:none!important;} }
 </style>
 </head>
 <body>
+
+<div class="shell">
+  <div class="wrap shell-in">
+    <div class="mark">
+      <span class="b">GoCheckMy <em>Network</em></span>
+      <span class="tag">Traffic · Acquisition · Experience</span>
+    </div>
+    <div class="freshness" id="freshness">loading</div>
+  </div>
+</div>
+
 <div class="wrap">
-  <div class="bar">
-    <span class="brand">GCM <b>//</b> COMMAND</span>
-    <span class="stamp" id="stamp"><span class="live">●</span> loading</span>
-  </div>
 
-  <div class="alerts" id="alerts" hidden>
-    <h2>Regression alerts</h2>
-    <ul id="alertList"></ul>
-  </div>
-
-  <section aria-label="Experience health">
-    <div class="seclabel">Experience health · real-user p75 · trailing 28 days · worst property shown</div>
-    <div class="tiles" id="tiles"></div>
-  </section>
-
-  <section class="hero" aria-label="Family traffic">
-    <div class="seclabel">Family visits · last 7 days</div>
-    <div class="row">
-      <span class="total" id="total">–</span>
-      <span class="wow flat" id="totalWow" hidden></span>
+  <div class="controls">
+    <span class="eyebrow">Time range</span>
+    <div class="seg" role="group" aria-label="Time range">
+      <button type="button" data-range="7" aria-pressed="false">7 days</button>
+      <button type="button" data-range="30" aria-pressed="true">30 days</button>
+      <button type="button" data-range="90" aria-pressed="false">90 days</button>
     </div>
-    <p class="summary" id="summary"></p>
-    <div class="movers" id="movers"></div>
-    <div class="panel">
-      <div class="panel-head" id="familyChartHead">Daily visits · all properties</div>
-      <div class="chart" id="familyChart"></div>
+    <span class="smeta" id="rangeNote"></span>
+  </div>
+
+  <section id="alertsWrap" hidden>
+    <div class="alerts">
+      <h3>Open regressions</h3>
+      <ul id="alertList"></ul>
     </div>
   </section>
 
-  <div class="seclabel">Properties</div>
-  <section class="grid" id="grid" aria-label="Per-site traffic"></section>
-  <div class="empty" id="empty" hidden>NO DATA YET · RUN THE TRAFFIC PULL WORKFLOW ONCE</div>
+  <section>
+    <h2 class="sec">Network traffic</h2>
+    <p class="sec-sub" id="trafficSub"></p>
+    <div class="card t-navy">
+      <div class="heroline">
+        <div>
+          <div class="eyebrow">Visits in range</div>
+          <div class="bignum" id="heroVisits">–</div>
+        </div>
+        <div>
+          <div class="eyebrow">vs previous period</div>
+          <div class="delta" id="heroDelta" style="font-size:19px">–</div>
+        </div>
+        <div>
+          <div class="eyebrow">Sites with traffic</div>
+          <div class="delta flat" id="heroLive" style="font-size:19px">–</div>
+        </div>
+      </div>
+      <div class="chart" id="mainChart" style="margin-top:16px"></div>
+      <div class="method" id="trafficMethod"></div>
+    </div>
+  </section>
 
-  <section class="tablewrap" aria-label="Data table" style="margin-top:16px">
-    <details>
-      <summary>Data table · every chart as numbers</summary>
+  <section>
+    <h2 class="sec">Where visitors come from</h2>
+    <p class="sec-sub">The question raw visit counts cannot answer. Search and AI referrals compound over time; direct and family traffic do not.</p>
+    <div class="two">
+      <div class="card t-gold">
+        <div class="eyebrow">Acquisition mix · whole network</div>
+        <div class="chanbar" id="chanBar" style="margin-top:12px"></div>
+        <div class="legend" id="chanLegend"></div>
+        <div class="method" id="chanMethod"></div>
+      </div>
+      <div class="card">
+        <div class="eyebrow">Top referrers</div>
+        <div id="refList" style="margin-top:10px"></div>
+        <div class="eyebrow" style="margin-top:18px">Top countries</div>
+        <div id="cList" style="margin-top:10px"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">Per property</h2>
+    <p class="sec-sub" id="siteSub"></p>
+    <div class="sites" id="sites"></div>
+  </section>
+
+  <section>
+    <h2 class="sec">Experience health</h2>
+    <p class="sec-sub">Real visitors, 75th percentile, trailing 28 days. The worst property in the family is shown, so green means every site cleared the bar.</p>
+    <div class="tiles" id="healthTiles"></div>
+  </section>
+
+  <section>
+    <details class="tbl">
+      <summary>Full data table · every number above, without hovering</summary>
       <div class="scroll" id="tableHost"></div>
     </details>
   </section>
 
-  <div class="foot">Static bake · refreshed daily ~19:00 ET · zero live calls</div>
+  <div class="foot" id="foot"></div>
 </div>
 <div class="tooltip" id="tip" hidden></div>
 
@@ -280,49 +297,39 @@
 "use strict";
 
 const SITES = [
-  { host: "gocheckmy.com",         label: "HUB",      accent: "#d4a54a" },
-  { host: "gocheckmyhome.com",     label: "HOME",     accent: "#2dd4bf" },
-  { host: "gocheckmypet.com",      label: "PET",      accent: "#fb7185" },
-  { host: "gocheckmymortgage.com", label: "MORTGAGE", accent: "#60a5fa" },
-  { host: "gocheckmyparents.com",  label: "PARENTS",  accent: "#94a0ef" },
-  { host: "gocheckmyestate.com",   label: "ESTATE",   accent: "#a78bfa" },
-  { host: "gocheckmystorm.com",    label: "STORM",    accent: "#22d3ee" },
-  { host: "gocheckmycrypto.com",   label: "CRYPTO",   accent: "#f7931a" },
-  { host: "gocheckmysports.com",   label: "SPORTS",   accent: "#57c08a" },
-  { host: "gocheckmynews.com",     label: "NEWS",     accent: "#4c9fe8" },
+  { host:"gocheckmy.com",         label:"GoCheckMy",         short:"Hub" },
+  { host:"gocheckmyhome.com",     label:"GoCheckMyHome",     short:"Home" },
+  { host:"gocheckmypet.com",      label:"GoCheckMyPet",      short:"Pet" },
+  { host:"gocheckmymortgage.com", label:"GoCheckMyMortgage", short:"Mortgage" },
+  { host:"gocheckmyparents.com",  label:"GoCheckMyParents",  short:"Parents" },
+  { host:"gocheckmyestate.com",   label:"GoCheckMyEstate",   short:"Estate" },
+  { host:"gocheckmystorm.com",    label:"GoCheckMyStorm",    short:"Storm" },
+  { host:"gocheckmycrypto.com",   label:"GoCheckMyCrypto",   short:"Crypto" },
+  { host:"gocheckmysports.com",   label:"GoCheckMySports",   short:"Sports" },
+  { host:"gocheckmynews.com",     label:"GoCheckMyNews",     short:"News" },
 ];
 
-const VITAL_GOOD = { lcp: 2500, inp: 200, cls: 0.1 };
-const VITAL_POOR = { lcp: 4000, inp: 500, cls: 0.25 };
+/* Site identity comes from the name, never from a colour: ten mutually
+   distinguishable hues do not exist on a white surface once colour-vision
+   deficiency is accounted for. One accent for every property chart. */
+const LINE = "#1e4d8b";
+
+const CHANNELS = [
+  { key:"search",  label:"Search",          color:"var(--ch-search)", why:"organic, compounds" },
+  { key:"ai",      label:"AI assistants",   color:"var(--ch-ai)",     why:"new discovery surface" },
+  { key:"direct",  label:"Direct / unknown",color:"var(--ch-direct)", why:"typed, bookmarked, or stripped" },
+  { key:"family",  label:"Family sites",    color:"var(--ch-family)", why:"internal cross-links" },
+  { key:"other",   label:"Other referrals", color:"var(--ch-other)",  why:"social and links" },
+];
+
+const VG = { lcp:2500, inp:200, cls:0.1 };
+const VP = { lcp:4000, inp:500, cls:0.25 };
 const MIN_SAMPLES = 10;
 
 const $ = (id) => document.getElementById(id);
 const fmt = (n) => (n ?? 0).toLocaleString("en-US");
-const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const tip = $("tip");
-
-function statusOf(metric, v) {
-  if (v == null) return "none";
-  if (v <= VITAL_GOOD[metric]) return "good";
-  if (v <= VITAL_POOR[metric]) return "ni";
-  return "poor";
-}
-function a11yStatus(score) {
-  if (score == null) return "none";
-  if (score >= 95) return "good";
-  if (score >= 90) return "ni";
-  return "poor";
-}
-function fmtVital(metric, v) {
-  if (v == null) return "–";
-  if (metric === "lcp") return (v / 1000).toFixed(1) + "s";
-  if (metric === "inp") return v + "ms";
-  return v.toFixed(2);
-}
-function fmtDate(d) {
-  const [, m, day] = d.split("-");
-  return ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][+m] + " " + (+day);
-}
+let HISTORY = null, RANGE = 30;
 
 function el(tag, cls, text) {
   const n = document.createElement(tag);
@@ -330,515 +337,523 @@ function el(tag, cls, text) {
   if (text != null) n.textContent = text;
   return n;
 }
+function statusOf(m, v) {
+  if (v == null) return "none";
+  return v <= VG[m] ? "good" : v <= VP[m] ? "warn" : "bad";
+}
+function a11yStatus(s) { return s == null ? "none" : s >= 95 ? "good" : s >= 90 ? "warn" : "bad"; }
+function fmtVital(m, v) {
+  if (v == null) return "–";
+  return m === "lcp" ? (v/1000).toFixed(1)+"s" : m === "inp" ? v+"ms" : v.toFixed(2);
+}
+function fmtDate(d) {
+  const [, m, day] = d.split("-");
+  return ["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][+m]+" "+(+day);
+}
+function daysBetween(a, b) { return Math.round((new Date(b) - new Date(a)) / 86400000); }
 
-function wowChip(node, cur, prev) {
-  if (prev == null || prev === 0 || cur == null) { node.hidden = true; return; }
-  const pct = Math.round(((cur - prev) / prev) * 100);
-  node.hidden = false;
-  node.className = "wow " + (pct > 0 ? "up" : pct < 0 ? "down" : "flat");
-  node.textContent = (pct > 0 ? "▲ +" : pct < 0 ? "▼ " : "◆ ") + pct + "%";
+/* Small numbers lie in percentages. Under 20 visits in the baseline, a
+   percentage is noise, so the absolute change is the honest statement. */
+function deltaText(cur, prev) {
+  if (prev == null || cur == null) return { txt:"no comparable period yet", cls:"flat" };
+  const diff = cur - prev;
+  const cls = diff > 0 ? "up" : diff < 0 ? "down" : "flat";
+  const arrow = diff > 0 ? "▲" : diff < 0 ? "▼" : "—";
+  if (prev < 20) return { txt:`${arrow} ${diff >= 0 ? "+" : ""}${diff} visits`, cls, small:true };
+  return { txt:`${arrow} ${diff >= 0 ? "+" : ""}${Math.round(diff/prev*100)}%`, cls };
 }
 
-function countUp(node, target) {
-  if (reduceMotion || target === 0 || document.hidden) { node.textContent = fmt(target); return; }
-  const t0 = performance.now(), dur = 850;
-  (function tick(t) {
-    const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
-    node.textContent = fmt(Math.round(target * e));
-    if (p < 1) requestAnimationFrame(tick);
-  })(t0);
-  // rAF is throttled in hidden tabs; guarantee the final value regardless
-  setTimeout(() => { node.textContent = fmt(target); }, dur + 150);
+/* ---------------- data helpers ---------------- */
+function rangeDays(n) {
+  const days = HISTORY.days || [];
+  return days.slice(Math.max(0, days.length - n));
 }
-
-/* ---------------- daily helpers ---------------- */
-
-function siteDaySeries(days, host) {
-  return days.map((d) => {
+/* The previous period is only returned when a FULL one exists. A partial
+   baseline is worse than none: comparing 30 days against the 2 days that
+   happen to precede them reports a spectacular fake increase. */
+function priorDays(n) {
+  const days = HISTORY.days || [];
+  const end = days.length - n;
+  if (end < n) return [];
+  return days.slice(end - n, end);
+}
+function sumVisits(days, host) {
+  let t = 0, any = false;
+  for (const d of days) {
     const s = d.sites && d.sites[host];
-    return { date: d.date, v: s ? s.visits : null, s };
-  });
+    if (s) { t += s.visits || 0; any = true; }
+  }
+  return any ? t : null;
 }
-function sumLast(series, n, offset) {
-  const end = series.length - (offset || 0);
-  const slice = series.slice(Math.max(0, end - n), end);
-  if (!slice.some((p) => p.v != null)) return null;
-  return slice.reduce((t, p) => t + (p.v || 0), 0);
+function networkSeries(days) {
+  return days.map(d => ({
+    date: d.date,
+    v: SITES.reduce((t, s) => t + ((d.sites && d.sites[s.host] ? d.sites[s.host].visits : 0) || 0), 0),
+  }));
+}
+function latest(key) { const a = HISTORY[key] || []; return a.length ? a[a.length-1] : null; }
+
+function networkChannels() {
+  const src = latest("sources");
+  const totals = {};
+  if (!src) return totals;
+  for (const s of SITES) {
+    const rec = (src.sites || {})[s.host];
+    if (!rec || !rec.channels) continue;
+    for (const [k, v] of Object.entries(rec.channels)) {
+      const key = (k === "social" || k === "referral") ? "other" : k;
+      totals[key] = (totals[key] || 0) + v;
+    }
+  }
+  return totals;
 }
 
 /* ---------------- chart ---------------- */
-
 function niceCeil(v) {
   if (v <= 5) return 5;
   const p = Math.pow(10, Math.floor(Math.log10(v)));
-  for (const m of [1, 2, 2.5, 5, 10]) if (m * p >= v) return m * p;
-  return 10 * p;
+  for (const m of [1,2,2.5,5,10]) if (m*p >= v) return m*p;
+  return 10*p;
 }
-
-function lineChart(container, points, opts) {
-  // points: [{date, v}] where v may be null (no signal that day)
-  container.textContent = "";
-  const W = Math.max(200, container.clientWidth);
-  const H = opts.height, PADL = opts.axis ? 34 : 8, PADR = 34, PADT = 8;
-  const PADB = opts.axis ? 18 : 6;
+function lineChart(host, points, opts) {
+  host.textContent = "";
+  const W = Math.max(220, host.clientWidth), H = opts.height;
+  const PADL = opts.axis ? 38 : 4, PADR = opts.axis ? 42 : 30, PADT = 8, PADB = opts.axis ? 20 : 6;
   const ns = "http://www.w3.org/2000/svg";
   const svg = document.createElementNS(ns, "svg");
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
   svg.setAttribute("width", W); svg.setAttribute("height", H);
   svg.setAttribute("role", "img");
-  svg.setAttribute("aria-label", opts.ariaLabel || "daily visits chart");
-  const drawn = points.filter((p) => p.v != null);
+  svg.setAttribute("aria-label", opts.aria || "daily visits");
+  const drawn = points.filter(p => p.v != null);
   if (!drawn.length) {
     const t = document.createElementNS(ns, "text");
-    t.setAttribute("x", W / 2); t.setAttribute("y", H / 2);
-    t.setAttribute("text-anchor", "middle"); t.setAttribute("class", "ytick");
-    t.textContent = "awaiting signal";
-    svg.appendChild(t); container.appendChild(svg); return;
+    t.setAttribute("x", W/2); t.setAttribute("y", H/2 + 3);
+    t.setAttribute("text-anchor", "middle"); t.setAttribute("class", "axtx");
+    t.textContent = "no data in range";
+    svg.appendChild(t); host.appendChild(svg); return;
   }
-  const max = niceCeil(Math.max(...drawn.map((p) => p.v), 1));
-  const x = (i) => points.length > 1 ? PADL + (i / (points.length - 1)) * (W - PADL - PADR) : W / 2;
-  const y = (v) => PADT + (1 - v / max) * (H - PADT - PADB);
+  const max = niceCeil(Math.max(...drawn.map(p => p.v), 1));
+  const x = i => points.length > 1 ? PADL + (i/(points.length-1))*(W-PADL-PADR) : (W-PADR+PADL)/2;
+  const y = v => PADT + (1 - v/max)*(H-PADT-PADB);
 
-  // hairline grid + y ticks (0, mid, max)
-  for (const gv of opts.axis ? [0, max / 2, max] : [0]) {
+  for (const gv of opts.axis ? [0, max/2, max] : [0]) {
     const l = document.createElementNS(ns, "line");
-    l.setAttribute("x1", PADL); l.setAttribute("x2", W - PADR);
+    l.setAttribute("x1", PADL); l.setAttribute("x2", W-PADR);
     l.setAttribute("y1", y(gv)); l.setAttribute("y2", y(gv));
-    l.setAttribute("class", "gl");
-    svg.appendChild(l);
+    l.setAttribute("class", "gl"); svg.appendChild(l);
     if (opts.axis) {
       const t = document.createElementNS(ns, "text");
-      t.setAttribute("x", PADL - 6); t.setAttribute("y", y(gv) + 3);
-      t.setAttribute("text-anchor", "end"); t.setAttribute("class", "ytick");
-      t.textContent = fmt(Math.round(gv));
-      svg.appendChild(t);
+      t.setAttribute("x", PADL-8); t.setAttribute("y", y(gv)+3);
+      t.setAttribute("text-anchor","end"); t.setAttribute("class","axtx");
+      t.textContent = fmt(Math.round(gv)); svg.appendChild(t);
     }
   }
   if (opts.axis && points.length > 1) {
-    for (const i of [0, Math.floor((points.length - 1) / 2), points.length - 1]) {
+    for (const i of [0, Math.floor((points.length-1)/2), points.length-1]) {
       const t = document.createElementNS(ns, "text");
-      t.setAttribute("x", x(i)); t.setAttribute("y", H - 4);
-      t.setAttribute("text-anchor", i === 0 ? "start" : i === points.length - 1 ? "end" : "middle");
-      t.setAttribute("class", "xtick");
-      t.textContent = fmtDate(points[i].date);
+      t.setAttribute("x", x(i)); t.setAttribute("y", H-4);
+      t.setAttribute("text-anchor", i === 0 ? "start" : i === points.length-1 ? "end" : "middle");
+      t.setAttribute("class","axtx"); t.textContent = fmtDate(points[i].date);
       svg.appendChild(t);
     }
   }
-
-  // area + line over contiguous non-null runs
-  let dLine = "", started = false;
+  let d = "", started = false;
   points.forEach((p, i) => {
     if (p.v == null) { started = false; return; }
-    dLine += (started ? " L " : " M ") + x(i).toFixed(1) + " " + y(p.v).toFixed(1);
+    d += (started ? " L " : " M ") + x(i).toFixed(1) + " " + y(p.v).toFixed(1);
     started = true;
   });
-  const first = points.findIndex((p) => p.v != null);
+  const first = points.findIndex(p => p.v != null);
   let last = points.length - 1;
-  while (points[last].v == null) last--;
+  while (last > 0 && points[last].v == null) last--;
   const area = document.createElementNS(ns, "path");
-  area.setAttribute("d", dLine + ` L ${x(last).toFixed(1)} ${y(0)} L ${x(first).toFixed(1)} ${y(0)} Z`);
-  area.setAttribute("fill", opts.accent); area.setAttribute("opacity", "0.1");
+  area.setAttribute("d", d + ` L ${x(last).toFixed(1)} ${y(0)} L ${x(first).toFixed(1)} ${y(0)} Z`);
+  area.setAttribute("fill", opts.accent); area.setAttribute("opacity", "0.10");
   svg.appendChild(area);
   const line = document.createElementNS(ns, "path");
-  line.setAttribute("d", dLine);
-  line.setAttribute("fill", "none"); line.setAttribute("stroke", opts.accent);
-  line.setAttribute("stroke-width", "2");
-  line.setAttribute("stroke-linecap", "round"); line.setAttribute("stroke-linejoin", "round");
+  line.setAttribute("d", d); line.setAttribute("fill","none");
+  line.setAttribute("stroke", opts.accent); line.setAttribute("stroke-width","2");
+  line.setAttribute("stroke-linecap","round"); line.setAttribute("stroke-linejoin","round");
   svg.appendChild(line);
+  const dot = document.createElementNS(ns, "circle");
+  dot.setAttribute("cx", x(last)); dot.setAttribute("cy", y(points[last].v));
+  dot.setAttribute("r","4"); dot.setAttribute("fill", opts.accent);
+  dot.setAttribute("stroke","#fff"); dot.setAttribute("stroke-width","2");
+  svg.appendChild(dot);
+  const lab = document.createElementNS(ns, "text");
+  lab.setAttribute("x", x(last)+8);
+  lab.setAttribute("y", Math.max(PADT+9, y(points[last].v)+4));
+  lab.setAttribute("class","endlab"); lab.textContent = fmt(points[last].v);
+  svg.appendChild(lab);
 
-  // end dot with surface ring + endpoint value label
-  const endDot = document.createElementNS(ns, "circle");
-  endDot.setAttribute("cx", x(last)); endDot.setAttribute("cy", y(points[last].v));
-  endDot.setAttribute("r", "4"); endDot.setAttribute("fill", opts.accent);
-  endDot.setAttribute("stroke", "#0e141d"); endDot.setAttribute("stroke-width", "2");
-  svg.appendChild(endDot);
-  const endLab = document.createElementNS(ns, "text");
-  endLab.setAttribute("x", x(last) + 8);
-  endLab.setAttribute("y", Math.max(PADT + 9, y(points[last].v) + 4));
-  endLab.setAttribute("class", "endlab");
-  endLab.textContent = fmt(points[last].v);
-  svg.appendChild(endLab);
-
-  // crosshair + tooltip (hover layer; the data table is the no-hover twin)
   const cross = document.createElementNS(ns, "line");
-  cross.setAttribute("y1", PADT); cross.setAttribute("y2", H - PADB);
-  cross.setAttribute("class", "cross"); cross.setAttribute("visibility", "hidden");
+  cross.setAttribute("y1", PADT); cross.setAttribute("y2", H-PADB);
+  cross.setAttribute("class","cross"); cross.setAttribute("visibility","hidden");
   svg.appendChild(cross);
-  const hoverDot = document.createElementNS(ns, "circle");
-  hoverDot.setAttribute("r", "4"); hoverDot.setAttribute("fill", opts.accent);
-  hoverDot.setAttribute("stroke", "#0e141d"); hoverDot.setAttribute("stroke-width", "2");
-  hoverDot.setAttribute("visibility", "hidden");
-  svg.appendChild(hoverDot);
+  const hov = document.createElementNS(ns, "circle");
+  hov.setAttribute("r","4"); hov.setAttribute("fill", opts.accent);
+  hov.setAttribute("stroke","#fff"); hov.setAttribute("stroke-width","2");
+  hov.setAttribute("visibility","hidden"); svg.appendChild(hov);
 
-  svg.addEventListener("pointermove", (ev) => {
+  svg.addEventListener("pointermove", ev => {
     const r = svg.getBoundingClientRect();
-    const px = ev.clientX - r.left;
-    const i = Math.max(0, Math.min(points.length - 1,
-      Math.round((px - PADL) / ((W - PADL - PADR) / Math.max(1, points.length - 1)))));
+    const step = (W-PADL-PADR)/Math.max(1, points.length-1);
+    const i = Math.max(0, Math.min(points.length-1, Math.round(((ev.clientX-r.left)*(W/r.width) - PADL)/step)));
     const p = points[i];
     cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i));
-    cross.setAttribute("visibility", "visible");
+    cross.setAttribute("visibility","visible");
     if (p.v != null) {
-      hoverDot.setAttribute("cx", x(i)); hoverDot.setAttribute("cy", y(p.v));
-      hoverDot.setAttribute("visibility", "visible");
-    } else {
-      hoverDot.setAttribute("visibility", "hidden");
-    }
+      hov.setAttribute("cx", x(i)); hov.setAttribute("cy", y(p.v));
+      hov.setAttribute("visibility","visible");
+    } else hov.setAttribute("visibility","hidden");
     tip.textContent = "";
-    tip.appendChild(el("div", "d", fmtDate(p.date) + (opts.tipLabel ? " · " + opts.tipLabel : "")));
-    const row = el("div", null, "");
-    row.appendChild(el("b", null, p.v == null ? "no signal" : fmt(p.v)));
-    if (p.v != null) row.appendChild(document.createTextNode(" visits"));
-    tip.appendChild(row);
-    if (opts.tipExtra && p.v != null) {
-      const ex = opts.tipExtra(i);
-      if (ex) tip.appendChild(el("div", "d", ex));
-    }
+    tip.appendChild(el("div","d", fmtDate(p.date)));
+    tip.appendChild(el("b", null, p.v == null ? "no data" : fmt(p.v)));
+    tip.appendChild(el("div", null, opts.unit || "visits"));
+    if (opts.extra && p.v != null) { const x2 = opts.extra(i); if (x2) tip.appendChild(el("div","d", x2)); }
     tip.hidden = false;
-    const tw = tip.offsetWidth;
-    tip.style.left = Math.min(window.innerWidth - tw - 12, ev.clientX + 14) + "px";
-    tip.style.top = (ev.clientY - 40) + "px";
+    tip.style.left = Math.min(innerWidth - tip.offsetWidth - 12, ev.clientX + 14) + "px";
+    tip.style.top = Math.max(8, ev.clientY - 52) + "px";
   });
   svg.addEventListener("pointerleave", () => {
     tip.hidden = true;
-    cross.setAttribute("visibility", "hidden");
-    hoverDot.setAttribute("visibility", "hidden");
+    cross.setAttribute("visibility","hidden");
+    hov.setAttribute("visibility","hidden");
   });
-
-  container.appendChild(svg);
+  host.appendChild(svg);
 }
 
 /* ---------------- sections ---------------- */
-
-function renderAlerts(alerts) {
-  if (!alerts || !alerts.length) return;
-  $("alerts").hidden = false;
-  const ul = $("alertList");
-  ul.textContent = "";
-  for (const a of alerts) ul.appendChild(el("li", null, a));
+function renderFreshness() {
+  const days = HISTORY.days || [];
+  const node = $("freshness");
+  node.textContent = "";
+  if (!days.length) { node.textContent = "no data yet"; return; }
+  const last = days[days.length-1].date;
+  const today = new Date().toISOString().slice(0,10);
+  const lag = daysBetween(last, today);
+  node.appendChild(el("span", null, "Complete data through "));
+  node.appendChild(el("b", null, fmtDate(last)));
+  const l = el("span", lag > 2 ? "stale" : null,
+    lag <= 1 ? " · current" : ` · ${lag} days behind`);
+  node.appendChild(l);
+  node.appendChild(el("div", null, `${days.length} days of history · collected daily ~1am ET`));
 }
 
-function worstVital(vitalsEntry, metric, key) {
-  let worst = null;
-  for (const s of SITES) {
-    const rec = ((vitalsEntry.sites || {})[s.host] || {}).overall || {};
-    const v = rec[key];
-    if (v == null || (rec.samples || 0) < MIN_SAMPLES) continue;
-    if (worst == null || v > worst.v) worst = { v, site: s, samples: rec.samples };
-  }
-  return worst;
-}
-
-function renderTiles(history) {
-  const tiles = $("tiles");
-  tiles.textContent = "";
-  const vit = (history.vitals || []).slice(-1)[0] || null;
-  const lab = (history.lab || []).slice(-1)[0] || null;
-
-  const defs = [
-    { name: "LCP", metric: "lcp", key: "lcp_p75_ms", thr: "good ≤ 2.5s · poor > 4s" },
-    { name: "INP", metric: "inp", key: "inp_p75_ms", thr: "good ≤ 200ms · poor > 500ms" },
-    { name: "CLS", metric: "cls", key: "cls_p75", thr: "good ≤ 0.10 · poor > 0.25" },
-  ];
-  for (const d of defs) {
-    const w = vit ? worstVital(vit, d.metric, d.key) : null;
-    const st = w ? statusOf(d.metric, w.v) : "none";
-    const tile = el("div", "tile");
-    const k = el("div", "k"); k.appendChild(el("span", null, d.name + " · p75"));
-    const pill = el("span", "pill st-" + st, st === "none" ? "no data" : st === "ni" ? "needs work" : st);
-    k.appendChild(pill); tile.appendChild(k);
-    tile.appendChild(el("div", "v st-" + st, w ? fmtVital(d.metric, w.v) : "–"));
-    tile.appendChild(el("div", "meta", w ? "worst: " + w.site.label.toLowerCase() + " · " + w.samples + " samples" : "awaiting beacon samples"));
-    tile.appendChild(el("div", "meta", d.thr));
-    tiles.appendChild(tile);
-  }
-
-  // accessibility tile: minimum Lighthouse a11y score across the family
-  let worstA = null;
-  if (lab) {
-    for (const s of SITES) {
-      const rec = (lab.sites || {})[s.host];
-      if (!rec || rec.accessibility == null) continue;
-      if (worstA == null || rec.accessibility < worstA.v) worstA = { v: rec.accessibility, site: s };
-    }
-  }
-  const ast = worstA ? a11yStatus(worstA.v) : "none";
-  const tile = el("div", "tile");
-  const k = el("div", "k"); k.appendChild(el("span", null, "A11Y · Lighthouse"));
-  k.appendChild(el("span", "pill st-" + ast, ast === "none" ? "no data" : ast === "ni" ? "needs work" : ast));
-  tile.appendChild(k);
-  const v = el("div", "v st-" + ast); v.textContent = worstA ? worstA.v : "–";
-  if (worstA) v.appendChild(el("small", null, " /100"));
-  tile.appendChild(v);
-  tile.appendChild(el("div", "meta", worstA ? "worst: " + worstA.site.label.toLowerCase() + " · " + (lab ? "lab run " + lab.date : "") : "runs with the Sunday pull"));
-  tile.appendChild(el("div", "meta", "alert floor 90 · target 100"));
-  tiles.appendChild(tile);
-}
-
-function renderHero(history) {
-  const days = history.days || [];
-  const weeks = history.weeks || [];
-  const cur = weeks[weeks.length - 1] || null;
-  const familySeries = days.map((d) => ({
-    date: d.date,
-    v: SITES.reduce((t, s) => {
-      const rec = d.sites && d.sites[s.host];
-      return rec ? t + rec.visits : t;
-    }, 0),
-  }));
-
-  let total7 = null, prev7 = null;
-  if (days.length) {
-    total7 = sumLast(familySeries.map((p) => ({ v: p.v })), 7, 0);
-    prev7 = days.length >= 8 ? sumLast(familySeries.map((p) => ({ v: p.v })), 7, 7) : null;
-  } else if (cur) {
-    total7 = SITES.reduce((t, s) => t + (((cur.sites || {})[s.host] || {}).visits || 0), 0);
-    const prevW = weeks[weeks.length - 2];
-    prev7 = prevW ? SITES.reduce((t, s) => t + (((prevW.sites || {})[s.host] || {}).visits || 0), 0) : null;
-  }
-  countUp($("total"), total7 || 0);
-  wowChip($("totalWow"), total7, prev7);
-  $("summary").textContent = cur ? (cur.summary || "") : "";
-
-  // mover chips from the weekly snapshots (unchanged logic)
-  const chips = [];
-  if (weeks.length >= 2) {
-    const prev = weeks[weeks.length - 2];
-    const vis = (w, h) => { const s = (w.sites || {})[h]; return s && !s.no_data ? s.visits || 0 : null; };
-    let best = null;
-    for (const s of SITES) {
-      const c = vis(cur, s.host), p = vis(prev, s.host);
-      if (c != null && p != null && p >= 5) {
-        const pct = Math.round(((c - p) / p) * 100);
-        if (!best || Math.abs(pct) > Math.abs(best.pct)) best = { s, pct };
-      }
-    }
-    if (best && best.pct !== 0) chips.push([best.pct > 0 ? "▲ MOVER" : "▼ MOVER", best.s.label, (best.pct > 0 ? "+" : "") + best.pct + "%"]);
-    for (const s of SITES) {
-      const c = vis(cur, s.host);
-      const priors = weeks.slice(0, -1).map((w) => vis(w, s.host) ?? 0);
-      if (c > 0 && priors.every((v) => v === 0)) chips.push(["● FIRST TRAFFIC", s.label, fmt(c) + " visits"]);
-      else if (c > 0 && weeks.length >= 4 && c > Math.max(...priors)) chips.push(["◆ RECORD WEEK", s.label, fmt(c) + " visits"]);
-    }
-  }
-  const movers = $("movers");
-  movers.textContent = "";
-  for (const [k, label, val] of chips) {
-    const chip = el("div", "chip");
-    chip.appendChild(el("span", "k", k));
-    chip.appendChild(el("b", null, label));
-    chip.appendChild(document.createTextNode(" " + val));
-    movers.appendChild(chip);
-  }
-
-  $("familyChartHead").textContent = days.length
-    ? `Daily visits · all properties · last ${familySeries.length} days`
-    : "Daily visits · arrives with the first daily pull";
-  lineChart($("familyChart"), familySeries.length ? familySeries : [], {
-    height: 150, accent: "#22d3ee", axis: true, tipLabel: "family",
-    ariaLabel: "daily total visits across all properties",
-    tipExtra: (i) => {
-      const d = days[i];
-      if (!d) return null;
-      const top = SITES
-        .map((s) => ({ s, v: (d.sites[s.host] || {}).visits || 0 }))
-        .sort((a, b) => b.v - a.v)[0];
-      return top && top.v > 0 ? "top: " + top.s.label.toLowerCase() + " " + top.v : null;
+function renderTraffic() {
+  const cur = rangeDays(RANGE), prev = priorDays(RANGE);
+  const series = networkSeries(cur);
+  const total = series.reduce((t,p) => t + p.v, 0);
+  const prevTotal = prev.length ? networkSeries(prev).reduce((t,p) => t + p.v, 0) : null;
+  $("heroVisits").textContent = fmt(total);
+  const d = deltaText(total, prevTotal);
+  const dn = $("heroDelta"); dn.className = "delta " + d.cls; dn.textContent = d.txt;
+  const live = SITES.filter(s => (sumVisits(cur, s.host) || 0) > 0).length;
+  $("heroLive").textContent = live + " of " + SITES.length;
+  $("trafficSub").textContent =
+    `Daily visits across all ten properties. ${cur.length} days shown` +
+    (prev.length
+      ? `, compared with the ${prev.length} days before.`
+      : `. A like-for-like comparison needs ${RANGE * 2} days of history; there are ${(HISTORY.days||[]).length}.`);
+  lineChart($("mainChart"), series, {
+    height:180, accent:LINE, axis:true, aria:"daily visits across the network",
+    extra: i => {
+      const day = cur[i]; if (!day) return null;
+      const top = SITES.map(s => ({s, v:(day.sites[s.host]||{}).visits||0}))
+                       .sort((a,b) => b.v-a.v)[0];
+      return top && top.v > 0 ? `busiest: ${top.s.short} (${top.v})` : null;
     },
   });
+  const m = $("trafficMethod"); m.textContent = "";
+  m.appendChild(el("b", null, "How this is counted: "));
+  m.appendChild(document.createTextNode(
+    "a visit is one Cloudflare Web Analytics session on the production hostname, counted only for complete UTC days, " +
+    "so the newest day is always yesterday and never a partial. Bot traffic Cloudflare identifies is already excluded. " +
+    "Percentage changes are suppressed when the baseline is under 20 visits, where a percentage would exaggerate ordinary noise."));
+  if (HISTORY.dropped_leading_days) {
+    m.appendChild(el("div", null,
+      `The first ${HISTORY.dropped_leading_days} days of the original backfill are excluded: they predate Cloudflare's ` +
+      `event retention, so they returned empty and would otherwise draw as a false flatline at zero.`));
+  }
 }
 
-function renderCards(history) {
-  const days = history.days || [];
-  const weeks = history.weeks || [];
-  const cur = weeks[weeks.length - 1] || null;
-  const vit = (history.vitals || []).slice(-1)[0] || null;
-  const lab = (history.lab || []).slice(-1)[0] || null;
-  const grid = $("grid");
-  grid.textContent = "";
-
-  for (const site of SITES) {
-    const card = el("article", "card");
-    card.style.setProperty("--accent", site.accent);
-    const series = siteDaySeries(days, site.host);
-    const weekly = cur ? (cur.sites || {})[site.host] : null;
-
-    const header = el("header");
-    header.appendChild(el("span", "dot"));
-    const h2 = el("h2", null, site.label);
-    h2.appendChild(el("span", "host", site.host));
-    header.appendChild(h2);
-    const wow = el("span", "wow flat"); wow.hidden = true;
-    header.appendChild(wow);
-    card.appendChild(header);
-
-    const v7 = sumLast(series, 7, 0);
-    const v7prev = sumLast(series, 7, 7);
-    const hasDaily = series.some((p) => p.v != null && p.v > 0);
-    const hasWeekly = weekly && !weekly.no_data;
-
-    if (!hasDaily && !hasWeekly) {
-      card.className = "card await";
-      card.appendChild(el("div", "big", "AWAITING SIGNAL"));
-      card.appendChild(el("div", "note", "no beacon data yet"));
-      grid.appendChild(card);
-      continue;
+function renderChannels() {
+  const totals = networkChannels();
+  const sum = Object.values(totals).reduce((a,b) => a+b, 0);
+  const bar = $("chanBar"), leg = $("chanLegend");
+  bar.textContent = ""; leg.textContent = "";
+  if (!sum) {
+    bar.style.display = "none";
+    leg.appendChild(el("div","miniempty",
+      "Referrer data arrives with the next nightly run. It was added on 2026-07-31."));
+  } else {
+    bar.style.display = "flex";
+    for (const c of CHANNELS) {
+      const v = totals[c.key] || 0;
+      if (!v) continue;
+      const seg = el("i");
+      seg.style.width = (v/sum*100) + "%";
+      seg.style.background = c.color;
+      seg.title = `${c.label}: ${v} visits`;
+      bar.appendChild(seg);
     }
+    for (const c of CHANNELS) {
+      const v = totals[c.key] || 0;
+      const row = el("span","lg");
+      const sw = el("span","sw"); sw.style.background = c.color;
+      row.appendChild(sw);
+      row.appendChild(document.createTextNode(c.label + " "));
+      row.appendChild(el("b", null, `${v} (${sum ? Math.round(v/sum*100) : 0}%)`));
+      leg.appendChild(row);
+    }
+  }
+  const m = $("chanMethod"); m.textContent = "";
+  m.appendChild(el("b", null, "How this is counted: "));
+  m.appendChild(document.createTextNode(
+    "the referring hostname on each visit, bucketed by rule. Direct means no referrer was sent, which covers typed URLs, " +
+    "bookmarks, and apps that strip the header, so it is a floor and not a true measure of intent. " +
+    "Family means one GoCheckMy site linking to another, separated out so internal traffic never reads as new discovery. " +
+    "This mix always covers the trailing 28 days regardless of the range selected above."));
 
-    const shown = hasDaily ? v7 : (weekly ? weekly.visits : 0);
-    const big = el("div", "big", "0");
-    card.appendChild(big);
-    const pv7 = hasDaily
-      ? series.slice(-7).reduce((t, p) => t + ((p.s && p.s.pageviews) || 0), 0)
-      : (weekly ? weekly.pageviews : 0);
-    card.appendChild(el("div", "unit", "visits · " + fmt(pv7) + " pv" + (hasDaily ? "" : " · weekly")));
-    countUp(big, shown || 0);
-    wowChip(wow, hasDaily ? v7 : (weekly ? weekly.visits : null),
-            hasDaily ? v7prev : null);
+  const src = latest("sources");
+  const refs = {}, countries = {};
+  if (src) for (const s of SITES) {
+    const rec = (src.sites || {})[s.host]; if (!rec) continue;
+    for (const r of rec.referers || []) refs[r.host] = (refs[r.host]||0) + r.visits;
+    for (const c of rec.countries || []) countries[c.country] = (countries[c.country]||0) + c.visits;
+  }
+  const fill = (node, obj, emptyMsg) => {
+    node.textContent = "";
+    const rows = Object.entries(obj).sort((a,b) => b[1]-a[1]).slice(0,6);
+    if (!rows.length) { node.appendChild(el("div","miniempty", emptyMsg)); return; }
+    for (const [k, v] of rows) {
+      const r = el("div","minirow");
+      r.appendChild(el("span", null, k));
+      r.appendChild(el("span","n", fmt(v)));
+      node.appendChild(r);
+    }
+  };
+  fill($("refList"), refs, "No external referrers recorded yet.");
+  fill($("cList"), countries, "Country data arrives with the next nightly run.");
+}
 
-    const chartHost = el("div", "chart");
-    card.appendChild(chartHost);
-    lineChart(chartHost, series, {
-      height: 64, accent: site.accent, axis: false, tipLabel: site.label.toLowerCase(),
-      ariaLabel: "daily visits for " + site.host,
+function renderSites() {
+  const cur = rangeDays(RANGE), prev = priorDays(RANGE);
+  const vit = latest("vitals"), src = latest("sources");
+  const wrap = $("sites"); wrap.textContent = "";
+  $("siteSub").textContent =
+    `Ranked by visits in the selected range. "Found by search" is the share of that site's visits arriving from a search engine or AI assistant.`;
+
+  const rows = SITES.map(s => ({ s, v: sumVisits(cur, s.host) || 0, p: sumVisits(prev, s.host) }))
+                    .sort((a,b) => b.v - a.v);
+  for (const { s, v, p } of rows) {
+    const row = el("article","srow");
+    const nm = el("div","sname", s.short);
+    nm.appendChild(el("span", null, s.host));
+    row.appendChild(nm);
+
+    const vis = el("div","svis", fmt(v));
+    vis.appendChild(el("small", null, "visits"));
+    row.appendChild(vis);
+
+    const sp = el("div","spark chart");
+    row.appendChild(sp);
+
+    const d = deltaText(v, p);
+    const dd = el("div","sdelta " + d.cls, d.txt);
+    row.appendChild(dd);
+
+    const rec = src ? ((src.sites||{})[s.host] || null) : null;
+    const ch = rec && rec.channels ? rec.channels : null;
+    const found = ch ? (ch.search||0) + (ch.ai||0) : null;
+    const chTotal = ch ? Object.values(ch).reduce((a,b) => a+b, 0) : 0;
+    const fm = el("div","smeta");
+    if (found != null && chTotal) {
+      fm.appendChild(el("b", null, Math.round(found/chTotal*100) + "%"));
+      fm.appendChild(document.createTextNode(" found by search"));
+    } else fm.textContent = "search data pending";
+    if (rec && rec.tool_reach_pct != null) {
+      fm.appendChild(el("div", null, rec.tool_reach_pct + "% went past the homepage"));
+    }
+    row.appendChild(fm);
+
+    const vv = el("div","vits");
+    const vr = vit ? (((vit.sites||{})[s.host] || {}).overall || null) : null;
+    for (const [name, key, metric] of [["LCP","lcp_p75_ms","lcp"],["INP","inp_p75_ms","inp"],["CLS","cls_p75","cls"]]) {
+      const val = vr ? vr[key] : null;
+      const low = vr && (vr.samples||0) < MIN_SAMPLES;
+      const c = el("span","vit");
+      const dot = el("i"); const st = low ? "none" : statusOf(metric, val);
+      dot.style.background = st === "good" ? "var(--success)" : st === "warn" ? "var(--amber)"
+                            : st === "bad" ? "var(--rose)" : "var(--faint)";
+      c.appendChild(dot);
+      c.appendChild(document.createTextNode(name + " "));
+      c.appendChild(el("b", null, fmtVital(metric, val)));
+      c.title = low ? "fewer than " + MIN_SAMPLES + " samples, low confidence" : name + " p75, trailing 28 days";
+      vv.appendChild(c);
+    }
+    row.appendChild(vv);
+    wrap.appendChild(row);
+
+    const ser = cur.map(dd2 => {
+      const rec2 = dd2.sites && dd2.sites[s.host];
+      return { date: dd2.date, v: rec2 ? rec2.visits : null };
     });
-
-    // real-user vitals chips + lab a11y
-    const vrow = el("div", "vitals");
-    const rec = vit ? (((vit.sites || {})[site.host] || {}).overall || null) : null;
-    const defs = [["LCP", "lcp", "lcp_p75_ms"], ["INP", "inp", "inp_p75_ms"], ["CLS", "cls", "cls_p75"]];
-    for (const [name, metric, key] of defs) {
-      const val = rec ? rec[key] : null;
-      const low = rec && (rec.samples || 0) < MIN_SAMPLES;
-      const chip = el("span", "vchip");
-      chip.appendChild(el("i", "sdot st-" + (low ? "none" : statusOf(metric, val))));
-      chip.appendChild(document.createTextNode(name + " "));
-      chip.appendChild(el("b", null, fmtVital(metric, val)));
-      chip.title = low ? "under " + MIN_SAMPLES + " samples, low confidence" : name + " p75, trailing 28 days";
-      vrow.appendChild(chip);
-    }
-    const labRec = lab ? (lab.sites || {})[site.host] : null;
-    const aChip = el("span", "vchip");
-    aChip.appendChild(el("i", "sdot st-" + a11yStatus(labRec ? labRec.accessibility : null)));
-    aChip.appendChild(document.createTextNode("A11Y "));
-    aChip.appendChild(el("b", null, labRec && labRec.accessibility != null ? String(labRec.accessibility) : "–"));
-    aChip.title = "Lighthouse accessibility score, weekly lab run";
-    vrow.appendChild(aChip);
-    card.appendChild(vrow);
-
-    // device split over the last 7 days
-    const last7 = series.slice(-7).map((p) => p.s).filter(Boolean);
-    const mob = last7.reduce((t, s) => t + (s.mobile_visits || 0), 0);
-    const desk = last7.reduce((t, s) => t + (s.desktop_visits || 0), 0);
-    if (mob + desk > 0) {
-      const dev = el("div", "devrow");
-      const mp = Math.round((mob / (mob + desk)) * 100);
-      dev.appendChild(el("span", null, "MOB " + mp + "%"));
-      const bar = el("span", "devbar");
-      const mi = el("i", "m"); mi.style.width = mp + "%";
-      const di = el("i", "d"); di.style.width = (100 - mp) + "%";
-      bar.appendChild(mi); bar.appendChild(di);
-      dev.appendChild(bar);
-      dev.appendChild(el("span", null, "DESK " + (100 - mp) + "%"));
-      card.appendChild(dev);
-    }
-
-    const foot = el("footer");
-    foot.appendChild(el("span", "k", "TOP"));
-    const top = weekly && weekly.top_paths && weekly.top_paths[0];
-    foot.appendChild(el("span", "path", top ? top.path : "n/a"));
-    if (top) foot.appendChild(el("span", "n", fmt(top.pageviews)));
-    card.appendChild(foot);
-    grid.appendChild(card);
+    lineChart(sp, ser, { height:44, accent:LINE, axis:false, aria:"daily visits for " + s.host });
   }
 }
 
-function renderTable(history) {
-  const days = history.days || [];
-  const weeks = history.weeks || [];
-  const cur = weeks[weeks.length - 1] || null;
-  const vit = (history.vitals || []).slice(-1)[0] || null;
-  const lab = (history.lab || []).slice(-1)[0] || null;
-  const host = $("tableHost");
-  host.textContent = "";
-  const table = el("table");
-  const thead = el("thead"), hr = el("tr");
-  for (const h of ["Site", "7d visits", "WoW", "7d pv", "Mobile", "LCP p75", "INP p75", "CLS p75", "Perf", "A11y", "Top page"])
-    hr.appendChild(el("th", null, h));
-  thead.appendChild(hr); table.appendChild(thead);
-  const tbody = el("tbody");
-  for (const s of SITES) {
-    const series = siteDaySeries(days, s.host);
-    const weekly = cur ? (cur.sites || {})[s.host] : null;
-    const v7 = sumLast(series, 7, 0) ?? (weekly && !weekly.no_data ? weekly.visits : null);
-    const v7p = sumLast(series, 7, 7);
-    const pct = v7 != null && v7p ? Math.round(((v7 - v7p) / v7p) * 100) : null;
-    const last7 = series.slice(-7).map((p) => p.s).filter(Boolean);
-    const mob = last7.reduce((t, r) => t + (r.mobile_visits || 0), 0);
-    const desk = last7.reduce((t, r) => t + (r.desktop_visits || 0), 0);
-    const rec = vit ? (((vit.sites || {})[s.host] || {}).overall || {}) : {};
-    const labRec = lab ? ((lab.sites || {})[s.host] || {}) : {};
-    const pv7 = last7.reduce((t, r) => t + (r.pageviews || 0), 0) || (weekly && !weekly.no_data ? weekly.pageviews : null);
-    const tr = el("tr");
-    tr.appendChild(el("td", null, s.host));
-    tr.appendChild(el("td", null, v7 == null ? "–" : fmt(v7)));
-    tr.appendChild(el("td", null, pct == null ? "–" : (pct > 0 ? "+" : "") + pct + "%"));
-    tr.appendChild(el("td", null, pv7 == null ? "–" : fmt(pv7)));
-    tr.appendChild(el("td", null, mob + desk > 0 ? Math.round((mob / (mob + desk)) * 100) + "%" : "–"));
-    tr.appendChild(el("td", null, fmtVital("lcp", rec.lcp_p75_ms)));
-    tr.appendChild(el("td", null, fmtVital("inp", rec.inp_p75_ms)));
-    tr.appendChild(el("td", null, fmtVital("cls", rec.cls_p75)));
-    tr.appendChild(el("td", null, labRec.performance != null ? String(labRec.performance) : "–"));
-    tr.appendChild(el("td", null, labRec.accessibility != null ? String(labRec.accessibility) : "–"));
-    const topPath = weekly && weekly.top_paths && weekly.top_paths[0];
-    tr.appendChild(el("td", null, topPath ? topPath.path : "–"));
-    tbody.appendChild(tr);
+function renderHealth() {
+  const vit = latest("vitals"), lab = latest("lab");
+  const host = $("healthTiles"); host.textContent = "";
+  const defs = [
+    { n:"Largest Contentful Paint", m:"lcp", k:"lcp_p75_ms", t:"good ≤ 2.5s · poor > 4s" },
+    { n:"Interaction to Next Paint", m:"inp", k:"inp_p75_ms", t:"good ≤ 200ms · poor > 500ms" },
+    { n:"Cumulative Layout Shift", m:"cls", k:"cls_p75", t:"good ≤ 0.10 · poor > 0.25" },
+  ];
+  for (const d of defs) {
+    let worst = null;
+    if (vit) for (const s of SITES) {
+      const r = ((vit.sites||{})[s.host] || {}).overall || {};
+      if (r[d.k] == null || (r.samples||0) < MIN_SAMPLES) continue;
+      if (!worst || r[d.k] > worst.v) worst = { v:r[d.k], s, n:r.samples };
+    }
+    const st = worst ? statusOf(d.m, worst.v) : "none";
+    const t = el("div","card tile");
+    const lab2 = el("div","lab", d.n);
+    t.appendChild(lab2);
+    const val = el("div","val v-"+st, worst ? fmtVital(d.m, worst.v) : "–");
+    val.appendChild(document.createTextNode(" "));
+    val.appendChild(el("span","pill p-"+st, st==="none"?"no data":st==="warn"?"needs work":st==="bad"?"poor":"good"));
+    t.appendChild(val);
+    t.appendChild(el("div","sub", worst ? `worst: ${worst.s.short} · ${worst.n} samples` : "awaiting samples"));
+    t.appendChild(el("div","sub", d.t));
+    host.appendChild(t);
   }
-  table.appendChild(tbody);
+  let wa = null;
+  if (lab) for (const s of SITES) {
+    const r = (lab.sites||{})[s.host];
+    if (!r || r.accessibility == null) continue;
+    if (!wa || r.accessibility < wa.v) wa = { v:r.accessibility, s };
+  }
+  const st = wa ? a11yStatus(wa.v) : "none";
+  const t = el("div","card tile");
+  t.appendChild(el("div","lab","Accessibility (Lighthouse)"));
+  const val = el("div","val v-"+st, wa ? String(wa.v) : "–");
+  val.appendChild(document.createTextNode(" "));
+  val.appendChild(el("span","pill p-"+st, st==="none"?"no data":st==="warn"?"needs work":st==="bad"?"poor":"good"));
+  t.appendChild(val);
+  t.appendChild(el("div","sub", wa ? `worst: ${wa.s.short} · lab run ${lab ? fmtDate(lab.date) : ""}` : "runs with the Sunday pull"));
+  t.appendChild(el("div","sub","alert floor 90 · target 100"));
+  host.appendChild(t);
+}
+
+function renderTable() {
+  const cur = rangeDays(RANGE), prev = priorDays(RANGE);
+  const vit = latest("vitals"), lab = latest("lab"), src = latest("sources");
+  const host = $("tableHost"); host.textContent = "";
+  const table = el("table");
+  const head = el("tr");
+  for (const h of ["Site","Visits","Prev","Change","Pageviews","Mobile","Search+AI","Past home","LCP","INP","CLS","Perf","A11y"])
+    head.appendChild(el("th", null, h));
+  const thead = el("thead"); thead.appendChild(head); table.appendChild(thead);
+  const tb = el("tbody");
+  for (const s of SITES) {
+    const v = sumVisits(cur, s.host), p = sumVisits(prev, s.host);
+    let pv = 0, mob = 0, desk = 0;
+    for (const d of cur) {
+      const r = d.sites && d.sites[s.host]; if (!r) continue;
+      pv += r.pageviews||0; mob += r.mobile_visits||0; desk += r.desktop_visits||0;
+    }
+    const rec = src ? ((src.sites||{})[s.host]||{}) : {};
+    const ch = rec.channels || null;
+    const chT = ch ? Object.values(ch).reduce((a,b)=>a+b,0) : 0;
+    const vr = vit ? (((vit.sites||{})[s.host]||{}).overall || {}) : {};
+    const lr = lab ? ((lab.sites||{})[s.host]||{}) : {};
+    const d = deltaText(v, p);
+    const tr = el("tr");
+    const cells = [
+      s.host, v == null ? "–" : fmt(v), p == null ? "–" : fmt(p), d.txt.replace(/[▲▼—] /,""),
+      fmt(pv), (mob+desk) ? Math.round(mob/(mob+desk)*100)+"%" : "–",
+      ch && chT ? Math.round(((ch.search||0)+(ch.ai||0))/chT*100)+"%" : "–",
+      rec.tool_reach_pct != null ? rec.tool_reach_pct+"%" : "–",
+      fmtVital("lcp", vr.lcp_p75_ms), fmtVital("inp", vr.inp_p75_ms), fmtVital("cls", vr.cls_p75),
+      lr.performance != null ? String(lr.performance) : "–",
+      lr.accessibility != null ? String(lr.accessibility) : "–",
+    ];
+    for (const c of cells) tr.appendChild(el("td", null, c));
+    tb.appendChild(tr);
+  }
+  table.appendChild(tb);
   host.appendChild(table);
 }
 
-/* ---------------- boot ---------------- */
-
-let lastHistory = null;
-
-function render(history) {
-  lastHistory = history;
-  const days = history.days || [];
-  const weeks = history.weeks || [];
-  if (!days.length && !weeks.length) {
-    $("empty").hidden = false;
-    $("stamp").innerHTML = '<span class="live">●</span> no data yet';
-    return;
-  }
-  const thru = days.length ? days[days.length - 1].date
-             : weeks[weeks.length - 1].week_ending;
-  $("stamp").innerHTML = `<span class="live">●</span> thru ${thru}` +
-    (days.length ? ` · ${days.length}d of daily signal` : " · weekly only");
-  renderTiles(history);
-  renderHero(history);
-  renderCards(history);
-  renderTable(history);
+function renderRangeNote() {
+  const days = HISTORY.days || [];
+  const note = $("rangeNote");
+  if (days.length >= RANGE) { note.textContent = ""; return; }
+  const need = RANGE - days.length;
+  note.textContent = `Only ${days.length} days collected so far, so this view shows everything on record. Full ${RANGE}-day history in ${need} more day${need===1?"":"s"}.`;
 }
 
-let resizeTimer = null;
+function renderAll() {
+  renderFreshness();
+  renderRangeNote();
+  renderTraffic();
+  renderChannels();
+  renderSites();
+  renderHealth();
+  renderTable();
+  const days = HISTORY.days || [];
+  $("foot").textContent = days.length
+    ? `Cloudflare Web Analytics · ${days.length} days on record · rebuilt from data committed ${HISTORY.updated_at ? HISTORY.updated_at.slice(0,10) : "recently"}`
+    : "";
+}
+
+for (const b of document.querySelectorAll(".seg button")) {
+  b.addEventListener("click", () => {
+    RANGE = +b.dataset.range;
+    for (const o of document.querySelectorAll(".seg button"))
+      o.setAttribute("aria-pressed", String(o === b));
+    if (HISTORY) renderAll();
+  });
+}
+let rt = null;
 addEventListener("resize", () => {
-  if (!lastHistory) return;
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => render(lastHistory), 160);
+  if (!HISTORY) return;
+  clearTimeout(rt); rt = setTimeout(renderAll, 160);
 });
 
-fetch("data/traffic-history.json", { cache: "no-store" })
-  .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
-  .then(render)
-  .catch(() => {
-    $("empty").hidden = false;
-    $("stamp").innerHTML = '<span class="live" style="color:var(--poor)">●</span> history file unreachable';
-  });
+/* The first backfill reached further back than Cloudflare retains events, so
+   the oldest days came back empty and were stored as zeros. Ten independent
+   properties all recording exactly zero on the same day is a collection
+   artefact, not a quiet day, so those leading days are dropped rather than
+   drawn as a real flatline. Zero days after traffic has started are kept. */
+function trimPreCollection(h) {
+  const days = h.days || [];
+  const first = days.findIndex(d =>
+    SITES.some(s => ((d.sites && d.sites[s.host] ? d.sites[s.host].visits : 0) || 0) > 0));
+  if (first > 0) {
+    h.dropped_leading_days = first;
+    h.days = days.slice(first);
+  }
+  return h;
+}
 
-fetch("data/alerts-latest.json", { cache: "no-store" })
-  .then((r) => (r.ok ? r.json() : null))
-  .then((a) => renderAlerts(a && a.alerts))
+fetch("data/traffic-history.json", { cache:"no-store" })
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(h => { HISTORY = trimPreCollection(h); renderAll(); })
+  .catch(() => { $("freshness").textContent = "history file unreachable"; });
+
+fetch("data/alerts-latest.json", { cache:"no-store" })
+  .then(r => r.ok ? r.json() : null)
+  .then(a => {
+    if (!a || !a.alerts || !a.alerts.length) return;
+    $("alertsWrap").hidden = false;
+    const ul = $("alertList"); ul.textContent = "";
+    for (const x of a.alerts) ul.appendChild(el("li", null, x));
+  })
   .catch(() => {});
 </script>
 </body>

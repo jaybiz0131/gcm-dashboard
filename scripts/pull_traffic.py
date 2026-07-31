@@ -217,6 +217,130 @@ def pull_site(token, account_tag, site_tag, host, since, until):
     return {"visits": visits, "pageviews": pageviews, "top_paths": top_paths, "no_data": False}
 
 
+SEARCH_HOSTS = ("google.", "bing.", "duckduckgo.", "search.yahoo", "ecosia.",
+                "search.brave", "startpage.", "yandex.", "baidu.", "qwant.")
+AI_HOSTS = ("chatgpt.com", "openai.com", "perplexity.ai", "claude.ai", "copilot.microsoft",
+            "gemini.google", "bard.google", "you.com", "phind.com")
+SOCIAL_HOSTS = ("facebook.", "fb.", "instagram.", "twitter.", "t.co", "x.com", "reddit.",
+                "linkedin.", "lnkd.in", "pinterest.", "youtube.", "tiktok.", "nextdoor.")
+
+
+def classify_referer(host):
+    """Bucket a referrer hostname into an acquisition channel.
+
+    Direct is the empty referrer: typed URL, bookmark, or an app that strips
+    the header. Family traffic (one GoCheckMy site linking to another) is
+    called out separately so it never inflates the "someone found us" story.
+    """
+    h = normalize_host(host)
+    if not h:
+        return "direct"
+    if any(h == s or h.endswith("." + s) or h.startswith(s) for s in
+           [x.rstrip(".") for x in ("gocheckmy.com",)]) or h.startswith("gocheckmy") or ".gocheckmy" in h:
+        return "family"
+    if any(s in h for s in AI_HOSTS):
+        return "ai"
+    if any(h.startswith(s) or ("." + s) in ("." + h) or s in h for s in SEARCH_HOSTS):
+        return "search"
+    if any(s in h for s in SOCIAL_HOSTS):
+        return "social"
+    return "referral"
+
+
+def pull_dimensions(token, account_tag, site_tag, host, since, until):
+    """Acquisition and content mix for one property over the window.
+
+    Answers the questions raw visit counts cannot: where visitors came from,
+    what country they are in, and whether they got past the homepage into an
+    actual tool. Referrer/country dimensions are newer than the rest of the
+    schema, so each block degrades independently rather than failing the pull.
+    """
+    flt = host_filter(site_tag, host, since, until)
+    out = {"channels": {}, "referers": [], "countries": [], "paths": []}
+
+    def run(alias, dim, order, limit):
+        query = f"""
+        {{
+          viewer {{
+            accounts(filter: {{accountTag: "{account_tag}"}}) {{
+              {alias}: rumPageloadEventsAdaptiveGroups(
+                filter: {flt}, orderBy: [{order}], limit: {limit}
+              ) {{
+                count
+                sum {{ visits }}
+                dimensions {{ {dim} }}
+              }}
+            }}
+          }}
+        }}
+        """
+        return (graphql(token, query).get(alias) or [])
+
+    try:
+        rows = run("byReferer", "refererHost", "sum_visits_DESC", 40)
+        channels = {}
+        refs = []
+        for g in rows:
+            rhost = (g.get("dimensions") or {}).get("refererHost") or ""
+            v = g["sum"]["visits"]
+            ch = classify_referer(rhost)
+            channels[ch] = channels.get(ch, 0) + v
+            if rhost and classify_referer(rhost) != "family":
+                refs.append({"host": normalize_host(rhost), "visits": v})
+        out["channels"] = channels
+        out["referers"] = sorted(refs, key=lambda r: -r["visits"])[:8]
+    except Exception as e:
+        log(f"    (referrers unavailable for {host}: {str(e)[:90]})")
+
+    try:
+        rows = run("byCountry", "countryName", "sum_visits_DESC", 15)
+        out["countries"] = [
+            {"country": (g.get("dimensions") or {}).get("countryName") or "Unknown",
+             "visits": g["sum"]["visits"]}
+            for g in rows
+        ][:8]
+    except Exception as e:
+        log(f"    (countries unavailable for {host}: {str(e)[:90]})")
+
+    try:
+        rows = run("byPath", "count_DESC", "count_DESC", 30)
+        out["paths"] = [
+            {"path": (g.get("dimensions") or {}).get("requestPath") or "/",
+             "pageviews": g["count"], "visits": g["sum"]["visits"]}
+            for g in rows
+        ]
+    except Exception:
+        try:
+            rows = run("byPath", "requestPath", "count_DESC", 30)
+            out["paths"] = [
+                {"path": (g.get("dimensions") or {}).get("requestPath") or "/",
+                 "pageviews": g["count"], "visits": g["sum"]["visits"]}
+                for g in rows
+            ]
+        except Exception as e:
+            log(f"    (paths unavailable for {host}: {str(e)[:90]})")
+    return out
+
+
+def is_home_path(p):
+    return p in ("/", "", "/index.html")
+
+
+def tool_reach(paths):
+    """Share of pageviews that landed somewhere other than the homepage.
+
+    A crude but honest engagement proxy from data we already have: on these
+    sites every non-home path is a tool, a guide, or a result page, so this
+    reads as "did the visit go anywhere". It is not a funnel and does not
+    claim to be one; a real funnel needs per-site event instrumentation.
+    """
+    total = sum(p["pageviews"] for p in paths)
+    if not total:
+        return None
+    deep = sum(p["pageviews"] for p in paths if not is_home_path(p["path"]))
+    return round(deep / total * 100)
+
+
 def pull_daily(token, account_tag, site_tag, host, since, until):
     """Per-day visits, pageviews, and device split for one property."""
     flt = host_filter(site_tag, host, since, until)
@@ -404,6 +528,22 @@ def mock_vitals(site):
     mob = dict(base, lcp_p75_ms=(base["lcp_p75_ms"] or 0) + 300,
                samples=max(1, base["samples"] // 2))
     return {"overall": base, "mobile": mob, "desktop": dict(base, samples=base["samples"] // 3)}
+
+
+def mock_sources(site):
+    seed = _seed(site, "sources")
+    search = 5 + seed % 25
+    return {
+        "channels": {"search": search, "direct": 4 + seed % 12, "family": seed % 8,
+                     "ai": seed % 4, "social": seed % 3, "referral": seed % 5},
+        "referers": [{"host": "google.com", "visits": search},
+                     {"host": "bing.com", "visits": max(1, seed % 5)}],
+        "countries": [{"country": "United States", "visits": 20 + seed % 40},
+                      {"country": "Canada", "visits": seed % 6}],
+        "paths": [{"path": "/", "pageviews": 30 + seed % 20, "visits": 25},
+                  {"path": "/guides/", "pageviews": 8 + seed % 10, "visits": 7},
+                  {"path": "/about", "pageviews": 2 + seed % 5, "visits": 2}],
+    }
 
 
 def mock_psi(site):
@@ -667,6 +807,7 @@ def main():
     history.setdefault("days", [])
     history.setdefault("vitals", [])
     history.setdefault("lab", [])
+    history.setdefault("sources", [])
 
     token = None
     mapping = {}
@@ -679,17 +820,19 @@ def main():
         mapping = discover_sites(token, dstart_s, dend_s)
         log(f"Discovered {len(mapping)} Web Analytics properties: {sorted(mapping)}")
 
-    # ---- daily series + vitals, every run
-    daily_out, vitals_out, failures = {}, {}, 0
+    # ---- daily series + vitals + acquisition mix, every run
+    daily_out, vitals_out, sources_out, failures = {}, {}, {}, 0
     for host in SITES:
         try:
             if MOCK:
                 daily_out[host] = mock_daily(host, window_days)
                 vitals_out[host] = mock_vitals(host)
+                sources_out[host] = mock_sources(host)
             elif host in mapping:
                 acct, tag = mapping[host]
                 daily_out[host] = pull_daily(token, acct, tag, host, dstart_s, dend_s)
                 vitals_out[host] = pull_vitals(token, acct, tag, host, dstart_s, dend_s)
+                sources_out[host] = pull_dimensions(token, acct, tag, host, dstart_s, dend_s)
             else:
                 log(f"  {host}: not discovered, leaving existing daily history untouched")
                 continue
@@ -718,6 +861,16 @@ def main():
                              + [vitals_entry])
         history["vitals"].sort(key=lambda v: v["date"])
         history["vitals"] = history["vitals"][-90:]
+
+    if sources_out:
+        for host, rec in sources_out.items():
+            rec["tool_reach_pct"] = tool_reach(rec.get("paths") or [])
+        sources_entry = {"date": window_days[-1], "window_days": DAILY_WINDOW_DAYS,
+                         "sites": sources_out}
+        history["sources"] = ([s for s in history["sources"] if s["date"] != sources_entry["date"]]
+                              + [sources_entry])
+        history["sources"].sort(key=lambda s: s["date"])
+        history["sources"] = history["sources"][-90:]
 
     # ---- Sunday-only work: weekly snapshot, report, Lighthouse lab pass
     report_written = None
