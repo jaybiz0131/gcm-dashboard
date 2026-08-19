@@ -4,3 +4,6 @@
 # Search Console exports are inputs, not source; the generated json is committed
 data/search-console/drop/*.zip
 data/search-console/drop/*.csv
+
+# Service-account keys - never commit
+.secrets/
