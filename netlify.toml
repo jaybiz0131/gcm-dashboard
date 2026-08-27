@@ -27,3 +27,14 @@
   to = "/404.html"
   status = 404
   force = true
+
+# Affiliate exports are working material: real commission numbers and network
+# account detail. Tracked so the importer's inputs are reproducible, blocked at
+# the edge so they are never served. Directory splat, not a file glob: a
+# "/*.csv" style rule does not match on Netlify (see the family note in
+# gocheckmystorm/netlify.toml).
+[[redirects]]
+  from = "/data/affiliates/*"
+  to = "/404.html"
+  status = 404
+  force = true
