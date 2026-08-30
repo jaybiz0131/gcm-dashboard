@@ -1,4 +1,6 @@
 {
- "generated_at": "2026-08-29T11:26:00Z",
- "alerts": []
+ "generated_at": "2026-08-30T10:12:37Z",
+ "alerts": [
+  "gocheckmyparents.com: real-user CLS p75 is 0.263, past the poor threshold (0.25)."
+ ]
 }
