@@ -1245,7 +1245,7 @@
    }
   }
  ],
- "updated_at": "2026-08-31T11:16:40Z",
+ "updated_at": "2026-09-01T09:41:52Z",
  "days": [
   {
    "date": "2026-06-28",
@@ -5392,6 +5392,71 @@
      "pageviews": 0,
      "mobile_visits": 0,
      "desktop_visits": 0
+    },
+    "gocheckmysports.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-08-31",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 20,
+     "pageviews": 20,
+     "mobile_visits": 10,
+     "desktop_visits": 10
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmycrypto.com": {
+     "visits": 20,
+     "pageviews": 20,
+     "mobile_visits": 0,
+     "desktop_visits": 20
     },
     "gocheckmysports.com": {
      "visits": 0,
@@ -12225,6 +12290,188 @@
       "inp_p75_ms": 64,
       "cls_p75": 1,
       "samples": 50
+     },
+     "mobile": {
+      "lcp_p75_ms": 538,
+      "inp_p75_ms": 0,
+      "cls_p75": -1,
+      "samples": 20
+     }
+    }
+   }
+  },
+  {
+   "date": "2026-08-31",
+   "window_days": 28,
+   "sites": {
+    "gocheckmy.com": {
+     "overall": {
+      "lcp_p75_ms": 1892,
+      "inp_p75_ms": 0,
+      "cls_p75": 1,
+      "samples": 40
+     },
+     "desktop": {
+      "lcp_p75_ms": 1892,
+      "inp_p75_ms": 0,
+      "cls_p75": 1,
+      "samples": 30
+     },
+     "mobile": {
+      "lcp_p75_ms": 1760,
+      "inp_p75_ms": 0,
+      "cls_p75": -1,
+      "samples": 10
+     }
+    },
+    "gocheckmyhome.com": {
+     "overall": {
+      "lcp_p75_ms": 3759,
+      "inp_p75_ms": 0,
+      "cls_p75": -1,
+      "samples": 20
+     },
+     "mobile": {
+      "lcp_p75_ms": 3759,
+      "inp_p75_ms": 0,
+      "cls_p75": -1,
+      "samples": 20
+     }
+    },
+    "gocheckmypet.com": {
+     "overall": {
+      "lcp_p75_ms": 2440,
+      "inp_p75_ms": 0,
+      "cls_p75": 1,
+      "samples": 70
+     },
+     "desktop": {
+      "lcp_p75_ms": 2440,
+      "inp_p75_ms": 0,
+      "cls_p75": 1,
+      "samples": 50
+     },
+     "mobile": {
+      "lcp_p75_ms": 1200,
+      "inp_p75_ms": 0,
+      "cls_p75": -1,
+      "samples": 10
+     }
+    },
+    "gocheckmymortgage.com": {
+     "overall": {
+      "lcp_p75_ms": 3680,
+      "inp_p75_ms": 0,
+      "cls_p75": 0.032,
+      "samples": 20
+     },
+     "desktop": {
+      "lcp_p75_ms": 3680,
+      "inp_p75_ms": 0,
+      "cls_p75": 0.032,
+      "samples": 20
+     }
+    },
+    "gocheckmyparents.com": {
+     "overall": {
+      "lcp_p75_ms": 1076,
+      "inp_p75_ms": 0,
+      "cls_p75": 1,
+      "samples": 80
+     },
+     "desktop": {
+      "lcp_p75_ms": 1076,
+      "inp_p75_ms": 0,
+      "cls_p75": 1,
+      "samples": 80
+     }
+    },
+    "gocheckmyestate.com": {
+     "overall": {
+      "lcp_p75_ms": 700,
+      "inp_p75_ms": 0,
+      "cls_p75": 0.036,
+      "samples": 50
+     },
+     "desktop": {
+      "lcp_p75_ms": 700,
+      "inp_p75_ms": 0,
+      "cls_p75": 0.036,
+      "samples": 50
+     }
+    },
+    "gocheckmystorm.com": {
+     "overall": {
+      "lcp_p75_ms": 1261,
+      "inp_p75_ms": 0,
+      "cls_p75": 0.013,
+      "samples": 40
+     },
+     "desktop": {
+      "lcp_p75_ms": 1336,
+      "inp_p75_ms": 0,
+      "cls_p75": 0.013,
+      "samples": 20
+     },
+     "mobile": {
+      "lcp_p75_ms": 1261,
+      "inp_p75_ms": 0,
+      "cls_p75": -1,
+      "samples": 20
+     }
+    },
+    "gocheckmycrypto.com": {
+     "overall": {
+      "lcp_p75_ms": 1127,
+      "inp_p75_ms": 48,
+      "cls_p75": 1,
+      "samples": 160
+     },
+     "desktop": {
+      "lcp_p75_ms": 1376,
+      "inp_p75_ms": 48,
+      "cls_p75": 1,
+      "samples": 80
+     },
+     "mobile": {
+      "lcp_p75_ms": 993,
+      "inp_p75_ms": 0,
+      "cls_p75": -1,
+      "samples": 80
+     }
+    },
+    "gocheckmysports.com": {
+     "overall": {
+      "lcp_p75_ms": 1160,
+      "inp_p75_ms": 160,
+      "cls_p75": 0.004,
+      "samples": 70
+     },
+     "desktop": {
+      "lcp_p75_ms": 3753,
+      "inp_p75_ms": 160,
+      "cls_p75": 1,
+      "samples": 30
+     },
+     "mobile": {
+      "lcp_p75_ms": 1160,
+      "inp_p75_ms": 0,
+      "cls_p75": 0,
+      "samples": 40
+     }
+    },
+    "gocheckmynews.com": {
+     "overall": {
+      "lcp_p75_ms": 840,
+      "inp_p75_ms": 64,
+      "cls_p75": 1,
+      "samples": 90
+     },
+     "desktop": {
+      "lcp_p75_ms": 984,
+      "inp_p75_ms": 64,
+      "cls_p75": 1,
+      "samples": 70
      },
      "mobile": {
       "lcp_p75_ms": 538,
@@ -27479,6 +27726,386 @@
       }
      ],
      "tool_reach_pct": 44
+    }
+   }
+  },
+  {
+   "date": "2026-08-31",
+   "window_days": 28,
+   "sites": {
+    "gocheckmy.com": {
+     "channels": {
+      "direct": 10,
+      "family": 0
+     },
+     "referers": [],
+     "countries": [
+      {
+       "country": "US",
+       "visits": 10
+      }
+     ],
+     "paths": [
+      {
+       "path": "/contact",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/",
+       "pageviews": 10,
+       "visits": 10
+      }
+     ],
+     "tool_reach_pct": 50
+    },
+    "gocheckmyhome.com": {
+     "channels": {
+      "direct": 40
+     },
+     "referers": [],
+     "countries": [
+      {
+       "country": "US",
+       "visits": 40
+      }
+     ],
+     "paths": [
+      {
+       "path": "/",
+       "pageviews": 40,
+       "visits": 40
+      }
+     ],
+     "tool_reach_pct": 0
+    },
+    "gocheckmypet.com": {
+     "channels": {
+      "direct": 40,
+      "family": 0
+     },
+     "referers": [],
+     "countries": [
+      {
+       "country": "US",
+       "visits": 40
+      }
+     ],
+     "paths": [
+      {
+       "path": "/",
+       "pageviews": 30,
+       "visits": 30
+      },
+      {
+       "path": "/care-plan",
+       "pageviews": 20,
+       "visits": 0
+      },
+      {
+       "path": "/articles/",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/pet-insurance-french-bulldogs.html",
+       "pageviews": 10,
+       "visits": 10
+      }
+     ],
+     "tool_reach_pct": 57
+    },
+    "gocheckmymortgage.com": {
+     "channels": {
+      "direct": 30
+     },
+     "referers": [],
+     "countries": [
+      {
+       "country": "US",
+       "visits": 30
+      }
+     ],
+     "paths": [
+      {
+       "path": "/",
+       "pageviews": 30,
+       "visits": 30
+      }
+     ],
+     "tool_reach_pct": 0
+    },
+    "gocheckmyparents.com": {
+     "channels": {
+      "direct": 70,
+      "search": 20,
+      "family": 0
+     },
+     "referers": [
+      {
+       "host": "google.com",
+       "visits": 10
+      },
+      {
+       "host": "bing.com",
+       "visits": 10
+      }
+     ],
+     "countries": [
+      {
+       "country": "US",
+       "visits": 80
+      },
+      {
+       "country": "DE",
+       "visits": 10
+      }
+     ],
+     "paths": [
+      {
+       "path": "/",
+       "pageviews": 30,
+       "visits": 30
+      },
+      {
+       "path": "/assessment.html",
+       "pageviews": 30,
+       "visits": 20
+      },
+      {
+       "path": "/how-we-make-money.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/costs/north-carolina.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/home-care-checker.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/facility-checker",
+       "pageviews": 10,
+       "visits": 10
+      }
+     ],
+     "tool_reach_pct": 70
+    },
+    "gocheckmyestate.com": {
+     "channels": {
+      "direct": 50,
+      "family": 0
+     },
+     "referers": [],
+     "countries": [
+      {
+       "country": "US",
+       "visits": 40
+      },
+      {
+       "country": "DE",
+       "visits": 10
+      }
+     ],
+     "paths": [
+      {
+       "path": "/",
+       "pageviews": 30,
+       "visits": 30
+      },
+      {
+       "path": "/assessment.html",
+       "pageviews": 20,
+       "visits": 10
+      },
+      {
+       "path": "/beneficiary-audit.html",
+       "pageviews": 10,
+       "visits": 10
+      }
+     ],
+     "tool_reach_pct": 50
+    },
+    "gocheckmystorm.com": {
+     "channels": {
+      "direct": 30,
+      "search": 10,
+      "family": 0
+     },
+     "referers": [
+      {
+       "host": "duckduckgo.com",
+       "visits": 10
+      }
+     ],
+     "countries": [
+      {
+       "country": "US",
+       "visits": 40
+      },
+      {
+       "country": "DO",
+       "visits": 0
+      }
+     ],
+     "paths": [
+      {
+       "path": "/",
+       "pageviews": 30,
+       "visits": 30
+      },
+      {
+       "path": "/storm-center",
+       "pageviews": 20,
+       "visits": 0
+      },
+      {
+       "path": "/radar.html",
+       "pageviews": 10,
+       "visits": 10
+      }
+     ],
+     "tool_reach_pct": 50
+    },
+    "gocheckmycrypto.com": {
+     "channels": {
+      "direct": 80,
+      "family": 0
+     },
+     "referers": [],
+     "countries": [
+      {
+       "country": "CN",
+       "visits": 40
+      },
+      {
+       "country": "US",
+       "visits": 40
+      }
+     ],
+     "paths": [
+      {
+       "path": "/news",
+       "pageviews": 60,
+       "visits": 0
+      },
+      {
+       "path": "/",
+       "pageviews": 30,
+       "visits": 30
+      },
+      {
+       "path": "/articles/afternoon-brief-2026-08-13",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/index.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/articles/morning-brief-2026-07-24",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/articles/afternoon-brief-2026-07-27",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/cold-storage",
+       "pageviews": 10,
+       "visits": 10
+      }
+     ],
+     "tool_reach_pct": 71
+    },
+    "gocheckmysports.com": {
+     "channels": {
+      "direct": 30,
+      "family": 0
+     },
+     "referers": [],
+     "countries": [
+      {
+       "country": "PL",
+       "visits": 20
+      },
+      {
+       "country": "US",
+       "visits": 10
+      }
+     ],
+     "paths": [
+      {
+       "path": "/",
+       "pageviews": 20,
+       "visits": 20
+      },
+      {
+       "path": "/articles/shanahan-to-coach-preseason-opener-nearing-full-strength-three-weeks-after-car-crash",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/archive",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/articles/giants-west-virginia-camp-shows-defense-emerging-offense-still-installing",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/articles/van-and-pantoja-rematch-set-for-ufc-331-in-september",
+       "pageviews": 10,
+       "visits": 0
+      }
+     ],
+     "tool_reach_pct": 67
+    },
+    "gocheckmynews.com": {
+     "channels": {
+      "direct": 60,
+      "family": 0
+     },
+     "referers": [],
+     "countries": [
+      {
+       "country": "US",
+       "visits": 60
+      }
+     ],
+     "paths": [
+      {
+       "path": "/",
+       "pageviews": 40,
+       "visits": 30
+      },
+      {
+       "path": "/news",
+       "pageviews": 20,
+       "visits": 10
+      },
+      {
+       "path": "/articles/evening-brief-2026-08-17",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/about",
+       "pageviews": 10,
+       "visits": 10
+      }
+     ],
+     "tool_reach_pct": 50
     }
    }
   }
