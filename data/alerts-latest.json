@@ -1,8 +1,4 @@
 {
- "generated_at": "2026-09-07T09:52:23Z",
- "alerts": [
-  "gocheckmypet.com: real-user CLS p75 is 1, past the poor threshold (0.25).",
-  "gocheckmyparents.com: real-user CLS p75 is 0.263, past the poor threshold (0.25).",
-  "gocheckmycrypto.com: real-user CLS p75 is 1, past the poor threshold (0.25)."
- ]
+ "generated_at": "2026-09-08T09:17:44Z",
+ "alerts": []
 }
