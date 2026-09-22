@@ -1,6 +1,4 @@
 {
- "generated_at": "2026-09-21T10:20:02Z",
- "alerts": [
-  "gocheckmypet.com: real-user LCP p75 is 4712ms, past the poor threshold (4000ms)."
- ]
+ "generated_at": "2026-09-22T09:34:40Z",
+ "alerts": []
 }
