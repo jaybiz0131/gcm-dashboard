@@ -1,6 +1,4 @@
 {
- "generated_at": "2026-09-23T09:40:07Z",
- "alerts": [
-  "gocheckmysports.com: real-user CLS p75 is 0.276, past the poor threshold (0.25)."
- ]
+ "generated_at": "2026-09-24T09:39:10Z",
+ "alerts": []
 }
