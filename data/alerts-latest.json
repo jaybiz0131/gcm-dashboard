@@ -1,4 +1,7 @@
 {
- "generated_at": "2026-10-01T11:17:07Z",
- "alerts": []
+ "generated_at": "2026-10-02T10:49:32Z",
+ "alerts": [
+  "gocheckmy.com: real-user LCP p75 is 10016ms, past the poor threshold (4000ms).",
+  "gocheckmysports.com: real-user CLS p75 is 0.276, past the poor threshold (0.25)."
+ ]
 }
