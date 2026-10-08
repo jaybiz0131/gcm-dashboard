@@ -2128,7 +2128,7 @@
    }
   }
  ],
- "updated_at": "2026-10-07T11:27:15Z",
+ "updated_at": "2026-10-08T11:42:53Z",
  "days": [
   {
    "date": "2026-06-28",
@@ -8691,6 +8691,71 @@
      "visits": 0,
      "pageviews": 0,
      "mobile_visits": 0,
+     "desktop_visits": 0
+    }
+   }
+  },
+  {
+   "date": "2026-10-07",
+   "sites": {
+    "gocheckmy.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 10,
+     "desktop_visits": 0
+    },
+    "gocheckmyhome.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmypet.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmymortgage.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyparents.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmyestate.com": {
+     "visits": 0,
+     "pageviews": 0,
+     "mobile_visits": 0,
+     "desktop_visits": 0
+    },
+    "gocheckmystorm.com": {
+     "visits": 20,
+     "pageviews": 20,
+     "mobile_visits": 0,
+     "desktop_visits": 20
+    },
+    "gocheckmycrypto.com": {
+     "visits": 60,
+     "pageviews": 60,
+     "mobile_visits": 0,
+     "desktop_visits": 60
+    },
+    "gocheckmysports.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 10,
+     "desktop_visits": 0
+    },
+    "gocheckmynews.com": {
+     "visits": 10,
+     "pageviews": 10,
+     "mobile_visits": 10,
      "desktop_visits": 0
     }
    }
@@ -21893,6 +21958,194 @@
       "inp_p75_ms": 56,
       "cls_p75": 0.016,
       "samples": 190
+     }
+    }
+   }
+  },
+  {
+   "date": "2026-10-07",
+   "window_days": 28,
+   "sites": {
+    "gocheckmy.com": {
+     "overall": {
+      "lcp_p75_ms": 10016,
+      "inp_p75_ms": 0,
+      "cls_p75": 0.013,
+      "samples": 50
+     },
+     "desktop": {
+      "lcp_p75_ms": 14377,
+      "inp_p75_ms": 0,
+      "cls_p75": 0.013,
+      "samples": 30
+     },
+     "mobile": {
+      "lcp_p75_ms": 10016,
+      "inp_p75_ms": 0,
+      "cls_p75": 0.037,
+      "samples": 20
+     }
+    },
+    "gocheckmyhome.com": {
+     "overall": {
+      "lcp_p75_ms": 2328,
+      "inp_p75_ms": 0,
+      "cls_p75": 0,
+      "samples": 70
+     },
+     "desktop": {
+      "lcp_p75_ms": 2328,
+      "inp_p75_ms": 0,
+      "cls_p75": 0,
+      "samples": 70
+     }
+    },
+    "gocheckmypet.com": {
+     "overall": {
+      "lcp_p75_ms": 1424,
+      "inp_p75_ms": 104,
+      "cls_p75": 0.004,
+      "samples": 180
+     },
+     "desktop": {
+      "lcp_p75_ms": 1256,
+      "inp_p75_ms": 24,
+      "cls_p75": 0.001,
+      "samples": 150
+     },
+     "mobile": {
+      "lcp_p75_ms": 1424,
+      "inp_p75_ms": 104,
+      "cls_p75": 0.013,
+      "samples": 30
+     }
+    },
+    "gocheckmymortgage.com": {
+     "overall": {
+      "lcp_p75_ms": 260,
+      "inp_p75_ms": 0,
+      "cls_p75": -1,
+      "samples": 20
+     },
+     "mobile": {
+      "lcp_p75_ms": 260,
+      "inp_p75_ms": 0,
+      "cls_p75": -1,
+      "samples": 20
+     }
+    },
+    "gocheckmyparents.com": {
+     "overall": {
+      "lcp_p75_ms": 752,
+      "inp_p75_ms": 0,
+      "cls_p75": 0.007,
+      "samples": 260
+     },
+     "desktop": {
+      "lcp_p75_ms": 468,
+      "inp_p75_ms": 0,
+      "cls_p75": 0.01,
+      "samples": 230
+     },
+     "mobile": {
+      "lcp_p75_ms": 1216,
+      "inp_p75_ms": 0,
+      "cls_p75": 0,
+      "samples": 30
+     }
+    },
+    "gocheckmyestate.com": {
+     "overall": {
+      "lcp_p75_ms": 3312,
+      "inp_p75_ms": 72,
+      "cls_p75": 0.001,
+      "samples": 70
+     },
+     "desktop": {
+      "lcp_p75_ms": 3312,
+      "inp_p75_ms": 72,
+      "cls_p75": 0.001,
+      "samples": 50
+     },
+     "mobile": {
+      "lcp_p75_ms": 1322,
+      "inp_p75_ms": 0,
+      "cls_p75": -1,
+      "samples": 20
+     }
+    },
+    "gocheckmystorm.com": {
+     "overall": {
+      "lcp_p75_ms": 1376,
+      "inp_p75_ms": 16,
+      "cls_p75": 0.002,
+      "samples": 170
+     },
+     "desktop": {
+      "lcp_p75_ms": 1180,
+      "inp_p75_ms": 16,
+      "cls_p75": 0.002,
+      "samples": 160
+     },
+     "mobile": {
+      "lcp_p75_ms": 1552,
+      "inp_p75_ms": 0,
+      "cls_p75": -1,
+      "samples": 10
+     }
+    },
+    "gocheckmycrypto.com": {
+     "overall": {
+      "lcp_p75_ms": 540,
+      "inp_p75_ms": 0,
+      "cls_p75": 0,
+      "samples": 210
+     },
+     "desktop": {
+      "lcp_p75_ms": 540,
+      "inp_p75_ms": 0,
+      "cls_p75": 0,
+      "samples": 150
+     },
+     "mobile": {
+      "lcp_p75_ms": 1179,
+      "inp_p75_ms": 0,
+      "cls_p75": -1,
+      "samples": 60
+     }
+    },
+    "gocheckmysports.com": {
+     "overall": {
+      "lcp_p75_ms": 884,
+      "inp_p75_ms": 88,
+      "cls_p75": 0.276,
+      "samples": 410
+     },
+     "desktop": {
+      "lcp_p75_ms": 884,
+      "inp_p75_ms": 88,
+      "cls_p75": 0.276,
+      "samples": 350
+     },
+     "mobile": {
+      "lcp_p75_ms": 712,
+      "inp_p75_ms": 0,
+      "cls_p75": -1,
+      "samples": 60
+     }
+    },
+    "gocheckmynews.com": {
+     "overall": {
+      "lcp_p75_ms": 1480,
+      "inp_p75_ms": 56,
+      "cls_p75": 0.016,
+      "samples": 160
+     },
+     "desktop": {
+      "lcp_p75_ms": 1480,
+      "inp_p75_ms": 56,
+      "cls_p75": 0.016,
+      "samples": 160
      }
     }
    }
@@ -56541,6 +56794,746 @@
        "path": "/",
        "pageviews": 110,
        "visits": 110
+      }
+     ],
+     "tool_reach_pct": 0
+    }
+   }
+  },
+  {
+   "date": "2026-10-07",
+   "window_days": 28,
+   "sites": {
+    "gocheckmy.com": {
+     "channels": {
+      "direct": 90,
+      "family": 10
+     },
+     "referers": [],
+     "countries": [
+      {
+       "country": "US",
+       "visits": 40
+      },
+      {
+       "country": "PL",
+       "visits": 20
+      },
+      {
+       "country": "FR",
+       "visits": 10
+      },
+      {
+       "country": "DE",
+       "visits": 10
+      },
+      {
+       "country": "IE",
+       "visits": 10
+      },
+      {
+       "country": "CN",
+       "visits": 10
+      }
+     ],
+     "paths": [
+      {
+       "path": "/approach.html",
+       "pageviews": 100,
+       "visits": 0
+      },
+      {
+       "path": "/",
+       "pageviews": 90,
+       "visits": 90
+      },
+      {
+       "path": "/contact.html",
+       "pageviews": 10,
+       "visits": 10
+      }
+     ],
+     "tool_reach_pct": 55
+    },
+    "gocheckmyhome.com": {
+     "channels": {
+      "direct": 50
+     },
+     "referers": [],
+     "countries": [
+      {
+       "country": "US",
+       "visits": 30
+      },
+      {
+       "country": "CN",
+       "visits": 20
+      }
+     ],
+     "paths": [
+      {
+       "path": "/",
+       "pageviews": 30,
+       "visits": 30
+      },
+      {
+       "path": "/guides.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/guides/environmental-checks-for-a-home.html",
+       "pageviews": 10,
+       "visits": 10
+      }
+     ],
+     "tool_reach_pct": 40
+    },
+    "gocheckmypet.com": {
+     "channels": {
+      "direct": 240,
+      "search": 10,
+      "family": 0
+     },
+     "referers": [
+      {
+       "host": "duckduckgo.com",
+       "visits": 10
+      }
+     ],
+     "countries": [
+      {
+       "country": "US",
+       "visits": 230
+      },
+      {
+       "country": "TH",
+       "visits": 10
+      },
+      {
+       "country": "IN",
+       "visits": 10
+      }
+     ],
+     "paths": [
+      {
+       "path": "/",
+       "pageviews": 50,
+       "visits": 50
+      },
+      {
+       "path": "/articles/sudden-limping-dogs-goes-away.html",
+       "pageviews": 40,
+       "visits": 40
+      },
+      {
+       "path": "/care-plan.html",
+       "pageviews": 40,
+       "visits": 30
+      },
+      {
+       "path": "/articles/",
+       "pageviews": 20,
+       "visits": 20
+      },
+      {
+       "path": "/food-check.html",
+       "pageviews": 20,
+       "visits": 10
+      },
+      {
+       "path": "/recall-checker.html",
+       "pageviews": 20,
+       "visits": 10
+      },
+      {
+       "path": "/compare.html",
+       "pageviews": 20,
+       "visits": 20
+      },
+      {
+       "path": "/articles/why-dogs-stomach-gurgles-loudly.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/articles/pale-gums-in-dogs-what-it-means.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/picks/joint.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/pet-insurance-labradors.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/pet-insurance-cancer.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/insurance-checkup.html",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/pet-insurance-golden-retrievers.html",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/articles/pet-insurance-waiting-periods-explained.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/articles/dog-panting-heavily-at-night.html",
+       "pageviews": 10,
+       "visits": 10
+      }
+     ],
+     "tool_reach_pct": 83
+    },
+    "gocheckmymortgage.com": {
+     "channels": {
+      "direct": 20,
+      "search": 10
+     },
+     "referers": [
+      {
+       "host": "google.com",
+       "visits": 10
+      }
+     ],
+     "countries": [
+      {
+       "country": "DE",
+       "visits": 10
+      },
+      {
+       "country": "US",
+       "visits": 10
+      },
+      {
+       "country": "PL",
+       "visits": 10
+      }
+     ],
+     "paths": [
+      {
+       "path": "/articles/broker-price-opinion-pmi-removal",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/lender-check",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/disclosure",
+       "pageviews": 10,
+       "visits": 10
+      }
+     ],
+     "tool_reach_pct": 100
+    },
+    "gocheckmyparents.com": {
+     "channels": {
+      "direct": 150,
+      "search": 20,
+      "family": 0
+     },
+     "referers": [
+      {
+       "host": "google.com",
+       "visits": 20
+      }
+     ],
+     "countries": [
+      {
+       "country": "US",
+       "visits": 120
+      },
+      {
+       "country": "ID",
+       "visits": 20
+      },
+      {
+       "country": "DE",
+       "visits": 10
+      },
+      {
+       "country": "FI",
+       "visits": 10
+      },
+      {
+       "country": "GB",
+       "visits": 10
+      }
+     ],
+     "paths": [
+      {
+       "path": "/assessment.html",
+       "pageviews": 120,
+       "visits": 10
+      },
+      {
+       "path": "/",
+       "pageviews": 80,
+       "visits": 50
+      },
+      {
+       "path": "/facility-checker.html",
+       "pageviews": 40,
+       "visits": 20
+      },
+      {
+       "path": "/guides/the-first-talk.html",
+       "pageviews": 20,
+       "visits": 10
+      },
+      {
+       "path": "/costs/",
+       "pageviews": 20,
+       "visits": 20
+      },
+      {
+       "path": "/costs/maryland.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/guides/how-to-check-an-assisted-living-facility.html",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/guides/five-year-medicaid-look-back-explained.html",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/how-we-make-money.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/costs/tennessee.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/glossary.html",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/costs/ohio.html",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/guides/the-car-keys-talk.html",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/guides/va-benefits-senior-care.html",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/home-care-checker.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/guides/documents-first-doctor-visit-memory-concerns.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/tour-checklist.html",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/affordability.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/guides/the-memory-evaluation-talk.html",
+       "pageviews": 10,
+       "visits": 0
+      }
+     ],
+     "tool_reach_pct": 81
+    },
+    "gocheckmyestate.com": {
+     "channels": {
+      "direct": 30,
+      "search": 20,
+      "family": 0
+     },
+     "referers": [
+      {
+       "host": "bing.com",
+       "visits": 20
+      }
+     ],
+     "countries": [
+      {
+       "country": "US",
+       "visits": 50
+      }
+     ],
+     "paths": [
+      {
+       "path": "/guides/life-insurance-beneficiary-disputes-tennessee.html",
+       "pageviews": 20,
+       "visits": 20
+      },
+      {
+       "path": "/charity-check.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/guides.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/guides/safe-deposit-box-or-home-estate-documents.html",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/guides/what-happens-without-a-will.html",
+       "pageviews": 10,
+       "visits": 10
+      }
+     ],
+     "tool_reach_pct": 100
+    },
+    "gocheckmystorm.com": {
+     "channels": {
+      "direct": 80,
+      "search": 40,
+      "family": 0
+     },
+     "referers": [
+      {
+       "host": "bing.com",
+       "visits": 40
+      }
+     ],
+     "countries": [
+      {
+       "country": "US",
+       "visits": 120
+      }
+     ],
+     "paths": [
+      {
+       "path": "/radar.html",
+       "pageviews": 50,
+       "visits": 50
+      },
+      {
+       "path": "/storm-center.html",
+       "pageviews": 20,
+       "visits": 20
+      },
+      {
+       "path": "/",
+       "pageviews": 20,
+       "visits": 20
+      },
+      {
+       "path": "/guides/hurricane-deductible-explained",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/guides/48-hour-hurricane-prep-renter-homeowner",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/guides.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/guides/generator-size-refrigerator-window-ac.html",
+       "pageviews": 10,
+       "visits": 10
+      }
+     ],
+     "tool_reach_pct": 85
+    },
+    "gocheckmycrypto.com": {
+     "channels": {
+      "direct": 350,
+      "family": 0
+     },
+     "referers": [],
+     "countries": [
+      {
+       "country": "CN",
+       "visits": 250
+      },
+      {
+       "country": "US",
+       "visits": 100
+      }
+     ],
+     "paths": [
+      {
+       "path": "/pulse",
+       "pageviews": 80,
+       "visits": 10
+      },
+      {
+       "path": "/",
+       "pageviews": 70,
+       "visits": 70
+      },
+      {
+       "path": "/pulse/prices",
+       "pageviews": 20,
+       "visits": 10
+      },
+      {
+       "path": "/news",
+       "pageviews": 20,
+       "visits": 0
+      },
+      {
+       "path": "/coins/pyth",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/learn/stablecoin-dry-powder",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/articles/revolut-openreserve-win-occ-nod-for-national-bank-charters-with-crypto-plans",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/coins/nexo",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/articles/sec-proposes-custody-framework-for-crypto-held-by-investment-advisers-and-funds-october-1",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/articles/kyrgyzstan-approves-crypto-framework-liquidates-kgst-issuer-on-september-5",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/bottom-line",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/accessibility",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/coins/hype",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/learn/whale-flows",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/articles/evening-brief-2026-09-14",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/articles/week-ahead-2026-09-14",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/coins/jup",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/articles/binance-user-data-provided-to-russian-authorities-led-to-arrest-of-opposition-linked-donor",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/articles/morning-brief-2026-08-17",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/coins/trump",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/flows",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/articles/afternoon-brief-2026-07-22",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/articles/japan-listed-remixpoint-liquidates-all-altcoin-holdings-consolidates-portfolio-to-bitcoin-only-strategy",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/articles/philippines-central-bank-proposes-12-month-freeze-on-payment-operator-registrations",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/coins/zro",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/chartmaster",
+       "pageviews": 10,
+       "visits": 0
+      },
+      {
+       "path": "/articles/bitmex-faces-class-action-lawsuit-alleging-collateral-theft-and-insider-trading-as-exchange-announces-shutdown",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/coins/sui",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/chart-master.html",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/coins/aster",
+       "pageviews": 10,
+       "visits": 10
+      }
+     ],
+     "tool_reach_pct": 84
+    },
+    "gocheckmysports.com": {
+     "channels": {
+      "direct": 390,
+      "family": 0
+     },
+     "referers": [],
+     "countries": [
+      {
+       "country": "US",
+       "visits": 370
+      },
+      {
+       "country": "CA",
+       "visits": 10
+      },
+      {
+       "country": "CN",
+       "visits": 10
+      }
+     ],
+     "paths": [
+      {
+       "path": "/",
+       "pageviews": 360,
+       "visits": 320
+      },
+      {
+       "path": "/scores",
+       "pageviews": 60,
+       "visits": 0
+      },
+      {
+       "path": "/fantasy/inactives",
+       "pageviews": 30,
+       "visits": 20
+      },
+      {
+       "path": "/articles/nfl-suspends-49ers-owner-jed-york-six-games-fines-500k-for-personal-conduct-violation",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/articles/nwsl-strikes-deal-with-roku-for-sunday-night-matches-after-victory-departure",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/sections/college-basketball",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/articles/bbc-ending-ski-sunday-after-nearly-50-years-on-air",
+       "pageviews": 10,
+       "visits": 10
+      },
+      {
+       "path": "/articles/connor-hellebuyck-publicly-requests-trade-from-winnipeg-jets",
+       "pageviews": 10,
+       "visits": 10
+      }
+     ],
+     "tool_reach_pct": 28
+    },
+    "gocheckmynews.com": {
+     "channels": {
+      "direct": 100
+     },
+     "referers": [],
+     "countries": [
+      {
+       "country": "US",
+       "visits": 90
+      },
+      {
+       "country": "CN",
+       "visits": 10
+      }
+     ],
+     "paths": [
+      {
+       "path": "/",
+       "pageviews": 100,
+       "visits": 100
       }
      ],
      "tool_reach_pct": 0
