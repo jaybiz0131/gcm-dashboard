@@ -1,4 +1,7 @@
 {
- "generated_at": "2026-10-18T09:16:05Z",
- "alerts": []
+ "generated_at": "2026-10-19T10:25:52Z",
+ "alerts": [
+  "gocheckmy.com: real-user LCP p75 is 10016ms, past the poor threshold (4000ms).",
+  "gocheckmynews.com: real-user LCP p75 is 5072ms, past the poor threshold (4000ms)."
+ ]
 }
